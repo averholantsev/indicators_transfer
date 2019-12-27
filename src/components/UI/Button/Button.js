@@ -1,7 +1,7 @@
 import React from 'react';
 
 const button = (props) => {
-  return <button onClick={props.clicked}>{props.name}</button>
+  return <button type={props.type} onClick={props.clicked}>{props.name}</button>
 };
 
 export default button;
