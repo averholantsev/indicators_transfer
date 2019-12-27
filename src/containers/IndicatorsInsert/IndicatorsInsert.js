@@ -9,9 +9,10 @@ class IndicatorsInsert extends Component {
     ColdWaterKittchen: null,
     ColdWaterBathroom: null,
     HotWaterKittchen: null,
-    HotWaterBathroom: null
-  }
-  
+    HotWaterBathroom: null,
+    submitIsDisabled: true
+  };
+
   setElectricityDay = (event) => {
     this.setState({ElectricityDay: event.target.value});
   };
@@ -57,7 +58,6 @@ class IndicatorsInsert extends Component {
       },
       CurrentDate: {today}
     }
-    console.log(indicators);
   };
 
 
