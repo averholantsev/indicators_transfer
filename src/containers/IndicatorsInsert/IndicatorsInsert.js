@@ -15,8 +15,7 @@ class IndicatorsInsert extends Component {
     HotWaterKittchen: "",
     HotWaterKittchenValid: true,
     HotWaterBathroom: "",
-    HotWaterBathroomValid: true,
-    valid: false
+    HotWaterBathroomValid: true
   };
 
   setStateParam = (param, event) => {
@@ -48,10 +47,6 @@ class IndicatorsInsert extends Component {
     if (this.state.HotWaterBathroom === "") {
       this.setState({ HotWaterBathroomValid: false });
     }
-    if (this.state.ElectricityDay !== "" && this.state.ElectricityNight !== "" && this.state.ColdWaterKittchen !== "" && this.state.ColdWaterBathroom !== "" && this.state.HotWaterKittchen !== "" && this.state.HotWaterBathroom !== "") {
-      console.log('valid: true');
-      this.setState({ valid: true });
-    }
 
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
@@ -75,9 +70,7 @@ class IndicatorsInsert extends Component {
       CurrentDate: { today }
     };
 
-    console.log(this.state.valid);
-    
-    if (this.state.valid) {
+    if (this.state.ElectricityDay !== "" && this.state.ElectricityNight !== "" && this.state.ColdWaterKittchen !== "" && this.state.ColdWaterBathroom !== "" && this.state.HotWaterKittchen !== "" && this.state.HotWaterBathroom !== "") {
       console.log(indicators);
     } else {
       console.log('Не заполнено хотя бы одно поле');
