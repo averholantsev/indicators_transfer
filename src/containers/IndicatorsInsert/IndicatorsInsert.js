@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Input from '../../components/UI/Input/Input';
+import Input from '../../components/UI/Inputs/InputNum';
 import Button from '../../components/UI/Button/Button';
 
 class IndicatorsInsert extends Component {
@@ -21,11 +21,13 @@ class IndicatorsInsert extends Component {
   setStateParam = (param, event) => {
     const stateParam = param;
     const stateParamValid = param + 'Valid';
-    const eventValue = event.target.value;
+    const eventValue = event.target.value.replace(/\D/,'');
 
     if (!Number(eventValue)) {
       return;
     } else this.setState({[stateParam]: eventValue}, () => this.validateField(stateParamValid, eventValue));
+
+    return this;
   };
 
   validateField = (fieldName, value) => {
@@ -62,7 +64,6 @@ class IndicatorsInsert extends Component {
     
   };
 
-
   render() {
     return (
       <form>
@@ -75,6 +76,8 @@ class IndicatorsInsert extends Component {
             placeholder={'Введите дневное потребление'}
             name={'ElectricityDay'}
             changed={(event) => this.setStateParam('ElectricityDay', event)}
+            type={'number'}
+            min={'0'}
           />
           <Input
             id={'ElectricityNight'}
@@ -82,6 +85,8 @@ class IndicatorsInsert extends Component {
             placeholder={'Введите ночное потребление'}
             name={'ElectricityNight'}
             changed={(event) => this.setStateParam('ElectricityNight', event)}
+            type={'number'}
+            min={'0'}
           />
         </div>
         <div>
@@ -92,8 +97,8 @@ class IndicatorsInsert extends Component {
             placeholder={'Введите потребление'}
             name={'ColdWaterKittchen'}
             changed={(event) => this.setStateParam('ColdWaterKittchen', event)}
-            type="text"
-            pattern="[0-9]*"
+            type={'number'}
+            min={'0'}
           />
           <Input
             id={'ColdWaterBathroom'}
@@ -101,6 +106,8 @@ class IndicatorsInsert extends Component {
             placeholder={'Введите потребление'}
             name={'ColdWaterBathroom'}
             changed={(event) => this.setStateParam('ColdWaterBathroom', event)}
+            type={'number'}
+            min={'0'}
           />
         </div>
         <div>
@@ -111,6 +118,8 @@ class IndicatorsInsert extends Component {
             placeholder={'Введите потребление'}
             name={'HotWaterKittchen'}
             changed={(event) => this.setStateParam('HotWaterKittchen', event)}
+            type={'number'}
+            min={'0'}
           />
           <Input
             id={'HotWaterBathroom'}
@@ -118,6 +127,8 @@ class IndicatorsInsert extends Component {
             placeholder={'Введите потребление'}
             name={'HotWaterBathroom'}
             changed={(event) => this.setStateParam('HotWaterBathroom', event)}
+            type={'number'}
+            min={0}
           />
         </div>
         <Button 

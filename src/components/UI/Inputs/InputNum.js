@@ -10,7 +10,7 @@ const input = (props) => {
         name={props.name}
         onChange={props.changed}
         type={props.type}
-        pattern={props.pattern}
+        min={props.min}
       >
         {props.inputValue}
       </input>
