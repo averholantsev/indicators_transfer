@@ -1,48 +1,63 @@
-import React, { Component } from 'react';
-import Input from '../../components/UI/Inputs/InputNum';
-import Button from '../../components/UI/Button/Button';
+import React, { Component } from "react";
+import InputNum from "../../components/UI/Inputs/InputNum";
+import Button from "../../components/UI/Button/Button";
 
 class IndicatorsInsert extends Component {
   state = {
-    ElectricityDay: null,
-    ElectricityDayValid: false,
-    ElectricityNight: null,
-    ElectricityNightValid: false,
-    ColdWaterKittchen: null,
-    ColdWaterKittchenValid: false,
-    ColdWaterBathroom: null,
-    ColdWaterBathroomValid: false,
-    HotWaterKittchen: null,
-    HotWaterKittchenValid: false,
-    HotWaterBathroom: null,
-    HotWaterBathroomValid: false    
+    ElectricityDay: "",
+    ElectricityDayValid: true,
+    ElectricityNight: "",
+    ElectricityNightValid: true,
+    ColdWaterKittchen: "",
+    ColdWaterKittchenValid: true,
+    ColdWaterBathroom: "",
+    ColdWaterBathroomValid: true,
+    HotWaterKittchen: "",
+    HotWaterKittchenValid: true,
+    HotWaterBathroom: "",
+    HotWaterBathroomValid: true,
+    valid: false
   };
 
   setStateParam = (param, event) => {
-    const stateParam = param;
-    const stateParamValid = param + 'Valid';
-    const eventValue = event.target.value.replace(/\D/,'');
+    const eventValue = event.target.value.replace(/\D/, "");
+    const enteredField = param + "Valid";
 
-    if (!Number(eventValue)) {
-      return;
-    } else this.setState({[stateParam]: eventValue}, () => this.validateField(stateParamValid, eventValue));
-
-    return this;
-  };
-
-  validateField = (fieldName, value) => {
-    if (Number(value) > 0 && Number(value) % 1 === 0) {
-      this.setState({[fieldName]: true});
-    } else this.setState({[fieldName]: false});
-    
+    if (Number(eventValue) || event.target.value === "") {
+      this.setState({ [param]: eventValue });
+      this.setState({ [enteredField]: true });
+    }
   };
 
   sendIndicators = () => {
+    if (this.state.ElectricityDay === "") {
+      this.setState({ ElectricityDayValid: false });
+    }
+    if (this.state.ElectricityNight === "") {
+      this.setState({ ElectricityNightValid: false });
+    }
+    if (this.state.ColdWaterKittchen === "") {
+      this.setState({ ColdWaterKittchenValid: false });
+    }
+    if (this.state.ColdWaterBathroom === "") {
+      this.setState({ ColdWaterBathroomValid: false });
+    }
+    if (this.state.HotWaterKittchen === "") {
+      this.setState({ HotWaterKittchenValid: false });
+    }
+    if (this.state.HotWaterBathroom === "") {
+      this.setState({ HotWaterBathroomValid: false });
+    }
+    if (this.state.ElectricityDay !== "" && this.state.ElectricityNight !== "" && this.state.ColdWaterKittchen !== "" && this.state.ColdWaterBathroom !== "" && this.state.HotWaterKittchen !== "" && this.state.HotWaterBathroom !== "") {
+      console.log('valid: true');
+      this.setState({ valid: true });
+    }
+
     let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
     let yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
+    today = yyyy + "-" + mm + "-" + dd;
 
     const indicators = {
       Electricity: {
@@ -57,88 +72,91 @@ class IndicatorsInsert extends Component {
         Kittchen: this.state.HotWaterKittchen,
         Bathroom: this.state.HotWaterBathroom
       },
-      CurrentDate: {today}
-    }
+      CurrentDate: { today }
+    };
 
-    console.log(indicators);
+    console.log(this.state.valid);
     
+    if (this.state.valid) {
+      console.log(indicators);
+    } else {
+      console.log('Не заполнено хотя бы одно поле');
+    }
   };
 
   render() {
+    const errorMessage = "Поле обязательно для заполнения";
+
     return (
-      <form>
+      <div>
         <h1>Отправка показаний</h1>
         <div>
           <h2>Электроэнергия</h2>
-          <Input
-            id={'ElectricityDay'}
-            label={'День'}
-            placeholder={'Введите дневное потребление'}
-            name={'ElectricityDay'}
-            changed={(event) => this.setStateParam('ElectricityDay', event)}
-            type={'number'}
-            min={'0'}
+          <InputNum
+            id={"ElectricityDay"}
+            label={"День"}
+            placeholder={"Введите дневное потребление"}
+            name={"ElectricityDay"}
+            changed={event => this.setStateParam("ElectricityDay", event)}
+            value={this.state.ElectricityDay}
           />
-          <Input
-            id={'ElectricityNight'}
-            label={'Ночь'}
-            placeholder={'Введите ночное потребление'}
-            name={'ElectricityNight'}
-            changed={(event) => this.setStateParam('ElectricityNight', event)}
-            type={'number'}
-            min={'0'}
+          <span>{this.state.ElectricityDayValid ? null : errorMessage}</span>
+          <InputNum
+            id={"ElectricityNight"}
+            label={"Ночь"}
+            placeholder={"Введите ночное потребление"}
+            name={"ElectricityNight"}
+            changed={event => this.setStateParam("ElectricityNight", event)}
+            value={this.state.ElectricityNight}
           />
+          <span>{this.state.ElectricityNightValid ? null : errorMessage}</span>
         </div>
         <div>
           <h2>Холодная вода</h2>
-          <Input
-            id={'ColdWaterKittchen'}
-            label={'Кухня'}
-            placeholder={'Введите потребление'}
-            name={'ColdWaterKittchen'}
-            changed={(event) => this.setStateParam('ColdWaterKittchen', event)}
-            type={'number'}
-            min={'0'}
+          <InputNum
+            id={"ColdWaterKittchen"}
+            label={"Кухня"}
+            placeholder={"Введите потребление"}
+            name={"ColdWaterKittchen"}
+            changed={event => this.setStateParam("ColdWaterKittchen", event)}
+            value={this.state.ColdWaterKittchen}
           />
-          <Input
-            id={'ColdWaterBathroom'}
-            label={'Ванная'}
-            placeholder={'Введите потребление'}
-            name={'ColdWaterBathroom'}
-            changed={(event) => this.setStateParam('ColdWaterBathroom', event)}
-            type={'number'}
-            min={'0'}
+          <span>{this.state.ColdWaterKittchenValid ? null : errorMessage}</span>
+          <InputNum
+            id={"ColdWaterBathroom"}
+            label={"Ванная"}
+            placeholder={"Введите потребление"}
+            name={"ColdWaterBathroom"}
+            changed={event => this.setStateParam("ColdWaterBathroom", event)}
+            value={this.state.ColdWaterBathroom}
           />
+          <span>{this.state.ColdWaterBathroomValid ? null : errorMessage}</span>
         </div>
         <div>
           <h2>Горячая вода</h2>
-          <Input
-            id={'HotWaterKittchen'}
-            label={'Кухня'}
-            placeholder={'Введите потребление'}
-            name={'HotWaterKittchen'}
-            changed={(event) => this.setStateParam('HotWaterKittchen', event)}
-            type={'number'}
-            min={'0'}
+          <InputNum
+            id={"HotWaterKittchen"}
+            label={"Кухня"}
+            placeholder={"Введите потребление"}
+            name={"HotWaterKittchen"}
+            changed={event => this.setStateParam("HotWaterKittchen", event)}
+            value={this.state.HotWaterKittchen}
           />
-          <Input
-            id={'HotWaterBathroom'}
-            label={'Ванная'}
-            placeholder={'Введите потребление'}
-            name={'HotWaterBathroom'}
-            changed={(event) => this.setStateParam('HotWaterBathroom', event)}
-            type={'number'}
-            min={0}
+          <span>{this.state.HotWaterKittchenValid ? null : errorMessage}</span>
+          <InputNum
+            id={"HotWaterBathroom"}
+            label={"Ванная"}
+            placeholder={"Введите потребление"}
+            name={"HotWaterBathroom"}
+            changed={event => this.setStateParam("HotWaterBathroom", event)}
+            value={this.state.HotWaterBathroom}
           />
+          <span>{this.state.HotWaterBathroomValid ? null : errorMessage}</span>
         </div>
-        <Button 
-          type={'submit'}
-          name={'Отправить'}
-          clicked={this.sendIndicators}
-        />
-      </form>
-    )
-  };
-};
+        <Button name={"Отправить"} clicked={this.sendIndicators} />
+      </div>
+    );
+  }
+}
 
 export default IndicatorsInsert;

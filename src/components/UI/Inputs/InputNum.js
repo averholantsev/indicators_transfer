@@ -1,6 +1,6 @@
 import React from 'react';
 
-const input = (props) => {
+const inputNum = (props) => {
   return (
     <div>
       <label htmlFor={props.id}>{props.label}</label>
@@ -9,13 +9,11 @@ const input = (props) => {
         placeholder={props.placeholder}
         name={props.name}
         onChange={props.changed}
-        type={props.type}
-        min={props.min}
-      >
-        {props.inputValue}
-      </input>
+        value={props.value}
+        required={props.required}
+      />
     </div>
   )
 };
 
-export default input;
+export default inputNum;
