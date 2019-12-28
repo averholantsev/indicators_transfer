@@ -2,6 +2,7 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 
 const inputNum = (props) => {
+  const alertMessage = (<div className="ui pointing red basic label">{props.errorMessage}</div>);
   return (
     <div className={props.classEnter}>
       <label htmlFor={props.id}>{props.label}</label>
@@ -15,6 +16,7 @@ const inputNum = (props) => {
         onChange={props.changed}
         value={props.value}
       />
+      {props.invalid ? null : alertMessage}
     </div>
   )
 };

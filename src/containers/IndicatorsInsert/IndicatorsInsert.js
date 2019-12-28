@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputNum from "../../components/UI/Inputs/InputNum";
 import Button from "../../components/UI/Button/Button";
+import Modal from '../../components/UI/Modal/Modal'
 import "./IndicatorsInsert.css";
 
 class IndicatorsInsert extends Component {
@@ -16,7 +17,8 @@ class IndicatorsInsert extends Component {
     HotWaterKittchen: "",
     HotWaterKittchenValid: true,
     HotWaterBathroom: "",
-    HotWaterBathroomValid: true
+    HotWaterBathroomValid: true,
+    Sending: true
   };
 
   setStateParam = (param, event) => {
@@ -25,11 +27,10 @@ class IndicatorsInsert extends Component {
 
     this.setState({ [param]: eventValue });
     this.setState({ [enteredField]: true });
+  };
 
-    /* if (Number(eventValue) || event.target.value === "") {
-      this.setState({ [param]: eventValue });
-      this.setState({ [enteredField]: true });
-    } */
+  purchaseCancelHandler = () => {
+    this.setState({ purchasing: false });
   };
 
   sendIndicators = event => {
@@ -96,87 +97,113 @@ class IndicatorsInsert extends Component {
     const inputError = ["field", "error"];
 
     return (
-      <div className="ui center container ui_center">
+      <div className="ui center ui_center">
+        <Modal
+          show={this.state.Sending}
+          modalClosed={this.purchaseCancelHandler}
+        >
+          Hello world!
+        </Modal>
         <h1 className="ui header h1_center">Отправка показаний</h1>
         <form className="ui form">
-          <div>
+          <div className="indicator_container">
             <h2 className="ui header">Электроэнергия</h2>
             <InputNum
-              classEnter={this.state.ElectricityDayValid ? inputClasses.join(" ") : inputError.join(" ")}
+              classEnter={
+                this.state.ElectricityDayValid
+                  ? inputClasses.join(" ")
+                  : inputError.join(" ")
+              }
               id={"ElectricityDay"}
               label={"День"}
               placeholder={"Введите дневное потребление"}
               name={"ElectricityDay"}
               changed={event => this.setStateParam("ElectricityDay", event)}
               value={this.state.ElectricityDay}
+              invalid={this.state.ElectricityDayValid}
+              errorMessage={errorMessage}
             />
-            <span>{this.state.ElectricityDayValid ? null : errorMessage}</span>
             <InputNum
-              classEnter={this.state.ElectricityNightValid ? inputClasses.join(" ") : inputError.join(" ")}
+              classEnter={
+                this.state.ElectricityNightValid
+                  ? inputClasses.join(" ")
+                  : inputError.join(" ")
+              }
               id={"ElectricityNight"}
               label={"Ночь"}
               placeholder={"Введите ночное потребление"}
               name={"ElectricityNight"}
               changed={event => this.setStateParam("ElectricityNight", event)}
               value={this.state.ElectricityNight}
+              invalid={this.state.ElectricityNightValid}
+              errorMessage={errorMessage}
             />
-            <span>
-              {this.state.ElectricityNightValid ? null : errorMessage}
-            </span>
           </div>
-          <div>
+          <div className="indicator_container">
             <h2 className="ui header">Холодная вода</h2>
             <InputNum
-              classEnter={this.state.ColdWaterKittchenValid ? inputClasses.join(" ") : inputError.join(" ")}
+              classEnter={
+                this.state.ColdWaterKittchenValid
+                  ? inputClasses.join(" ")
+                  : inputError.join(" ")
+              }
               id={"ColdWaterKittchen"}
               label={"Кухня"}
               placeholder={"Введите потребление"}
               name={"ColdWaterKittchen"}
               changed={event => this.setStateParam("ColdWaterKittchen", event)}
               value={this.state.ColdWaterKittchen}
+              invalid={this.state.ColdWaterKittchenValid}
+              errorMessage={errorMessage}
             />
-            <span>
-              {this.state.ColdWaterKittchenValid ? null : errorMessage}
-            </span>
             <InputNum
-              classEnter={this.state.ColdWaterBathroomValid ? inputClasses.join(" ") : inputError.join(" ")}
+              classEnter={
+                this.state.ColdWaterBathroomValid
+                  ? inputClasses.join(" ")
+                  : inputError.join(" ")
+              }
               id={"ColdWaterBathroom"}
               label={"Ванная"}
               placeholder={"Введите потребление"}
               name={"ColdWaterBathroom"}
               changed={event => this.setStateParam("ColdWaterBathroom", event)}
               value={this.state.ColdWaterBathroom}
+              invalid={this.state.ColdWaterBathroomValid}
+              errorMessage={errorMessage}
             />
-            <span>
-              {this.state.ColdWaterBathroomValid ? null : errorMessage}
-            </span>
           </div>
-          <div>
+          <div className="indicator_container">
             <h2 className="ui header">Горячая вода</h2>
             <InputNum
-              classEnter={this.state.HotWaterKittchenValid ? inputClasses.join(" ") : inputError.join(" ")}
+              classEnter={
+                this.state.HotWaterKittchenValid
+                  ? inputClasses.join(" ")
+                  : inputError.join(" ")
+              }
               id={"HotWaterKittchen"}
               label={"Кухня"}
               placeholder={"Введите потребление"}
               name={"HotWaterKittchen"}
               changed={event => this.setStateParam("HotWaterKittchen", event)}
               value={this.state.HotWaterKittchen}
+              invalid={this.state.HotWaterKittchenValid}
+              errorMessage={errorMessage}
             />
-            <span>
-              {this.state.HotWaterKittchenValid ? null : errorMessage}
-            </span>
             <InputNum
-              classEnter={this.state.HotWaterBathroomValid ? inputClasses.join(" ") : inputError.join(" ")}
+              classEnter={
+                this.state.HotWaterBathroomValid
+                  ? inputClasses.join(" ")
+                  : inputError.join(" ")
+              }
               id={"HotWaterBathroom"}
               label={"Ванная"}
               placeholder={"Введите потребление"}
               name={"HotWaterBathroom"}
               changed={event => this.setStateParam("HotWaterBathroom", event)}
               value={this.state.HotWaterBathroom}
+              invalid={this.state.HotWaterBathroomValid}
+              errorMessage={errorMessage}
             />
-            <span>
-              {this.state.HotWaterBathroomValid ? null : errorMessage}
-            </span>
           </div>
           <Button
             classUI="ui primary button"
