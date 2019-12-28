@@ -1,16 +1,19 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
 
 const inputNum = (props) => {
   return (
-    <div>
+    <div className={props.classEnter}>
       <label htmlFor={props.id}>{props.label}</label>
-      <input 
+      <NumberFormat
+        decimalScale="2"
+        decimalSeparator="."
+        allowNegative={false}
         id={props.id}
         placeholder={props.placeholder}
         name={props.name}
         onChange={props.changed}
         value={props.value}
-        required={props.required}
       />
     </div>
   )
