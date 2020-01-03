@@ -10,3 +10,17 @@
 .indicator_container {
   margin-bottom: 1rem;
 }
+
+.indicatorsList {
+  margin: 0;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+}
+
+.indicatorsList dd, dt{
+  display: inline-block;
+}
+
+.indicatorsList dd{
+  margin-inline-start: 1rem;
+}

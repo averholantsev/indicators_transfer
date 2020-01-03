@@ -1,60 +1,63 @@
 import React, { Component } from "react";
 import InputNum from "../../components/UI/Inputs/InputNum";
 import Button from "../../components/UI/Button/Button";
-import Modal from '../../components/UI/Modal/Modal'
+import { Modal } from "semantic-ui-react";
 import "./IndicatorsInsert.css";
 
 class IndicatorsInsert extends Component {
   state = {
-    ElectricityDay: "",
-    ElectricityDayValid: true,
-    ElectricityNight: "",
-    ElectricityNightValid: true,
-    ColdWaterKittchen: "",
-    ColdWaterKittchenValid: true,
-    ColdWaterBathroom: "",
-    ColdWaterBathroomValid: true,
-    HotWaterKittchen: "",
-    HotWaterKittchenValid: true,
-    HotWaterBathroom: "",
-    HotWaterBathroomValid: true,
-    Sending: true
+    indicators: {
+      ElectricityDay: { value: "1", valid: true },
+      ElectricityNight: { value: "1", valid: true },
+      ColdWaterKittchen: { value: "1", valid: true },
+      ColdWaterBathroom: { value: "1", valid: true },
+      HotWaterKittchen: { value: "1", valid: true },
+      HotWaterBathroom: { value: "1", valid: true }
+    },
+    modalOpen: false
   };
 
-  setStateParam = (param, event) => {
-    const eventValue = event.target.value; //.replace(/\D/, "")
-    const enteredField = param + "Valid";
+  addIndicatorHandler = (type, event) => {
+    //Обновляем показатель
+    const updatedCount = event.target.value;
+    const updatedIndicators = { ...this.state.indicators };
+    updatedIndicators[type].value = updatedCount;
+    updatedIndicators[type].valid = true;
 
-    this.setState({ [param]: eventValue });
-    this.setState({ [enteredField]: true });
+    //Обновляем state
+    this.setState({ indicators: updatedIndicators });
   };
 
-  purchaseCancelHandler = () => {
-    this.setState({ purchasing: false });
+  modalHandlerClose = () => {
+    this.setState({ modalOpen: false });
   };
 
-  sendIndicators = event => {
+  modalHandlerOpen = event => {
     event.preventDefault();
 
-    if (this.state.ElectricityDay === "") {
-      this.setState({ ElectricityDayValid: false });
-    }
-    if (this.state.ElectricityNight === "") {
-      this.setState({ ElectricityNightValid: false });
-    }
-    if (this.state.ColdWaterKittchen === "") {
-      this.setState({ ColdWaterKittchenValid: false });
-    }
-    if (this.state.ColdWaterBathroom === "") {
-      this.setState({ ColdWaterBathroomValid: false });
-    }
-    if (this.state.HotWaterKittchen === "") {
-      this.setState({ HotWaterKittchenValid: false });
-    }
-    if (this.state.HotWaterBathroom === "") {
-      this.setState({ HotWaterBathroomValid: false });
+    for (let ind in this.state.indicators) {
+      const indicators = { ...this.state.indicators };
+
+      if (indicators[ind].value === "") {
+        const updatedIndicators = { ...this.state.indicators };
+        updatedIndicators[ind].valid = false;
+        this.setState({ indicators: updatedIndicators });
+        this.setState({ indicatorsValid: false });
+      }
     }
 
+    if (
+      this.state.indicators.ElectricityDay.valid &&
+      this.state.indicators.ElectricityNight.valid &&
+      this.state.indicators.ColdWaterKittchen.valid &&
+      this.state.indicators.ColdWaterBathroom.valid &&
+      this.state.indicators.HotWaterKittchen.valid &&
+      this.state.indicators.HotWaterBathroom.valid
+    )
+      this.setState({ modalOpen: true });
+  };
+
+  sendIndicators = () => {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
     let mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -63,32 +66,20 @@ class IndicatorsInsert extends Component {
 
     const indicators = {
       Electricity: {
-        Day: this.state.ElectricityDay,
-        Night: this.state.ElectricityNight
+        Day: this.state.indicators.ElectricityDay.value,
+        Night: this.state.indicators.ElectricityNight.value
       },
       ColdWater: {
-        Kittchen: this.state.ColdWaterKittchen,
-        Bathroom: this.state.ColdWaterBathroom
+        Kittchen: this.state.indicators.ColdWaterKittchen.value,
+        Bathroom: this.state.indicators.ColdWaterBathroom.value
       },
       HotWater: {
-        Kittchen: this.state.HotWaterKittchen,
-        Bathroom: this.state.HotWaterBathroom
+        Kittchen: this.state.indicators.HotWaterKittchen.value,
+        Bathroom: this.state.indicators.HotWaterBathroom.value
       },
       CurrentDate: { today }
     };
-
-    if (
-      this.state.ElectricityDay !== "" &&
-      this.state.ElectricityNight !== "" &&
-      this.state.ColdWaterKittchen !== "" &&
-      this.state.ColdWaterBathroom !== "" &&
-      this.state.HotWaterKittchen !== "" &&
-      this.state.HotWaterBathroom !== ""
-    ) {
-      console.log(indicators);
-    } else {
-      console.log("Не заполнено хотя бы одно поле");
-    }
+    console.log(indicators);
   };
 
   render() {
@@ -99,10 +90,50 @@ class IndicatorsInsert extends Component {
     return (
       <div className="ui center ui_center">
         <Modal
-          show={this.state.Sending}
-          modalClosed={this.purchaseCancelHandler}
+          size="mini"
+          open={this.state.modalOpen}
+          onClose={this.modalHandlerClose}
         >
-          Hello world!
+          <Modal.Header>
+            Проверьте правильность передаваемых показателей
+          </Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              <dl className="indicatorsList">
+                <dt>Электричество день:</dt>
+                <dd>{this.state.indicators.ElectricityDay.value}</dd>
+                <br />
+                <dt>Электричество ночь:</dt>
+                <dd>{this.state.indicators.ElectricityNight.value}</dd>
+                <br />
+                <dt>Холодная вода кухня:</dt>
+                <dd>{this.state.indicators.ColdWaterKittchen.value}</dd>
+                <br />
+                <dt>Холодная вода ванная:</dt>
+                <dd>{this.state.indicators.ColdWaterBathroom.value}</dd>
+                <br />
+                <dt>Горячая вода кухня:</dt>
+                <dd>{this.state.indicators.HotWaterKittchen.value}</dd>
+                <br />
+                <dt>Горячая вода ванная:</dt>
+                <dd>{this.state.indicators.HotWaterBathroom.value}</dd>
+              </dl>
+            </Modal.Description>
+            <div className="ui grid">
+              <div className="right aligned sixteen wide column">
+                <Button
+                  classUI="ui button"
+                  name={"Отмена"}
+                  clicked={this.modalHandlerClose}
+                />
+                <Button
+                  classUI="ui primary button"
+                  name={"Отправить"}
+                  clicked={this.sendIndicators}
+                />
+              </div>
+            </div>
+          </Modal.Content>
         </Modal>
         <h1 className="ui header h1_center">Отправка показаний</h1>
         <form className="ui form">
@@ -110,7 +141,7 @@ class IndicatorsInsert extends Component {
             <h2 className="ui header">Электроэнергия</h2>
             <InputNum
               classEnter={
-                this.state.ElectricityDayValid
+                this.state.indicators.ElectricityDay.valid
                   ? inputClasses.join(" ")
                   : inputError.join(" ")
               }
@@ -118,14 +149,16 @@ class IndicatorsInsert extends Component {
               label={"День"}
               placeholder={"Введите дневное потребление"}
               name={"ElectricityDay"}
-              changed={event => this.setStateParam("ElectricityDay", event)}
-              value={this.state.ElectricityDay}
-              invalid={this.state.ElectricityDayValid}
+              changed={event =>
+                this.addIndicatorHandler("ElectricityDay", event)
+              }
+              value={this.state.indicators.ElectricityDay.value}
+              invalid={this.state.indicators.ElectricityDay.valid}
               errorMessage={errorMessage}
             />
             <InputNum
               classEnter={
-                this.state.ElectricityNightValid
+                this.state.indicators.ElectricityNight.valid
                   ? inputClasses.join(" ")
                   : inputError.join(" ")
               }
@@ -133,9 +166,11 @@ class IndicatorsInsert extends Component {
               label={"Ночь"}
               placeholder={"Введите ночное потребление"}
               name={"ElectricityNight"}
-              changed={event => this.setStateParam("ElectricityNight", event)}
-              value={this.state.ElectricityNight}
-              invalid={this.state.ElectricityNightValid}
+              changed={event =>
+                this.addIndicatorHandler("ElectricityNight", event)
+              }
+              value={this.state.indicators.ElectricityNight.value}
+              invalid={this.state.indicators.ElectricityNight.valid}
               errorMessage={errorMessage}
             />
           </div>
@@ -143,7 +178,7 @@ class IndicatorsInsert extends Component {
             <h2 className="ui header">Холодная вода</h2>
             <InputNum
               classEnter={
-                this.state.ColdWaterKittchenValid
+                this.state.indicators.ColdWaterKittchen.valid
                   ? inputClasses.join(" ")
                   : inputError.join(" ")
               }
@@ -151,14 +186,16 @@ class IndicatorsInsert extends Component {
               label={"Кухня"}
               placeholder={"Введите потребление"}
               name={"ColdWaterKittchen"}
-              changed={event => this.setStateParam("ColdWaterKittchen", event)}
-              value={this.state.ColdWaterKittchen}
-              invalid={this.state.ColdWaterKittchenValid}
+              changed={event =>
+                this.addIndicatorHandler("ColdWaterKittchen", event)
+              }
+              value={this.state.indicators.ColdWaterKittchen.value}
+              invalid={this.state.indicators.ColdWaterKittchen.valid}
               errorMessage={errorMessage}
             />
             <InputNum
               classEnter={
-                this.state.ColdWaterBathroomValid
+                this.state.indicators.ColdWaterBathroom.valid
                   ? inputClasses.join(" ")
                   : inputError.join(" ")
               }
@@ -166,9 +203,11 @@ class IndicatorsInsert extends Component {
               label={"Ванная"}
               placeholder={"Введите потребление"}
               name={"ColdWaterBathroom"}
-              changed={event => this.setStateParam("ColdWaterBathroom", event)}
-              value={this.state.ColdWaterBathroom}
-              invalid={this.state.ColdWaterBathroomValid}
+              changed={event =>
+                this.addIndicatorHandler("ColdWaterBathroom", event)
+              }
+              value={this.state.indicators.ColdWaterBathroom.value}
+              invalid={this.state.indicators.ColdWaterBathroom.valid}
               errorMessage={errorMessage}
             />
           </div>
@@ -176,7 +215,7 @@ class IndicatorsInsert extends Component {
             <h2 className="ui header">Горячая вода</h2>
             <InputNum
               classEnter={
-                this.state.HotWaterKittchenValid
+                this.state.indicators.HotWaterKittchen.valid
                   ? inputClasses.join(" ")
                   : inputError.join(" ")
               }
@@ -184,14 +223,16 @@ class IndicatorsInsert extends Component {
               label={"Кухня"}
               placeholder={"Введите потребление"}
               name={"HotWaterKittchen"}
-              changed={event => this.setStateParam("HotWaterKittchen", event)}
-              value={this.state.HotWaterKittchen}
-              invalid={this.state.HotWaterKittchenValid}
+              changed={event =>
+                this.addIndicatorHandler("HotWaterKittchen", event)
+              }
+              value={this.state.indicators.HotWaterKittchen.value}
+              invalid={this.state.indicators.HotWaterKittchen.valid}
               errorMessage={errorMessage}
             />
             <InputNum
               classEnter={
-                this.state.HotWaterBathroomValid
+                this.state.indicators.HotWaterBathroom.valid
                   ? inputClasses.join(" ")
                   : inputError.join(" ")
               }
@@ -199,16 +240,18 @@ class IndicatorsInsert extends Component {
               label={"Ванная"}
               placeholder={"Введите потребление"}
               name={"HotWaterBathroom"}
-              changed={event => this.setStateParam("HotWaterBathroom", event)}
-              value={this.state.HotWaterBathroom}
-              invalid={this.state.HotWaterBathroomValid}
+              changed={event =>
+                this.addIndicatorHandler("HotWaterBathroom", event)
+              }
+              value={this.state.indicators.HotWaterBathroom.value}
+              invalid={this.state.indicators.HotWaterBathroom.valid}
               errorMessage={errorMessage}
             />
           </div>
           <Button
             classUI="ui primary button"
-            name={"Отправить"}
-            clicked={this.sendIndicators}
+            name={"Отправить показания"}
+            clicked={this.modalHandlerOpen}
           />
         </form>
       </div>
