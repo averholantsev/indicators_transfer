@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from '../../axios-orders'
+
 import InputNum from "../../components/UI/Inputs/InputNum";
 import Button from "../../components/UI/Button/Button";
 import { Modal } from "semantic-ui-react";
@@ -58,11 +60,7 @@ class IndicatorsInsert extends Component {
   };
 
   sendIndicators = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0");
-    let yyyy = today.getFullYear();
-    today = yyyy + "-" + mm + "-" + dd;
+    let today = new Date().toISOString();
 
     const indicators = {
       Electricity: {
@@ -79,7 +77,14 @@ class IndicatorsInsert extends Component {
       },
       CurrentDate: { today }
     };
-    console.log(indicators);
+    //ToDo: Доделать крутилку и роутинг
+    axios.post("/indicators.json", indicators)
+    .then(response => {
+      this.setState({ modalOpen: false });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   };
 
   render() {
@@ -88,48 +93,84 @@ class IndicatorsInsert extends Component {
     const inputError = ["field", "error"];
 
     return (
-      <div className="ui center ui_center">
+      <div className="ui center ui_center" style={{margin: '40px 10px'}} >
         <Modal
           size="mini"
           open={this.state.modalOpen}
           onClose={this.modalHandlerClose}
         >
           <Modal.Header>
-            Проверьте правильность передаваемых показателей
+            <h3 className="ui center aligned header">Проверьте правильность передаваемых показателей</h3>
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
-              <dl className="indicatorsList">
-                <dt>Электричество день:</dt>
-                <dd>{this.state.indicators.ElectricityDay.value}</dd>
-                <br />
-                <dt>Электричество ночь:</dt>
-                <dd>{this.state.indicators.ElectricityNight.value}</dd>
-                <br />
-                <dt>Холодная вода кухня:</dt>
-                <dd>{this.state.indicators.ColdWaterKittchen.value}</dd>
-                <br />
-                <dt>Холодная вода ванная:</dt>
-                <dd>{this.state.indicators.ColdWaterBathroom.value}</dd>
-                <br />
-                <dt>Горячая вода кухня:</dt>
-                <dd>{this.state.indicators.HotWaterKittchen.value}</dd>
-                <br />
-                <dt>Горячая вода ванная:</dt>
-                <dd>{this.state.indicators.HotWaterBathroom.value}</dd>
-              </dl>
+              <div className="ui four column centered grid">
+                <div className="row" style={{paddingBottom: '0'}}>
+                  <h4 className="ui center aligned header">Электроэнергия</h4>
+                </div>
+                <div className="row">
+                  <div className="column">
+                    <p>День:</p>
+                  </div>
+                  <div className="column">
+                    <strong>{this.state.indicators.ElectricityDay.value}</strong>
+                  </div>
+                  <div className="column">
+                    <p>Ночь:</p>
+                  </div>
+                  <div className="column">
+                    <strong>{this.state.indicators.ElectricityNight.value}</strong>
+                  </div>
+                </div>
+                <div className="row" style={{paddingBottom: '0'}}>
+                  <h4 className="ui center aligned header">Кухня</h4>
+                </div>
+                <div className="row">
+                  <div className="column">
+                    <p>Холодная вода:</p>
+                  </div>
+                  <div className="column">
+                    <strong>{this.state.indicators.ColdWaterKittchen.value}</strong>
+                  </div>
+                  <div className="column">
+                    <p>Горячая вода:</p>
+                  </div>
+                  <div className="column">
+                    <strong>{this.state.indicators.HotWaterKittchen.value}</strong>
+                  </div>
+                </div>
+                <div className="row" style={{paddingBottom: '0'}}>
+                  <h4 className="ui center aligned header">Ванная</h4>
+                </div>
+                <div className="row">
+                  <div className="column">
+                    <p>Холодная вода:</p>
+                  </div>
+                  <div className="column">
+                    <strong>{this.state.indicators.ColdWaterBathroom.value}</strong>
+                  </div>
+                  <div className="column">
+                    <p>Горячая вода:</p>
+                  </div>
+                  <div className="column">
+                    <strong>{this.state.indicators.HotWaterBathroom.value}</strong>
+                  </div>
+                </div>
+              </div>
             </Modal.Description>
-            <div className="ui grid">
+            <div className="ui grid" style={{marginTop: '2rem'}}>
               <div className="right aligned sixteen wide column">
                 <Button
                   classUI="ui button"
                   name={"Отмена"}
                   clicked={this.modalHandlerClose}
+                  style={{marginRight: '1rem'}}
                 />
                 <Button
                   classUI="ui primary button"
                   name={"Отправить"}
                   clicked={this.sendIndicators}
+                  style={{marginRight: '0'}}
                 />
               </div>
             </div>
