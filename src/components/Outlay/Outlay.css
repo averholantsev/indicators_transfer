@@ -1,0 +1,9 @@
+.outlayContainer {
+  padding: 0 2rem;
+}
+
+@media (min-width: 500px) {
+  .outlayContainer {
+    width: 500px;
+  }
+}

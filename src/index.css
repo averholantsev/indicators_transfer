@@ -8,5 +8,6 @@ body {
 }
 
 .App {
+  display: block;
   margin-top: 2rem;
 }

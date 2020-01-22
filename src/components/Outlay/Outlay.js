@@ -1,7 +1,7 @@
 import React from "react";
-import Aux from "../../hoc/AuxW/AuxW";
+import "./Outlay.css";
 
-const outlay = props => {  
+const outlay = props => {
   const indicatorDate = new Date(props.date);
   let indicatorMonth = "";
   switch (indicatorDate.getMonth()) {
@@ -46,11 +46,58 @@ const outlay = props => {
   }
 
   return (
-    <Aux>
-      <p>
-        {indicatorMonth} {indicatorDate.getFullYear()}
-      </p>
-    </Aux>
+    <div className="ui four column centered grid outlayContainer">
+      <div className="row">
+        <h3>
+          {indicatorMonth} {indicatorDate.getFullYear()}
+        </h3>
+      </div>
+      <div className="three column row">
+        <div className="column">
+          <h4>Показатель</h4>
+        </div>
+        <div className="column">
+          <h4>Расходы</h4>
+        </div>
+        <div className="column">
+          <h4>Потребление</h4>
+        </div>
+      </div>
+      <div className="three column row">
+        <div className="column">
+          <p>Эл-я день: </p>
+          <p>Эл-я ночь: </p>
+          <p>Холодная вода: </p>
+          <p>Горячая вода: </p>
+        </div>
+        {props.outlay == null ? (
+          "Загрузка..."
+        ) : (
+          <div className="column">
+            <p>{props.indicators.electricity.Day}</p>
+            <p>{props.indicators.electricity.Night}</p>
+            <p>
+              {Number(props.indicators.coldWater.Bathroom) +
+                Number(props.indicators.coldWater.Kittchen)}
+            </p>
+            <p>
+              {Number(props.indicators.hotWater.Bathroom) +
+                Number(props.indicators.hotWater.Kittchen)}
+            </p>
+          </div>
+        )}
+        {props.outlay == null ? (
+          "Загрузка..."
+        ) : (
+          <div className="column">
+            <p>{props.outlay.electricityDay}</p>
+            <p>{props.outlay.electricityNight}</p>
+            <p>{props.outlay.coldWater}</p>
+            <p>{props.outlay.hotWater}</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
