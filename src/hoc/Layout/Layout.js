@@ -1,20 +1,19 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
+
 import "./Layout.css";
-import IndicatorsInsert from "../../containers/IndicatorsInsert/IndicatorsInsert";
-import OutlayDetails from "../../containers/OutlayDetails/OutlayDetails";
+import Aux from "../AuxW/AuxW";
+import Navigation from "../../components/UI/Navigation/Navigation";
 
 class Layout extends Component {
   render() {
     return (
-      <div className="ui middle aligned center aligned grid">
-        {/* <div className="row">
-          <IndicatorsInsert />
-        </div> */}
-        <div className="row">
-          <OutlayDetails />
+      <Aux>
+        <Navigation />
+        <div className="ui middle aligned center aligned grid">
+          <div className="row">{this.props.children}</div>
         </div>
-      </div>
+      </Aux>
     );
   }
 }
