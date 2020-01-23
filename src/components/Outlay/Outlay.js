@@ -45,7 +45,7 @@ const outlay = props => {
   }
 
   return (
-    <div className="ui four column centered grid outlayContainer">
+    <div className="ui four column centered grid">
       <div className="row">
         <h3>
           {indicatorMonth} {indicatorDate.getFullYear()}
