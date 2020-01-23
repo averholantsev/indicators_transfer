@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../axios-orders";
+import { Loader } from 'semantic-ui-react'
 
 import Outlay from "../../components/Outlay/Outlay";
 
@@ -26,8 +27,6 @@ class OutlayDetails extends Component {
     axios
       .get("/indicators.json")
       .then(response => {
-        console.log("Выполнился get запрос: /indicators.json");
-        console.log(response.data);
         let indicatorsList = Object.keys(response.data).map(key => {
           return {
             id: key,
@@ -103,7 +102,7 @@ class OutlayDetails extends Component {
       <div>
         <h1 className="ui header centered">Текущие расходы</h1>
         {this.state.indicatorsList == null ? (
-          <p>Загразка...</p>
+          <Loader active inline='centered'>Загрузка</Loader>
         ) : (
           this.state.indicatorsList.map(ind => {
             return (
