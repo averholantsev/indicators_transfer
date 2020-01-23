@@ -78,7 +78,6 @@ class IndicatorsInsert extends Component {
       },
       CurrentDate: { today }
     };
-    //ToDo: Доделать крутилку и роутинг
     axios.post("/indicators.json", indicators)
     .then(response => {
       this.setState({ modalOpen: false });
@@ -93,7 +92,7 @@ class IndicatorsInsert extends Component {
     const errorMessage = "Поле обязательно для заполнения";
     const inputClasses = ["field"];
     const inputError = ["field", "error"];    
-
+    // TODO Добавить выбор месяца и года
     return (
       <div className="ui center ui_center" >
         <Modal
@@ -185,7 +184,7 @@ class IndicatorsInsert extends Component {
               <h1 className="ui header centered">Отправка показаний</h1>
             </div>
           </div>
-
+          
           <div className="ui two column centered grid">
             <div className="left floated column">
               <h2 className="ui header">Электроэнергия</h2>

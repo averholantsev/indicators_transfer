@@ -5,6 +5,7 @@ import "./OutlayDetails.css";
 import Outlay from "../../components/Outlay/Outlay";
 
 class OutlayDetails extends Component {
+  // TODO Хранить в бд первоначальные результаты
   state = {
     indicatorsList: null,
     prevIndicators: {
