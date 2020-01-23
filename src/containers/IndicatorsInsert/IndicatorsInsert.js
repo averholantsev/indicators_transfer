@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom';
 import axios from '../../axios-orders'
 
 import InputNum from "../../components/UI/Inputs/InputNum";
@@ -81,6 +82,7 @@ class IndicatorsInsert extends Component {
     axios.post("/indicators.json", indicators)
     .then(response => {
       this.setState({ modalOpen: false });
+      this.props.history.push("/outlay");
     })
     .catch(error => {
       console.log(error);
@@ -90,7 +92,7 @@ class IndicatorsInsert extends Component {
   render() {
     const errorMessage = "Поле обязательно для заполнения";
     const inputClasses = ["field"];
-    const inputError = ["field", "error"];
+    const inputError = ["field", "error"];    
 
     return (
       <div className="ui center ui_center" >
@@ -337,4 +339,4 @@ class IndicatorsInsert extends Component {
   }
 }
 
-export default IndicatorsInsert;
+export default withRouter(IndicatorsInsert);

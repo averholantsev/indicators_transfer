@@ -46,12 +46,12 @@ class OutlayDetails extends Component {
         });
 
         this.setState({ indicatorsList: indicatorsList });
-        this.fun();
+        this.countOutlay();
       })
       .catch(error => console.log(error));
   }
 
-  fun = () => {
+  countOutlay = () => {
     let outlayArray = [...this.state.indicatorsList];
     for (let i = 0; i < outlayArray.length; i++) {
       if (outlayArray[i] === outlayArray[0]) {
