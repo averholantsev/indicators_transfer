@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import Layout from "./hoc/Layout/Layout";
 import OutlayDetails from "./containers/OutlayDetails/OutlayDetails";
@@ -9,9 +9,11 @@ function App() {
   return (
     <div className="App">
       <Layout>
-        <Route path="/outlay" component={OutlayDetails} />
-        <Route path="/send-indicators" component={IndicatorsInsert} />
-        <Redirect from='/' to='/outlay' />
+        <Switch>
+          <Route exact path="/outlay" component={OutlayDetails} />
+          <Route exact path="/send-indicators" component={IndicatorsInsert} />
+          <Redirect exact from="/" to="/outlay" />
+        </Switch>
       </Layout>
     </div>
   );

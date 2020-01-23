@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../axios-orders";
 import { Loader } from 'semantic-ui-react'
-
+import "./OutlayDetails.css";
 import Outlay from "../../components/Outlay/Outlay";
 
 class OutlayDetails extends Component {
@@ -99,7 +99,7 @@ class OutlayDetails extends Component {
 
   render() {
     return (
-      <div>
+      <div className="outlayContainer">
         <h1 className="ui header centered">Текущие расходы</h1>
         {this.state.indicatorsList == null ? (
           <Loader active inline='centered'>Загрузка</Loader>

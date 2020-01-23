@@ -1,5 +1,4 @@
 import React from "react";
-import "./Outlay.css";
 
 const outlay = props => {
   const indicatorDate = new Date(props.date);

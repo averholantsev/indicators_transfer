@@ -1,5 +1,5 @@
 .ui_center {
-  width: 500px !important;
+  padding: 0 2rem;
 }
 
 .h1_center {
@@ -19,4 +19,10 @@
 
 .indicatorsList dd{
   margin-inline-start: 1rem;
+}
+
+@media (min-width: 500px) {
+  .ui_center {
+    width: 500px;
+  }
 }

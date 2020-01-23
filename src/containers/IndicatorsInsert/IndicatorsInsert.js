@@ -93,7 +93,7 @@ class IndicatorsInsert extends Component {
     const inputError = ["field", "error"];
 
     return (
-      <div className="ui center ui_center" style={{margin: '40px 10px'}} >
+      <div className="ui center ui_center" >
         <Modal
           size="mini"
           open={this.state.modalOpen}
