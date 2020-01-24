@@ -1,11 +1,74 @@
 import React, { Component } from "react";
-import { withRouter } from 'react-router-dom';
-import axios from '../../axios-orders'
+import { withRouter } from "react-router-dom";
+import axios from "../../axios-orders";
 
 import InputNum from "../../components/UI/Inputs/InputNum";
 import Button from "../../components/UI/Button/Button";
-import { Modal } from "semantic-ui-react";
+import { Modal, Dropdown } from "semantic-ui-react";
 import "./IndicatorsInsert.css";
+
+const MONTHS_LIST = [
+  {
+    key: "0",
+    text: "Январь",
+    value: "Январь"
+  },
+  {
+    key: "1",
+    text: "Феварль",
+    value: "Феварль"
+  },
+  {
+    key: "2",
+    text: "Март",
+    value: "Март"
+  },
+  {
+    key: "3",
+    text: "Апрель",
+    value: "Апрель"
+  },
+  {
+    key: "4",
+    text: "Май",
+    value: "Май"
+  },
+  {
+    key: "5",
+    text: "Июнь",
+    value: "Июнь"
+  },
+  {
+    key: "6",
+    text: "Июль",
+    value: "Июль"
+  },
+  {
+    key: "7",
+    text: "Август",
+    value: "Август"
+  },
+  {
+    key: "8",
+    text: "Сентябрь",
+    value: "Сентябрь"
+  },
+  {
+    key: "9",
+    text: "Октябрь",
+    value: "Октябрь"
+  },
+  {
+    key: "10",
+    text: "Ноябрь",
+    value: "Ноябрь"
+  },
+  {
+    key: "11",
+    text: "Декабрь",
+    value: "Декабрь"
+  }
+];
 
 class IndicatorsInsert extends Component {
   state = {
@@ -78,35 +141,57 @@ class IndicatorsInsert extends Component {
       },
       CurrentDate: { today }
     };
-    axios.post("/indicators.json", indicators)
-    .then(response => {
-      this.setState({ modalOpen: false });
-      this.props.history.push("/outlay");
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    axios
+      .post("/indicators.json", indicators)
+      .then(response => {
+        this.setState({ modalOpen: false });
+        this.props.history.push("/outlay");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  getCurrentMonth = () => {
+    const currentMonth = new Date().getMonth();
+    return currentMonth;
+  };
+
+  getCurrentYear = () => {
+    const currentYear = new Date().getFullYear();
+    console.log(currentYear)
+    let currentYearList = [];
+    for(let i=2; i>=0; i--) {
+      currentYearList.push({
+        key: currentYear - i,
+        text: currentYear - i,
+        value: currentYear - i
+      });
+    }
+    return currentYearList;
   };
 
   render() {
     const errorMessage = "Поле обязательно для заполнения";
     const inputClasses = ["field"];
-    const inputError = ["field", "error"];    
+    const inputError = ["field", "error"];
     // TODO Добавить выбор месяца и года
     return (
-      <div className="ui center ui_center" >
+      <div className="ui center ui_center">
         <Modal
           size="mini"
           open={this.state.modalOpen}
           onClose={this.modalHandlerClose}
         >
           <Modal.Header>
-            <h3 className="ui center aligned header">Проверьте правильность передаваемых показателей</h3>
+            <h3 className="ui center aligned header">
+              Проверьте правильность передаваемых показателей
+            </h3>
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <div className="ui four column centered grid">
-                <div className="row" style={{paddingBottom: '0'}}>
+                <div className="row" style={{ paddingBottom: "0" }}>
                   <h4 className="ui center aligned header">Электроэнергия</h4>
                 </div>
                 <div className="row">
@@ -114,16 +199,20 @@ class IndicatorsInsert extends Component {
                     <p>День:</p>
                   </div>
                   <div className="column">
-                    <strong>{this.state.indicators.ElectricityDay.value}</strong>
+                    <strong>
+                      {this.state.indicators.ElectricityDay.value}
+                    </strong>
                   </div>
                   <div className="column">
                     <p>Ночь:</p>
                   </div>
                   <div className="column">
-                    <strong>{this.state.indicators.ElectricityNight.value}</strong>
+                    <strong>
+                      {this.state.indicators.ElectricityNight.value}
+                    </strong>
                   </div>
                 </div>
-                <div className="row" style={{paddingBottom: '0'}}>
+                <div className="row" style={{ paddingBottom: "0" }}>
                   <h4 className="ui center aligned header">Кухня</h4>
                 </div>
                 <div className="row">
@@ -131,16 +220,20 @@ class IndicatorsInsert extends Component {
                     <p>Холодная вода:</p>
                   </div>
                   <div className="column">
-                    <strong>{this.state.indicators.ColdWaterKittchen.value}</strong>
+                    <strong>
+                      {this.state.indicators.ColdWaterKittchen.value}
+                    </strong>
                   </div>
                   <div className="column">
                     <p>Горячая вода:</p>
                   </div>
                   <div className="column">
-                    <strong>{this.state.indicators.HotWaterKittchen.value}</strong>
+                    <strong>
+                      {this.state.indicators.HotWaterKittchen.value}
+                    </strong>
                   </div>
                 </div>
-                <div className="row" style={{paddingBottom: '0'}}>
+                <div className="row" style={{ paddingBottom: "0" }}>
                   <h4 className="ui center aligned header">Ванная</h4>
                 </div>
                 <div className="row">
@@ -148,30 +241,34 @@ class IndicatorsInsert extends Component {
                     <p>Холодная вода:</p>
                   </div>
                   <div className="column">
-                    <strong>{this.state.indicators.ColdWaterBathroom.value}</strong>
+                    <strong>
+                      {this.state.indicators.ColdWaterBathroom.value}
+                    </strong>
                   </div>
                   <div className="column">
                     <p>Горячая вода:</p>
                   </div>
                   <div className="column">
-                    <strong>{this.state.indicators.HotWaterBathroom.value}</strong>
+                    <strong>
+                      {this.state.indicators.HotWaterBathroom.value}
+                    </strong>
                   </div>
                 </div>
               </div>
             </Modal.Description>
-            <div className="ui grid" style={{marginTop: '2rem'}}>
+            <div className="ui grid" style={{ marginTop: "2rem" }}>
               <div className="right aligned sixteen wide column">
                 <Button
                   classUI="ui button"
                   name={"Отмена"}
                   clicked={this.modalHandlerClose}
-                  style={{marginRight: '1rem'}}
+                  style={{ marginRight: "1rem" }}
                 />
                 <Button
                   classUI="ui primary button"
                   name={"Отправить"}
                   clicked={this.sendIndicators}
-                  style={{marginRight: '0'}}
+                  style={{ marginRight: "0" }}
                 />
               </div>
             </div>
@@ -184,7 +281,37 @@ class IndicatorsInsert extends Component {
               <h1 className="ui header centered">Отправка показаний</h1>
             </div>
           </div>
-          
+
+          <div className="ui grid">
+            <div className="row">
+              <div className="column">
+                <h2 className="ui header">Месяц и год</h2>
+              </div>
+            </div>
+            <div className="two column row">
+              <div className="column">
+                <Dropdown
+                  placeholder="Выберите месяц"
+                  selection
+                  fluid
+                  defaultValue={MONTHS_LIST[this.getCurrentMonth()].value}
+                  options={MONTHS_LIST}
+                />
+              </div>
+              <div className="column">
+                <div className="column">
+                  <Dropdown
+                    placeholder="Выберите месяц"
+                    selection
+                    fluid
+                    defaultValue={this.getCurrentYear()[2].value}
+                    options={this.getCurrentYear()}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="ui two column centered grid">
             <div className="left floated column">
               <h2 className="ui header">Электроэнергия</h2>
@@ -324,7 +451,7 @@ class IndicatorsInsert extends Component {
           </div>
 
           <div className="ui one column centered grid">
-            <div style={{textAlign: "center"}} className="column">
+            <div style={{ textAlign: "center" }} className="column">
               <Button
                 classUI="ui primary button"
                 name={"Отправить показания"}
