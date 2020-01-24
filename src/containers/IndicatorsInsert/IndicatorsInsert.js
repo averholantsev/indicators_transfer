@@ -202,7 +202,7 @@ class IndicatorsInsert extends Component {
         >
           <Modal.Header>
             <h3 className="ui center aligned header">
-              Проверьте правильность передаваемых показателей
+              Проверьте передаваемые <br />показатели за {MONTHS_LIST[this.state.monthYear.month].text} {this.state.monthYear.year} г.
             </h3>
           </Modal.Header>
           <Modal.Content>
