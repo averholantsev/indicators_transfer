@@ -104,7 +104,7 @@ class IndicatorsInsert extends Component {
 
   modalHandlerOpen = event => {
     event.preventDefault();
-
+        
     for (let ind in this.state.indicators) {
       const indicators = { ...this.state.indicators };
 
@@ -128,7 +128,7 @@ class IndicatorsInsert extends Component {
   };
 
   sendIndicators = () => {
-    let today = new Date().toISOString();
+    let dateOfIndicators = new Date(this.state.monthYear.year, this.state.monthYear.month, 1, 5, 0, 0, 0).toISOString();
 
     const indicators = {
       Electricity: {
@@ -143,7 +143,7 @@ class IndicatorsInsert extends Component {
         Kittchen: this.state.indicators.HotWaterKittchen.value,
         Bathroom: this.state.indicators.HotWaterBathroom.value
       },
-      CurrentDate: { today }
+      CurrentDate: { today: dateOfIndicators }
     };
     axios
       .post("/indicators.json", indicators)
