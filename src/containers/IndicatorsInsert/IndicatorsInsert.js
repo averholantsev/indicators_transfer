@@ -11,62 +11,62 @@ const MONTHS_LIST = [
   {
     key: "0",
     text: "Январь",
-    value: "Январь"
+    value: 0
   },
   {
     key: "1",
     text: "Феварль",
-    value: "Феварль"
+    value: 1
   },
   {
     key: "2",
     text: "Март",
-    value: "Март"
+    value: 2
   },
   {
     key: "3",
     text: "Апрель",
-    value: "Апрель"
+    value: 3
   },
   {
     key: "4",
     text: "Май",
-    value: "Май"
+    value: 4
   },
   {
     key: "5",
     text: "Июнь",
-    value: "Июнь"
+    value: 5
   },
   {
     key: "6",
     text: "Июль",
-    value: "Июль"
+    value: 6
   },
   {
     key: "7",
     text: "Август",
-    value: "Август"
+    value: 7
   },
   {
     key: "8",
     text: "Сентябрь",
-    value: "Сентябрь"
+    value: 8
   },
   {
     key: "9",
     text: "Октябрь",
-    value: "Октябрь"
+    value: 9
   },
   {
     key: "10",
     text: "Ноябрь",
-    value: "Ноябрь"
+    value: 10
   },
   {
     key: "11",
     text: "Декабрь",
-    value: "Декабрь"
+    value: 11
   }
 ];
 
@@ -79,6 +79,10 @@ class IndicatorsInsert extends Component {
       ColdWaterBathroom: { value: "", valid: true },
       HotWaterKittchen: { value: "", valid: true },
       HotWaterBathroom: { value: "", valid: true }
+    },
+    monthYear: {
+      month: new Date().getMonth(),
+      year: new Date().getFullYear()
     },
     modalOpen: false
   };
@@ -159,9 +163,8 @@ class IndicatorsInsert extends Component {
 
   getCurrentYear = () => {
     const currentYear = new Date().getFullYear();
-    console.log(currentYear)
     let currentYearList = [];
-    for(let i=2; i>=0; i--) {
+    for (let i = 2; i >= 0; i--) {
       currentYearList.push({
         key: currentYear - i,
         text: currentYear - i,
@@ -169,6 +172,20 @@ class IndicatorsInsert extends Component {
       });
     }
     return currentYearList;
+  };
+
+  setStateMonth = (e, { value }) => {
+    const updatedMonth = value;
+    const updatedMonthYear = { ...this.state.monthYear };
+    updatedMonthYear.month = updatedMonth;
+    this.setState({ monthYear: updatedMonthYear });
+  };
+
+  setStateYear = (e, { value }) => {
+    const updatedYear = value;
+    const updatedMonthYear = { ...this.state.monthYear };
+    updatedMonthYear.year = updatedYear;
+    this.setState({ monthYear: updatedMonthYear });
   };
 
   render() {
@@ -296,6 +313,7 @@ class IndicatorsInsert extends Component {
                   fluid
                   defaultValue={MONTHS_LIST[this.getCurrentMonth()].value}
                   options={MONTHS_LIST}
+                  onChange={this.setStateMonth}
                 />
               </div>
               <div className="column">
@@ -306,6 +324,7 @@ class IndicatorsInsert extends Component {
                     fluid
                     defaultValue={this.getCurrentYear()[2].value}
                     options={this.getCurrentYear()}
+                    onChange={this.setStateYear}
                   />
                 </div>
               </div>
