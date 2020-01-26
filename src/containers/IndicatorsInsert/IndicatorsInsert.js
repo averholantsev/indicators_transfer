@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import axios from "../../axios-orders";
+import axios from "../../axios-main";
+import emailjs from "emailjs-com";
+import CONFIG from '../../configuration.json'
 
 import InputNum from "../../components/UI/Inputs/InputNum";
 import Button from "../../components/UI/Button/Button";
@@ -84,6 +87,12 @@ class IndicatorsInsert extends Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear()
     },
+    emailData: {
+      name: CONFIG.NAME,
+      email: CONFIG.EMAIL,
+      recipient: CONFIG.RECIPIENT,
+      subject: CONFIG.SUBJECT
+    },
     modalOpen: false
   };
 
@@ -104,7 +113,7 @@ class IndicatorsInsert extends Component {
 
   modalHandlerOpen = event => {
     event.preventDefault();
-        
+
     for (let ind in this.state.indicators) {
       const indicators = { ...this.state.indicators };
 
@@ -127,8 +136,40 @@ class IndicatorsInsert extends Component {
       this.setState({ modalOpen: true });
   };
 
+  sendEmailHandler = () => {
+    let templateParams = {
+      from_name: this.state.emailData.email,
+      to_name: this.state.emailData.recipient,
+      subject: this.state.emailData.subject,
+      message_html: this.state.emailData.message
+    };
+    emailjs
+      .send(
+        "gmail",
+        CONFIG.TEMPLATE_ID,
+        templateParams,
+        CONFIG.USER_ID
+      )
+      .then(
+        response => {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        error => {
+          console.log("FAILED...", error);
+        }
+      );
+  };
+
   sendIndicators = () => {
-    let dateOfIndicators = new Date(this.state.monthYear.year, this.state.monthYear.month, 1, 5, 0, 0, 0).toISOString();
+    let dateOfIndicators = new Date(
+      this.state.monthYear.year,
+      this.state.monthYear.month,
+      1,
+      5,
+      0,
+      0,
+      0
+    ).toISOString();
 
     const indicators = {
       Electricity: {
@@ -149,6 +190,7 @@ class IndicatorsInsert extends Component {
       .post("/indicators.json", indicators)
       .then(response => {
         this.setState({ modalOpen: false });
+        this.sendEmailHandler();
         this.props.history.push("/outlay");
       })
       .catch(error => {
@@ -202,7 +244,9 @@ class IndicatorsInsert extends Component {
         >
           <Modal.Header>
             <h3 className="ui center aligned header">
-              Проверьте передаваемые <br />показатели за {MONTHS_LIST[this.state.monthYear.month].text} {this.state.monthYear.year} г.
+              Проверьте передаваемые <br />
+              показатели за {MONTHS_LIST[this.state.monthYear.month].text}{" "}
+              {this.state.monthYear.year} г.
             </h3>
           </Modal.Header>
           <Modal.Content>
