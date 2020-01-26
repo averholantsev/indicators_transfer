@@ -88,10 +88,10 @@ class IndicatorsInsert extends Component {
       year: new Date().getFullYear()
     },
     emailData: {
-      name: CONFIG.NAME,
       email: CONFIG.EMAIL,
       recipient: CONFIG.RECIPIENT,
-      subject: CONFIG.SUBJECT
+      subject: CONFIG.SUBJECT,
+      address: CONFIG.ADDRESS
     },
     modalOpen: false
   };
