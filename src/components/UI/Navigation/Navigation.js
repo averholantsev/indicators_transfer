@@ -3,6 +3,7 @@ import { Menu } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 class Navigation extends Component {
+// TODO: Добавить представление по визуализации данных
   render() {
     return (
       <Menu pointing secondary>

@@ -239,7 +239,6 @@ class IndicatorsInsert extends Component {
     const errorMessage = "Поле обязательно для заполнения";
     const inputClasses = ["field"];
     const inputError = ["field", "error"];
-    // TODO Добавить выбор месяца и года
     return (
       <div className="ui center ui_center">
         <Modal

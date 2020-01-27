@@ -97,7 +97,8 @@ class OutlayDetails extends Component {
     }
     this.setState({ indicatorsList: outlayArray });
   };
-
+// TODO: Сделать отображение списка в обратном порядке
+// TODO: Добавить возможность редактирования и удаления записей
   render() {
     return (
       <div className="outlayContainer">
