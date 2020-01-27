@@ -88,9 +88,7 @@ class IndicatorsInsert extends Component {
       year: new Date().getFullYear()
     },
     emailData: {
-      email: CONFIG.EMAIL,
       recipient: CONFIG.RECIPIENT,
-      subject: CONFIG.SUBJECT,
       address: CONFIG.ADDRESS
     },
     modalOpen: false
@@ -138,14 +136,21 @@ class IndicatorsInsert extends Component {
 
   sendEmailHandler = () => {
     let templateParams = {
-      from_name: this.state.emailData.email,
-      to_name: this.state.emailData.recipient,
-      subject: this.state.emailData.subject,
-      message_html: this.state.emailData.message
+      recipient: this.state.emailData.recipient,
+      address: this.state.emailData.address,
+      month: MONTHS_LIST[this.state.monthYear.month].text,
+      year: this.state.monthYear.year,
+      electricityDay: this.state.indicators.ElectricityDay.value,
+      electricityNight: this.state.indicators.ElectricityNight.value,
+      coldWaterKittchen: this.state.indicators.ColdWaterKittchen.value,
+      coldWaterBathroom: this.state.indicators.ColdWaterBathroom.value,
+      hotWaterKittchen: this.state.indicators.HotWaterKittchen.value,
+      hotWaterBathroom: this.state.indicators.HotWaterBathroom.value
     };
+    
     emailjs
       .send(
-        "gmail",
+        CONFIG.SERVICE_ID,
         CONFIG.TEMPLATE_ID,
         templateParams,
         CONFIG.USER_ID
