@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
-import { Loader } from 'semantic-ui-react'
+import { Loader } from "semantic-ui-react";
 import "./OutlayDetails.css";
 import Outlay from "../../components/Outlay/Outlay";
 
@@ -21,33 +21,40 @@ class OutlayDetails extends Component {
         Bathroom: "263",
         Kittchen: "157"
       }
-    }
+    },
+    error: null
   };
 
   componentDidMount() {
     axios
       .get("/indicators.json")
       .then(response => {
-        let indicatorsList = Object.keys(response.data).map(key => {
-          return {
-            id: key,
-            date: response.data[key].CurrentDate.today,
-            indicators: {
-              electricity: response.data[key].Electricity,
-              coldWater: response.data[key].ColdWater,
-              hotWater: response.data[key].HotWater
-            },
-            outlay: null
-          };
-        });
-        indicatorsList.sort((a, b) => {
-          let dateA = new Date(a.date),
-            dateB = new Date(b.date);
-          return dateA - dateB;
-        });
+        if (response.data) {
+          let indicatorsList = Object.keys(response.data).map(key => {
+            return {
+              id: key,
+              date: response.data[key].CurrentDate.today,
+              indicators: {
+                electricity: response.data[key].Electricity,
+                coldWater: response.data[key].ColdWater,
+                hotWater: response.data[key].HotWater
+              },
+              outlay: null
+            };
+          });
+          indicatorsList.sort((a, b) => {
+            let dateA = new Date(a.date),
+              dateB = new Date(b.date);
+            return dateA - dateB;
+          });
 
-        this.setState({ indicatorsList: indicatorsList });
-        this.countOutlay();
+          this.setState({ indicatorsList: indicatorsList });
+          this.countOutlay();
+        } else {
+          this.setState({
+            error: "Данные отсутствуют. Передайте показания счетчиков."
+          });
+        }
       })
       .catch(error => console.log(error));
   }
@@ -97,26 +104,31 @@ class OutlayDetails extends Component {
     }
     this.setState({ indicatorsList: outlayArray });
   };
-// TODO: Сделать отображение списка в обратном порядке
-// TODO: Добавить возможность редактирования и удаления записей
+  // TODO: Сделать отображение списка в обратном порядке
+  // TODO: Добавить возможность редактирования и удаления записей
+
   render() {
+    let indicatorsList = null;
+    if (this.state.indicatorsList == null && this.state.error == null) {
+      indicatorsList = <Loader active inline="centered">Загрузка</Loader>;
+    } else if (this.state.indicatorsList != null) {
+      indicatorsList = this.state.indicatorsList.map(ind => {
+        return (
+          <Outlay
+            key={ind.id}
+            indicators={ind.indicators}
+            date={ind.date}
+            outlay={ind.outlay}
+          />
+        );
+      });
+    } else {
+      indicatorsList = <p style={{textAlign: "center"}}>{this.state.error}</p>;
+    }
     return (
       <div className="outlayContainer">
         <h1 className="ui header centered">Текущие расходы</h1>
-        {this.state.indicatorsList == null ? (
-          <Loader active inline='centered'>Загрузка</Loader>
-        ) : (
-          this.state.indicatorsList.map(ind => {
-            return (
-              <Outlay
-                key={ind.id}
-                indicators={ind.indicators}
-                date={ind.date}
-                outlay={ind.outlay}
-              />
-            );
-          })
-        )}
+        {indicatorsList}
       </div>
     );
   }
