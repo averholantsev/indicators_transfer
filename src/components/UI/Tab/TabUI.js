@@ -28,7 +28,7 @@ const TabUI = (props) => {
         textColor="primary"
         centered
       >
-        {props.tabsList.map(item => <Tab label={item} />)}
+        {props.tabsList.map(item => <Tab key={item} label={item} />)}
       </Tabs>
     </Paper>
   );

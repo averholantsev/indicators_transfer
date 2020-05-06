@@ -8,7 +8,7 @@ import TabUI from "../../components/UI/Tab/TabUI";
 class OutlayDetails extends Component {
   // TODO Хранить в бд первоначальные результаты
   state = {
-    indicatorsList: null,
+    indicatorsList: [],
     prevIndicators: {
       electricity: {
         Day: "18572",
@@ -23,7 +23,7 @@ class OutlayDetails extends Component {
         Kittchen: "157",
       },
     },
-    currentYear: 2020,
+    currentYear: new Date().getUTCFullYear(),
     error: null,
   };
 
@@ -43,7 +43,7 @@ class OutlayDetails extends Component {
         `/indicators.json?orderBy="CurrentDate/year"&startAt=${year}&endAt=${year}`
       )
       .then((response) => {
-        if (response.data) {
+        if (Object.keys(response.data).length !== 0) {
           let indicatorsList = Object.keys(response.data).map((key) => {
             return {
               id: key,
@@ -66,11 +66,17 @@ class OutlayDetails extends Component {
           this.countOutlay();
         } else {
           this.setState({
-            error: "Данные отсутствуют. Передайте показания счетчиков.",
+            indicatorsList: [],
+            error: `Данные за ${this.state.currentYear} год отсутствуют`,
           });
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          error: "Данные отсутствуют. Передайте показания счетчиков.",
+        });
+      });
   };
 
   countOutlay = () => {
@@ -127,13 +133,13 @@ class OutlayDetails extends Component {
   // TODO: Добавить возможность редактирования и удаления записей
   render() {
     let indicatorsList = null;
-    if (this.state.indicatorsList == null && this.state.error == null) {
+    if (this.state.indicatorsList.length === 0 && this.state.error == null) {
       indicatorsList = (
         <Loader active inline="centered">
           Загрузка
         </Loader>
       );
-    } else if (this.state.indicatorsList != null) {
+    } else if (this.state.indicatorsList.length > 0) {
       indicatorsList = this.state.indicatorsList.map((ind) => {
         return (
           <Outlay
@@ -144,13 +150,24 @@ class OutlayDetails extends Component {
           />
         );
       });
+    } else if (this.state.indicatorsList.length === 0 && this.state.error) {
+      indicatorsList = <p style={{ textAlign: "center" }}>{this.state.error}</p>;
     } else {
       indicatorsList = (
         <p style={{ textAlign: "center" }}>{this.state.error}</p>
       );
     }
 
-    const tabsList = [2020, 2019];
+    const tabsList = [];
+    for (
+      let i = new Date().getUTCFullYear();
+      i >= new Date().getUTCFullYear() - 2;
+      i--
+    ) {
+      tabsList.push(i);
+    }
+
+    console.log();
 
     return (
       <div className="outlayContainer">
