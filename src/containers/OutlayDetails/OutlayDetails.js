@@ -27,6 +27,10 @@ class OutlayDetails extends Component {
         name: "Горячая вода:",
         intake: 420,
       },
+      {
+        name: "Водоотведение:",
+        intake: 822,
+      },
     ],
     currentYear: new Date().getUTCFullYear(),
     error: null,
@@ -64,6 +68,14 @@ class OutlayDetails extends Component {
                 {
                   name: "Горячая вода:",
                   intake:
+                    Number(response.data[key].HotWater.Bathroom) +
+                    Number(response.data[key].HotWater.Kittchen),
+                },
+                {
+                  name: "Водоотведение:",
+                  intake:
+                    Number(response.data[key].ColdWater.Bathroom) +
+                    Number(response.data[key].ColdWater.Kittchen) +
                     Number(response.data[key].HotWater.Bathroom) +
                     Number(response.data[key].HotWater.Kittchen),
                 },
@@ -130,9 +142,7 @@ class OutlayDetails extends Component {
     } else if (this.state.indicatorsList.length > 0) {
       indicatorsList = this.state.indicatorsList
         .filter((item) => {
-          return (
-            item.date.getUTCFullYear() === this.state.currentYear
-          );
+          return item.date.getUTCFullYear() === this.state.currentYear;
         })
         .map((item, index) => {
           return <Outlay key={index} indicatorsList={item} />;
