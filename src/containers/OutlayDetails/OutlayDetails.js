@@ -161,7 +161,7 @@ class OutlayDetails extends Component {
     const tabsList = [];
     for (
       let i = new Date().getUTCFullYear();
-      i >= new Date().getUTCFullYear() - 2;
+      i >= new Date().getUTCFullYear() - 1;
       i--
     ) {
       tabsList.push(i);

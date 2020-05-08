@@ -12,5 +12,7 @@
   //Заполняется идентификатор шаблона https://www.emailjs.com/
   "TEMPLATE_ID": "",
   //Заполняется идентификатор пользователя https://www.emailjs.com/
-  "USER_ID": ""
+  "USER_ID": "",
+  //Заполняется идентификатор пользователя для авторизации https://console.firebase.google.com/
+  "AUTH_API_KEY": ""
 }

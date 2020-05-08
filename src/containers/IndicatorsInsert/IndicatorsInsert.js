@@ -189,7 +189,7 @@ class IndicatorsInsert extends Component {
         Kittchen: this.state.indicators.HotWaterKittchen.value,
         Bathroom: this.state.indicators.HotWaterBathroom.value
       },
-      CurrentDate: { today: dateOfIndicators }
+      CurrentDate: { today: dateOfIndicators, year: this.state.monthYear.year }
     };
     axios
       .post("/indicators.json", indicators)

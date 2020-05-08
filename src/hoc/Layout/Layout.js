@@ -1,19 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 import "./Layout.css";
-import Aux from "../AuxW/AuxW";
-import Navigation from "../../components/UI/Navigation/Navigation";
+import AppBar from "../../components/Navigation/AppBar";
 
 class Layout extends Component {
   render() {
     return (
-      <Aux>
-        <Navigation />
-        <div className="ui middle aligned center aligned grid">
-          <div className="row">{this.props.children}</div>
-        </div>
-      </Aux>
+      <Grid container>
+        {this.props.isAuth && (
+          <Grid item xs={12}>
+            <AppBar />
+          </Grid>
+        )}
+        <Grid item xs={12}>
+          <Paper className="paper">{this.props.children}</Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
