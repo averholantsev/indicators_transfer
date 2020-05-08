@@ -3,7 +3,7 @@ import axios from "../../axios-main";
 import { Loader } from "semantic-ui-react";
 import "./OutlayDetails.css";
 import Outlay from "../../components/Outlay/Outlay";
-import TabUI from "../../components/UI/Tab/TabUI";
+import Tabs from "../../components/UI/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 
 class OutlayDetails extends Component {
@@ -161,7 +161,7 @@ class OutlayDetails extends Component {
         <Typography variant="h4" align="center">
           Текущие расходы
         </Typography>
-        <TabUI tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
+        <Tabs tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
         <div className="indicatorsList">{indicatorsList}</div>
       </div>
     );

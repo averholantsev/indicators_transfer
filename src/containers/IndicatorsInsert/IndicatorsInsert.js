@@ -4,86 +4,34 @@ import { withRouter } from "react-router-dom";
 import axios from "../../axios-main";
 import emailjs from "emailjs-com";
 import CONFIG from "../../configuration.json";
+import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
 
 import InputNum from "../../components/UI/Inputs/InputNum";
-import Button from "../../components/UI/Button/Button";
-import { Modal, Dropdown } from "semantic-ui-react";
-import Typography from "@material-ui/core/Typography";
-import ButtonUI from "@material-ui/core/Button";
+import { Dropdown } from "semantic-ui-react";
 import "./IndicatorsInsert.css";
 
-const MONTHS_LIST = [
-  {
-    key: "0",
-    text: "Январь",
-    value: 0,
-  },
-  {
-    key: "1",
-    text: "Феварль",
-    value: 1,
-  },
-  {
-    key: "2",
-    text: "Март",
-    value: 2,
-  },
-  {
-    key: "3",
-    text: "Апрель",
-    value: 3,
-  },
-  {
-    key: "4",
-    text: "Май",
-    value: 4,
-  },
-  {
-    key: "5",
-    text: "Июнь",
-    value: 5,
-  },
-  {
-    key: "6",
-    text: "Июль",
-    value: 6,
-  },
-  {
-    key: "7",
-    text: "Август",
-    value: 7,
-  },
-  {
-    key: "8",
-    text: "Сентябрь",
-    value: 8,
-  },
-  {
-    key: "9",
-    text: "Октябрь",
-    value: 9,
-  },
-  {
-    key: "10",
-    text: "Ноябрь",
-    value: 10,
-  },
-  {
-    key: "11",
-    text: "Декабрь",
-    value: 11,
-  },
-];
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Typography from "@material-ui/core/Typography";
+import ButtonUI from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 class IndicatorsInsert extends Component {
   state = {
     indicators: {
-      ElectricityDay: { value: "", valid: true },
-      ElectricityNight: { value: "", valid: true },
-      ColdWaterKittchen: { value: "", valid: true },
-      ColdWaterBathroom: { value: "", valid: true },
-      HotWaterKittchen: { value: "", valid: true },
-      HotWaterBathroom: { value: "", valid: true },
+      ElectricityDay: { value: "1", valid: true },
+      ElectricityNight: { value: "1", valid: true },
+      ColdWaterKittchen: { value: "1", valid: true },
+      ColdWaterBathroom: { value: "1", valid: true },
+      HotWaterKittchen: { value: "1", valid: true },
+      HotWaterBathroom: { value: "1", valid: true },
     },
     monthYear: {
       month: new Date().getMonth(),
@@ -243,104 +191,114 @@ class IndicatorsInsert extends Component {
     const inputError = ["field", "error"];
     return (
       <div className="ui center ui_center">
-        <Modal
-          size="mini"
+        <Dialog
           open={this.state.modalOpen}
           onClose={this.modalHandlerClose}
+          maxWidth="xs"
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <Modal.Header>
-            <h3 className="ui center aligned header">
-              Проверьте передаваемые <br />
-              показатели за {MONTHS_LIST[this.state.monthYear.month].text}{" "}
+          <DialogTitle id="alert-dialog-title">
+            <Typography variant="h5" align="center">
+              Проверьте показатели за{" "}
+              {MONTHS_LIST[this.state.monthYear.month].text}{" "}
               {this.state.monthYear.year} г.
-            </h3>
-          </Modal.Header>
-          <Modal.Content>
-            <Modal.Description>
-              <div className="ui four column centered grid">
-                <div className="row" style={{ paddingBottom: "0" }}>
-                  <h4 className="ui center aligned header">Электроэнергия</h4>
-                </div>
-                <div className="row">
-                  <div className="column">
-                    <p>День:</p>
-                  </div>
-                  <div className="column">
-                    <strong>
-                      {this.state.indicators.ElectricityDay.value}
-                    </strong>
-                  </div>
-                  <div className="column">
-                    <p>Ночь:</p>
-                  </div>
-                  <div className="column">
-                    <strong>
-                      {this.state.indicators.ElectricityNight.value}
-                    </strong>
-                  </div>
-                </div>
-                <div className="row" style={{ paddingBottom: "0" }}>
-                  <h4 className="ui center aligned header">Кухня</h4>
-                </div>
-                <div className="row">
-                  <div className="column">
-                    <p>Холодная вода:</p>
-                  </div>
-                  <div className="column">
-                    <strong>
-                      {this.state.indicators.ColdWaterKittchen.value}
-                    </strong>
-                  </div>
-                  <div className="column">
-                    <p>Горячая вода:</p>
-                  </div>
-                  <div className="column">
-                    <strong>
-                      {this.state.indicators.HotWaterKittchen.value}
-                    </strong>
-                  </div>
-                </div>
-                <div className="row" style={{ paddingBottom: "0" }}>
-                  <h4 className="ui center aligned header">Ванная</h4>
-                </div>
-                <div className="row">
-                  <div className="column">
-                    <p>Холодная вода:</p>
-                  </div>
-                  <div className="column">
-                    <strong>
-                      {this.state.indicators.ColdWaterBathroom.value}
-                    </strong>
-                  </div>
-                  <div className="column">
-                    <p>Горячая вода:</p>
-                  </div>
-                  <div className="column">
-                    <strong>
-                      {this.state.indicators.HotWaterBathroom.value}
-                    </strong>
-                  </div>
-                </div>
-              </div>
-            </Modal.Description>
-            <div className="ui grid" style={{ marginTop: "2rem" }}>
-              <div className="right aligned sixteen wide column">
-                <Button
-                  classUI="ui button"
-                  name={"Отмена"}
-                  clicked={this.modalHandlerClose}
-                  style={{ marginRight: "1rem" }}
-                />
-                <Button
-                  classUI="ui primary button"
-                  name={"Отправить"}
-                  clicked={this.sendIndicators}
-                  style={{ marginRight: "0" }}
-                />
-              </div>
-            </div>
-          </Modal.Content>
-        </Modal>
+            </Typography>
+          </DialogTitle>
+          <DialogContent dividers>
+            <Grid container>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography variant="h6" align="center">
+                    Электроэнергия
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    День:
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    {this.state.indicators.ElectricityDay.value}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    Ночь:
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    {this.state.indicators.ElectricityNight.value}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography variant="h6" align="center">
+                    Кухня
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    Холодная вода:
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    {this.state.indicators.ColdWaterKittchen.value}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    Горячая вода:
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    {this.state.indicators.HotWaterKittchen.value}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography variant="h6" align="center">
+                    Ванная
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    Холодная вода:
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    {this.state.indicators.ColdWaterBathroom.value}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    Горячая вода:
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">
+                    {this.state.indicators.HotWaterBathroom.value}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <ButtonUI onClick={this.modalHandlerClose} color="secondary">
+              Отмена
+            </ButtonUI>
+            <ButtonUI onClick={this.sendIndicators} color="primary" autoFocus>
+              Отправить
+            </ButtonUI>
+          </DialogActions>
+        </Dialog>
 
         <form className="ui form">
           <div className="ui one column centered grid">
