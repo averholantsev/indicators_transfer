@@ -1,9 +1,18 @@
 import React from "react";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
-const outlay = props => {
-  const indicatorDate = new Date(props.date);
+const outlay = (props) => {
+  let { date, indicators } = props.indicatorsList;
+
   let indicatorMonth = "";
-  switch (indicatorDate.getMonth()) {
+  switch (date.getMonth()) {
     case 0:
       indicatorMonth = "Январь";
       break;
@@ -45,58 +54,31 @@ const outlay = props => {
   }
 
   return (
-    <div className="ui four column centered grid">
-      <div className="row">
-        <h3>
-          {indicatorMonth} {indicatorDate.getFullYear()}
-        </h3>
-      </div>
-      <div className="three column row">
-        <div className="column">
-          <h4>Показатель</h4>
-        </div>
-        <div className="column">
-          <h4>Расходы</h4>
-        </div>
-        <div className="column">
-          <h4>Потребление</h4>
-        </div>
-      </div>
-      <div className="three column row">
-        <div className="column">
-          <p>Эл-я день: </p>
-          <p>Эл-я ночь: </p>
-          <p>Холодная вода: </p>
-          <p>Горячая вода: </p>
-        </div>
-        {props.outlay == null ? (
-          "Загрузка..."
-        ) : (
-          <div className="column">
-            <p>{props.indicators.electricity.Day}</p>
-            <p>{props.indicators.electricity.Night}</p>
-            <p>
-              {Number(props.indicators.coldWater.Bathroom) +
-                Number(props.indicators.coldWater.Kittchen)}
-            </p>
-            <p>
-              {Number(props.indicators.hotWater.Bathroom) +
-                Number(props.indicators.hotWater.Kittchen)}
-            </p>
-          </div>
-        )}
-        {props.outlay == null ? (
-          "Загрузка..."
-        ) : (
-          <div className="column">
-            <p>{props.outlay.electricityDay}</p>
-            <p>{props.outlay.electricityNight}</p>
-            <p>{props.outlay.coldWater}</p>
-            <p>{props.outlay.hotWater}</p>
-          </div>
-        )}
-      </div>
-    </div>
+    <TableContainer component={Paper} style={{marginTop: "30px"}}>
+      <Typography variant="h6" align="center">
+        {indicatorMonth} {date.getFullYear()}
+      </Typography>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Показатель</TableCell>
+            <TableCell align="center">Расход</TableCell>
+            <TableCell align="center">Потребление</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {indicators.map((row, index) => (
+            <TableRow key={index}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="center">{row.intake}</TableCell>
+              <TableCell align="center">{row.outlay}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

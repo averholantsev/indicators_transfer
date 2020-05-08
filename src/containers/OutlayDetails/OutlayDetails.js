@@ -4,132 +4,120 @@ import { Loader } from "semantic-ui-react";
 import "./OutlayDetails.css";
 import Outlay from "../../components/Outlay/Outlay";
 import TabUI from "../../components/UI/Tab/TabUI";
+import Typography from "@material-ui/core/Typography";
 
 class OutlayDetails extends Component {
   // TODO Хранить в бд первоначальные результаты
   state = {
     indicatorsList: [],
-    prevIndicators: {
-      electricity: {
-        Day: "18572",
-        Night: "6699",
+    prevIndicators: [
+      {
+        name: "Эл-я день:",
+        intake: 18572,
       },
-      coldWater: {
-        Bathroom: "129",
-        Kittchen: "273",
+      {
+        name: "Эл-я ночь:",
+        intake: 6699,
       },
-      hotWater: {
-        Bathroom: "263",
-        Kittchen: "157",
+      {
+        name: "Холодная вода:",
+        intake: 402,
       },
-    },
+      {
+        name: "Горячая вода:",
+        intake: 420,
+      },
+    ],
     currentYear: new Date().getUTCFullYear(),
     error: null,
   };
 
   componentDidMount() {
-    this.getListOfIndicators(this.state.currentYear);
+    this.getListOfIndicators();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currentYear !== this.state.currentYear) {
-      this.getListOfIndicators(this.state.currentYear);
-    }
-  }
-
-  getListOfIndicators = (year) => {
+  getListOfIndicators = () => {
     axios
-      .get(
-        `/indicators.json?orderBy="CurrentDate/year"&startAt=${year}&endAt=${year}`
-      )
+      .get(`/indicators.json`)
       .then((response) => {
+        console.log("Ответ с сервера: ", response.data);
         if (Object.keys(response.data).length !== 0) {
           let indicatorsList = Object.keys(response.data).map((key) => {
             return {
               id: key,
-              date: response.data[key].CurrentDate.today,
-              indicators: {
-                electricity: response.data[key].Electricity,
-                coldWater: response.data[key].ColdWater,
-                hotWater: response.data[key].HotWater,
-              },
-              outlay: null,
+              date: new Date(response.data[key].CurrentDate.today),
+              indicators: [
+                {
+                  name: "Эл-я день:",
+                  intake: Number(response.data[key].Electricity.Day),
+                },
+                {
+                  name: "Эл-я ночь:",
+                  intake: Number(response.data[key].Electricity.Night),
+                },
+                {
+                  name: "Холодная вода:",
+                  intake:
+                    Number(response.data[key].ColdWater.Bathroom) +
+                    Number(response.data[key].ColdWater.Kittchen),
+                },
+                {
+                  name: "Горячая вода:",
+                  intake:
+                    Number(response.data[key].HotWater.Bathroom) +
+                    Number(response.data[key].HotWater.Kittchen),
+                },
+              ],
             };
           });
-          indicatorsList.sort((a, b) => {
-            let dateA = new Date(a.date),
-              dateB = new Date(b.date);
-            return dateA - dateB;
-          });
-
-          this.setState({ indicatorsList: indicatorsList });
-          this.countOutlay();
+          indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
+          this.setState({ indicatorsList: this.countOutlay(indicatorsList) });
         } else {
           this.setState({
-            indicatorsList: [],
-            error: `Данные за ${this.state.currentYear} год отсутствуют`,
+            error: `Данные за ${this.state.currentYear} год отсутствуют. Передайте показания счетчиков.`,
           });
         }
       })
       .catch((error) => {
         console.log(error);
         this.setState({
-          error: "Данные отсутствуют. Передайте показания счетчиков.",
+          error: "Произошла ошибка, обратитесь к Системному Администратору.",
         });
       });
   };
 
-  countOutlay = () => {
-    let outlayArray = [...this.state.indicatorsList];
-    for (let i = 0; i < outlayArray.length; i++) {
-      if (outlayArray[i] === outlayArray[0]) {
-        outlayArray[i].outlay = {
-          electricityDay:
-            Number(outlayArray[i].indicators.electricity.Day) -
-            Number(this.state.prevIndicators.electricity.Day),
-          electricityNight:
-            Number(outlayArray[i].indicators.electricity.Night) -
-            Number(this.state.prevIndicators.electricity.Night),
-          coldWater:
-            Number(outlayArray[i].indicators.coldWater.Bathroom) -
-            Number(this.state.prevIndicators.coldWater.Bathroom) +
-            (Number(outlayArray[i].indicators.coldWater.Kittchen) -
-              Number(this.state.prevIndicators.coldWater.Kittchen)),
-          hotWater:
-            Number(outlayArray[i].indicators.hotWater.Bathroom) -
-            Number(this.state.prevIndicators.hotWater.Bathroom) +
-            (Number(outlayArray[i].indicators.hotWater.Kittchen) -
-              Number(this.state.prevIndicators.hotWater.Kittchen)),
-        };
+  countOutlay = (indicatorsList) => {
+    let newIndicatorsList = [...indicatorsList];
+
+    for (let i = 0; i < newIndicatorsList.length; i++) {
+      if (newIndicatorsList[i] === newIndicatorsList[0]) {
+        newIndicatorsList[i].indicators = newIndicatorsList[i].indicators.map(
+          (item, index) => {
+            let newItem = { ...item };
+            newItem["outlay"] =
+              newItem.intake - this.state.prevIndicators[index].intake;
+            return newItem;
+          }
+        );
       } else {
-        outlayArray[i].outlay = {
-          electricityDay:
-            Number(outlayArray[i].indicators.electricity.Day) -
-            Number(outlayArray[i - 1].indicators.electricity.Day),
-          electricityNight:
-            Number(outlayArray[i].indicators.electricity.Night) -
-            Number(outlayArray[i - 1].indicators.electricity.Night),
-          coldWater:
-            Number(outlayArray[i].indicators.coldWater.Bathroom) -
-            Number(outlayArray[i - 1].indicators.coldWater.Bathroom) +
-            (Number(outlayArray[i].indicators.coldWater.Kittchen) -
-              Number(outlayArray[i - 1].indicators.coldWater.Kittchen)),
-          hotWater:
-            Number(outlayArray[i].indicators.hotWater.Bathroom) -
-            Number(outlayArray[i - 1].indicators.hotWater.Bathroom) +
-            (Number(outlayArray[i].indicators.hotWater.Kittchen) -
-              Number(outlayArray[i - 1].indicators.hotWater.Kittchen)),
-        };
+        newIndicatorsList[i].indicators = newIndicatorsList[i].indicators.map(
+          (item, index) => {
+            let newItem = { ...item };
+            newItem["outlay"] =
+              newItem.intake -
+              newIndicatorsList[i - 1].indicators[index].intake;
+            return newItem;
+          }
+        );
       }
     }
-    this.setState({ indicatorsList: outlayArray });
+    return newIndicatorsList;
   };
 
   changeCurrentYear = (year) => {
     this.setState({ currentYear: year });
   };
 
-  // TODO: Сделать отображение списка в обратном порядке
   // TODO: Добавить возможность редактирования и удаления записей
   render() {
     let indicatorsList = null;
@@ -140,18 +128,19 @@ class OutlayDetails extends Component {
         </Loader>
       );
     } else if (this.state.indicatorsList.length > 0) {
-      indicatorsList = this.state.indicatorsList.map((ind) => {
-        return (
-          <Outlay
-            key={ind.id}
-            indicators={ind.indicators}
-            date={ind.date}
-            outlay={ind.outlay}
-          />
-        );
-      });
+      indicatorsList = this.state.indicatorsList
+        .filter((item) => {
+          return (
+            item.date.getUTCFullYear() === this.state.currentYear
+          );
+        })
+        .map((item, index) => {
+          return <Outlay key={index} indicatorsList={item} />;
+        });
     } else if (this.state.indicatorsList.length === 0 && this.state.error) {
-      indicatorsList = <p style={{ textAlign: "center" }}>{this.state.error}</p>;
+      indicatorsList = (
+        <p style={{ textAlign: "center" }}>{this.state.error}</p>
+      );
     } else {
       indicatorsList = (
         <p style={{ textAlign: "center" }}>{this.state.error}</p>
@@ -167,11 +156,11 @@ class OutlayDetails extends Component {
       tabsList.push(i);
     }
 
-    console.log();
-
     return (
       <div className="outlayContainer">
-        <h1 className="ui header centered">Текущие расходы</h1>
+        <Typography variant="h4" align="center">
+          Текущие расходы
+        </Typography>
         <TabUI tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
         <div className="indicatorsList">{indicatorsList}</div>
       </div>

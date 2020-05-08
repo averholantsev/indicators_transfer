@@ -3,74 +3,76 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "../../axios-main";
 import emailjs from "emailjs-com";
-import CONFIG from '../../configuration.json'
+import CONFIG from "../../configuration.json";
 
 import InputNum from "../../components/UI/Inputs/InputNum";
 import Button from "../../components/UI/Button/Button";
 import { Modal, Dropdown } from "semantic-ui-react";
+import Typography from "@material-ui/core/Typography";
+import ButtonUI from "@material-ui/core/Button";
 import "./IndicatorsInsert.css";
 
 const MONTHS_LIST = [
   {
     key: "0",
     text: "Январь",
-    value: 0
+    value: 0,
   },
   {
     key: "1",
     text: "Феварль",
-    value: 1
+    value: 1,
   },
   {
     key: "2",
     text: "Март",
-    value: 2
+    value: 2,
   },
   {
     key: "3",
     text: "Апрель",
-    value: 3
+    value: 3,
   },
   {
     key: "4",
     text: "Май",
-    value: 4
+    value: 4,
   },
   {
     key: "5",
     text: "Июнь",
-    value: 5
+    value: 5,
   },
   {
     key: "6",
     text: "Июль",
-    value: 6
+    value: 6,
   },
   {
     key: "7",
     text: "Август",
-    value: 7
+    value: 7,
   },
   {
     key: "8",
     text: "Сентябрь",
-    value: 8
+    value: 8,
   },
   {
     key: "9",
     text: "Октябрь",
-    value: 9
+    value: 9,
   },
   {
     key: "10",
     text: "Ноябрь",
-    value: 10
+    value: 10,
   },
   {
     key: "11",
     text: "Декабрь",
-    value: 11
-  }
+    value: 11,
+  },
 ];
 
 class IndicatorsInsert extends Component {
@@ -81,17 +83,17 @@ class IndicatorsInsert extends Component {
       ColdWaterKittchen: { value: "", valid: true },
       ColdWaterBathroom: { value: "", valid: true },
       HotWaterKittchen: { value: "", valid: true },
-      HotWaterBathroom: { value: "", valid: true }
+      HotWaterBathroom: { value: "", valid: true },
     },
     monthYear: {
       month: new Date().getMonth(),
-      year: new Date().getFullYear()
+      year: new Date().getFullYear(),
     },
     emailData: {
       recipient: CONFIG.RECIPIENT,
-      address: CONFIG.ADDRESS
+      address: CONFIG.ADDRESS,
     },
-    modalOpen: false
+    modalOpen: false,
   };
 
   addIndicatorHandler = (type, event) => {
@@ -109,7 +111,7 @@ class IndicatorsInsert extends Component {
     this.setState({ modalOpen: false });
   };
 
-  modalHandlerOpen = event => {
+  modalHandlerOpen = (event) => {
     event.preventDefault();
 
     for (let ind in this.state.indicators) {
@@ -145,9 +147,9 @@ class IndicatorsInsert extends Component {
       coldWaterKittchen: this.state.indicators.ColdWaterKittchen.value,
       coldWaterBathroom: this.state.indicators.ColdWaterBathroom.value,
       hotWaterKittchen: this.state.indicators.HotWaterKittchen.value,
-      hotWaterBathroom: this.state.indicators.HotWaterBathroom.value
+      hotWaterBathroom: this.state.indicators.HotWaterBathroom.value,
     };
-    
+
     emailjs
       .send(
         CONFIG.SERVICE_ID,
@@ -156,10 +158,10 @@ class IndicatorsInsert extends Component {
         CONFIG.USER_ID
       )
       .then(
-        response => {
+        (response) => {
           console.log("SUCCESS!", response.status, response.text);
         },
-        error => {
+        (error) => {
           console.log("FAILED...", error);
         }
       );
@@ -179,26 +181,26 @@ class IndicatorsInsert extends Component {
     const indicators = {
       Electricity: {
         Day: this.state.indicators.ElectricityDay.value,
-        Night: this.state.indicators.ElectricityNight.value
+        Night: this.state.indicators.ElectricityNight.value,
       },
       ColdWater: {
         Kittchen: this.state.indicators.ColdWaterKittchen.value,
-        Bathroom: this.state.indicators.ColdWaterBathroom.value
+        Bathroom: this.state.indicators.ColdWaterBathroom.value,
       },
       HotWater: {
         Kittchen: this.state.indicators.HotWaterKittchen.value,
-        Bathroom: this.state.indicators.HotWaterBathroom.value
+        Bathroom: this.state.indicators.HotWaterBathroom.value,
       },
-      CurrentDate: { today: dateOfIndicators, year: this.state.monthYear.year }
+      CurrentDate: { today: dateOfIndicators, year: this.state.monthYear.year },
     };
     axios
       .post("/indicators.json", indicators)
-      .then(response => {
+      .then((response) => {
         this.setState({ modalOpen: false });
         this.sendEmailHandler();
         this.props.history.push("/outlay");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -215,7 +217,7 @@ class IndicatorsInsert extends Component {
       currentYearList.push({
         key: currentYear - i,
         text: currentYear - i,
-        value: currentYear - i
+        value: currentYear - i,
       });
     }
     return currentYearList;
@@ -343,14 +345,16 @@ class IndicatorsInsert extends Component {
         <form className="ui form">
           <div className="ui one column centered grid">
             <div className="column">
-              <h1 className="ui header centered">Отправка показаний</h1>
+              <Typography variant="h4" align="center">
+                Отправка показаний
+              </Typography>
             </div>
           </div>
 
           <div className="ui grid">
             <div className="row">
               <div className="column">
-                <h2 className="ui header">Месяц и год</h2>
+                <Typography variant="h5">Месяц и год</Typography>
               </div>
             </div>
             <div className="two column row">
@@ -381,7 +385,7 @@ class IndicatorsInsert extends Component {
 
           <div className="ui two column centered grid">
             <div className="left floated column">
-              <h2 className="ui header">Электроэнергия</h2>
+              <Typography variant="h5">Электроэнергия</Typography>
             </div>
             <div className="two column row">
               <div className="column">
@@ -395,7 +399,7 @@ class IndicatorsInsert extends Component {
                   label={"День"}
                   placeholder={"Введите дневное потребление"}
                   name={"ElectricityDay"}
-                  changed={event =>
+                  changed={(event) =>
                     this.addIndicatorHandler("ElectricityDay", event)
                   }
                   value={this.state.indicators.ElectricityDay.value}
@@ -414,7 +418,7 @@ class IndicatorsInsert extends Component {
                   label={"Ночь"}
                   placeholder={"Введите ночное потребление"}
                   name={"ElectricityNight"}
-                  changed={event =>
+                  changed={(event) =>
                     this.addIndicatorHandler("ElectricityNight", event)
                   }
                   value={this.state.indicators.ElectricityNight.value}
@@ -427,7 +431,7 @@ class IndicatorsInsert extends Component {
 
           <div className="ui two column centered grid indicator_container">
             <div className="left floated column">
-              <h2 className="ui header">Кухня</h2>
+              <Typography variant="h5">Кухня</Typography>
             </div>
             <div className="two column row">
               <div className="column">
@@ -441,7 +445,7 @@ class IndicatorsInsert extends Component {
                   label={"Холодная вода"}
                   placeholder={"Введите потребление"}
                   name={"ColdWaterKittchen"}
-                  changed={event =>
+                  changed={(event) =>
                     this.addIndicatorHandler("ColdWaterKittchen", event)
                   }
                   value={this.state.indicators.ColdWaterKittchen.value}
@@ -460,7 +464,7 @@ class IndicatorsInsert extends Component {
                   label={"Горячая вода"}
                   placeholder={"Введите потребление"}
                   name={"HotWaterBathroom"}
-                  changed={event =>
+                  changed={(event) =>
                     this.addIndicatorHandler("HotWaterBathroom", event)
                   }
                   value={this.state.indicators.HotWaterBathroom.value}
@@ -473,7 +477,7 @@ class IndicatorsInsert extends Component {
 
           <div className="ui two column centered grid indicator_container">
             <div className="left floated column">
-              <h2 className="ui header">Ванная</h2>
+              <Typography variant="h5">Ванная</Typography>
             </div>
             <div className="two column row">
               <div className="column">
@@ -487,7 +491,7 @@ class IndicatorsInsert extends Component {
                   label={"Холодная вода"}
                   placeholder={"Введите потребление"}
                   name={"ColdWaterBathroom"}
-                  changed={event =>
+                  changed={(event) =>
                     this.addIndicatorHandler("ColdWaterBathroom", event)
                   }
                   value={this.state.indicators.ColdWaterBathroom.value}
@@ -506,7 +510,7 @@ class IndicatorsInsert extends Component {
                   label={"Горячая вода"}
                   placeholder={"Введите потребление"}
                   name={"HotWaterKittchen"}
-                  changed={event =>
+                  changed={(event) =>
                     this.addIndicatorHandler("HotWaterKittchen", event)
                   }
                   value={this.state.indicators.HotWaterKittchen.value}
@@ -519,11 +523,14 @@ class IndicatorsInsert extends Component {
 
           <div className="ui one column centered grid">
             <div style={{ textAlign: "center" }} className="column">
-              <Button
-                classUI="ui primary button"
-                name={"Отправить показания"}
-                clicked={this.modalHandlerOpen}
-              />
+              <ButtonUI
+                variant="contained"
+                color="primary"
+                disableElevation
+                onClick={this.modalHandlerOpen}
+              >
+                Отправить показания
+              </ButtonUI>
             </div>
           </div>
         </form>

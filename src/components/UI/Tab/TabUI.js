@@ -7,7 +7,12 @@ import Tab from "@material-ui/core/Tab";
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
+    marginTop: "15px",
+    boxShadow: "none",
   },
+  label: {
+    fontSize: "1rem",
+  }
 });
 
 const TabUI = (props) => {
@@ -28,7 +33,7 @@ const TabUI = (props) => {
         textColor="primary"
         centered
       >
-        {props.tabsList.map(item => <Tab key={item} label={item} />)}
+        {props.tabsList.map(item => <Tab key={item} label={item} className={classes.label} />)}
       </Tabs>
     </Paper>
   );
