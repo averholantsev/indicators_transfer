@@ -19,7 +19,7 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="indicators_transfer">
       <App />
     </BrowserRouter>
   </Provider>
