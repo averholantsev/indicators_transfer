@@ -21,12 +21,12 @@ import Grid from "@material-ui/core/Grid";
 class IndicatorsInsert extends Component {
   state = {
     indicators: {
-      ElectricityDay: { value: "1", valid: true },
-      ElectricityNight: { value: "1", valid: true },
-      ColdWaterKittchen: { value: "1", valid: true },
-      ColdWaterBathroom: { value: "1", valid: true },
-      HotWaterKittchen: { value: "1", valid: true },
-      HotWaterBathroom: { value: "1", valid: true },
+      ElectricityDay: { value: "", valid: true },
+      ElectricityNight: { value: "", valid: true },
+      ColdWaterKittchen: { value: "", valid: true },
+      ColdWaterBathroom: { value: "", valid: true },
+      HotWaterKittchen: { value: "", valid: true },
+      HotWaterBathroom: { value: "", valid: true },
     },
     monthYear: {
       month: new Date().getMonth(),
