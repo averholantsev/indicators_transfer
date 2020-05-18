@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import history  from "./store/history";
 import reducer from "./store/reducers/auth";
 
@@ -19,9 +19,9 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
   <Provider store={store}>
-    <BrowserRouter history={history} basename={process.env.PUBLIC_URL + "/"}>
+    <HashRouter history={history} basename={process.env.PUBLIC_URL + "/"}>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 );
 
