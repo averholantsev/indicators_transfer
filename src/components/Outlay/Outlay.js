@@ -9,7 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
 const outlay = (props) => {
-  let { date, indicators } = props.indicatorsList;
+  const { date, indicators } = props.indicatorsList;
+  const { costNovogor } = props
 
   let indicatorMonth = "";
   switch (date.getMonth()) {
@@ -54,7 +55,7 @@ const outlay = (props) => {
   }
 
   return (
-    <TableContainer component={Paper} style={{marginTop: "30px"}}>
+    <TableContainer component={Paper} style={{ marginTop: "30px" }}>
       <Typography variant="h6" align="center">
         {indicatorMonth} {date.getFullYear()}
       </Typography>
@@ -76,6 +77,12 @@ const outlay = (props) => {
               <TableCell align="center">{row.outlay}</TableCell>
             </TableRow>
           ))}
+          <TableRow>
+            <TableCell component="th" scope="row">
+              Новогор
+            </TableCell>
+            <TableCell align="center">{costNovogor}</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

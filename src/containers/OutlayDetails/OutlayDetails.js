@@ -32,6 +32,38 @@ class OutlayDetails extends Component {
         intake: 822,
       },
     ],
+    tariffs: [
+      {
+        id: "water",
+        cost: 33.03,
+        dateStart: "2019-01-01",
+        dateEnd: "2020-12-31",
+      },
+      {
+        id: "hot_water",
+        cost: 1423.06,
+        dateStart: "2020-01-01",
+        dateEnd: "2020-06-30",
+      },
+      {
+        id: "disposal_water",
+        cost: 23.14,
+        dateStart: "2019-01-01",
+        dateEnd: "2020-12-31",
+      },
+      {
+        id: "day_electricity",
+        cost: 4.17,
+        dateStart: "2020-01-01",
+        dateEnd: "2020-06-30",
+      },
+      {
+        id: "night_electricity",
+        cost: 2.66,
+        dateStart: "2020-01-01",
+        dateEnd: "2020-06-30",
+      },
+    ],
     currentYear: new Date().getUTCFullYear(),
     error: null,
   };
@@ -45,50 +77,50 @@ class OutlayDetails extends Component {
       .get(`/indicators.json`)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
-        if (Object.keys(response.data).length !== 0) {
-          let indicatorsList = Object.keys(response.data).map((key) => {
-            return {
-              id: key,
-              date: new Date(response.data[key].CurrentDate.today),
-              indicators: [
-                {
-                  name: "Эл-я день:",
-                  intake: Number(response.data[key].Electricity.Day),
-                },
-                {
-                  name: "Эл-я ночь:",
-                  intake: Number(response.data[key].Electricity.Night),
-                },
-                {
-                  name: "Холодная вода:",
-                  intake:
-                    Number(response.data[key].ColdWater.Bathroom) +
-                    Number(response.data[key].ColdWater.Kittchen),
-                },
-                {
-                  name: "Горячая вода:",
-                  intake:
-                    Number(response.data[key].HotWater.Bathroom) +
-                    Number(response.data[key].HotWater.Kittchen),
-                },
-                {
-                  name: "Водоотведение:",
-                  intake:
-                    Number(response.data[key].ColdWater.Bathroom) +
-                    Number(response.data[key].ColdWater.Kittchen) +
-                    Number(response.data[key].HotWater.Bathroom) +
-                    Number(response.data[key].HotWater.Kittchen),
-                },
-              ],
-            };
-          });
-          indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
-          this.setState({ indicatorsList: this.countOutlay(indicatorsList) });
-        } else {
-          this.setState({
-            error: `Данные за ${this.state.currentYear} год отсутствуют. Передайте показания счетчиков.`,
-          });
-        }
+
+        let indicatorsList = Object.keys(response.data).map((key) => {
+          return {
+            id: key,
+            date: new Date(response.data[key].CurrentDate.today),
+            indicators: [
+              {
+                id: "day_electricity",
+                name: "Эл-я день:",
+                intake: Number(response.data[key].Electricity.Day),
+              },
+              {
+                id: "night_electricity",
+                name: "Эл-я ночь:",
+                intake: Number(response.data[key].Electricity.Night),
+              },
+              {
+                id: "cold_water",
+                name: "Холодная вода:",
+                intake:
+                  Number(response.data[key].ColdWater.Bathroom) +
+                  Number(response.data[key].ColdWater.Kittchen),
+              },
+              {
+                id: "hot_water",
+                name: "Горячая вода:",
+                intake:
+                  Number(response.data[key].HotWater.Bathroom) +
+                  Number(response.data[key].HotWater.Kittchen),
+              },
+              {
+                id: "disposal_water",
+                name: "Водоотведение:",
+                intake:
+                  Number(response.data[key].ColdWater.Bathroom) +
+                  Number(response.data[key].ColdWater.Kittchen) +
+                  Number(response.data[key].HotWater.Bathroom) +
+                  Number(response.data[key].HotWater.Kittchen),
+              },
+            ],
+          };
+        });
+        indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
+        this.setState({ indicatorsList: this.countOutlay(indicatorsList) });
       })
       .catch((error) => {
         console.log(error);
@@ -126,6 +158,66 @@ class OutlayDetails extends Component {
     return newIndicatorsList;
   };
 
+  countCostNovogor = (indicators, date) => {
+    let coldWater = null;
+    try {
+      coldWater = indicators.find(({ id }) => id === "cold_water").outlay;
+    } catch (e) {
+      console.log("Холодная вода", e);
+    }
+
+    let hotWater = null;
+    try {
+      hotWater = indicators.find(({ id }) => id === "hot_water").outlay;
+    } catch (e) {
+      console.log("Горячая вода", e);
+    }
+
+    let disposalWater = null;
+    try {
+      disposalWater = indicators.find(({ id }) => id === "disposal_water")
+        .outlay;
+    } catch (e) {
+      console.log("Водоотведение", e);
+    }
+
+    let waterTariff = null;
+    try {
+      waterTariff = this.state.tariffs.find(({ id, dateStart, dateEnd }) => {
+        if (
+          id === "water" &&
+          Date.parse(dateStart) <= date &&
+          Date.parse(dateEnd) >= date
+        ) {
+          return true;
+        } else return false;
+      }).cost;
+    } catch (e) {
+      console.log("Тариф на воду", e);
+    }
+
+    let disposalTariff = null;
+    try {
+      disposalTariff = this.state.tariffs.find(({ id, dateStart, dateEnd }) => {
+        if (
+          id === "disposal_water" &&
+          Date.parse(dateStart) <= date &&
+          Date.parse(dateEnd) >= date
+        ) {
+          return true;
+        } else return false;
+      }).cost;
+    } catch (e) {
+      console.log("Тариф на водоотведение", e);
+    }
+
+    let novogorCost = (
+      (coldWater + hotWater) * waterTariff +
+      disposalWater * disposalTariff
+    ).toFixed(2);
+    return novogorCost;
+  };
+
   changeCurrentYear = (year) => {
     this.setState({ currentYear: year });
   };
@@ -144,13 +236,19 @@ class OutlayDetails extends Component {
         .filter((item) => {
           return item.date.getUTCFullYear() === this.state.currentYear;
         })
-        .map((item, index) => {
-          return <Outlay key={index} indicatorsList={item} />;
+
+      if (indicatorsList.length > 0) {
+        indicatorsList = indicatorsList.map((item, index) => {
+          return (
+            <Outlay
+              key={index}
+              indicatorsList={item}
+              costNovogor={this.countCostNovogor(item.indicators, item.date)}
+            />
+          );
         });
-    } else if (this.state.indicatorsList.length === 0 && this.state.error) {
-      indicatorsList = (
-        <p style={{ textAlign: "center" }}>{this.state.error}</p>
-      );
+      } else indicatorsList = (<p style={{ textAlign: "center" }}>{`Нет данных на ${this.state.currentYear} год`}</p>);
+        
     } else {
       indicatorsList = (
         <p style={{ textAlign: "center" }}>{this.state.error}</p>
@@ -172,7 +270,9 @@ class OutlayDetails extends Component {
           Текущие расходы
         </Typography>
         <Tabs tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
-        <div className="indicatorsList">{indicatorsList}</div>
+        <div className="indicatorsList">
+          {indicatorsList}
+        </div>
       </div>
     );
   }
