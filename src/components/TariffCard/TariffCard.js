@@ -13,6 +13,11 @@ import {
 } from "@material-ui/pickers";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
@@ -36,6 +41,10 @@ const useStyles = makeStyles({
   textFieldMargin: {
     marginRight: "15px",
     marginBottom: "15px",
+  },
+  selectPadding: {
+    display: 'flex',
+    flexBasis: "13rem"
   },
   buttonClose: {
     position: "absolute",
@@ -111,15 +120,22 @@ const TariffCard = (props) => {
       <CardContent className={classes.cardPadding}>
         <Grid container>
           <Grid item xs={12} className={classes.row}>
-            <TextField
-              className={classes.textFieldMargin + " " + classes.textField}
-              label="Наименование"
-              value={name}
-              disabled={disabled}
-              onChange={(event) =>
-                props.updateTariffInState(id, "name", event.target.value)
-              }
-            />
+            <FormControl className={classes.textFieldMargin + " " + classes.textField + " " + classes.selectPadding}>
+              <InputLabel>Наименование</InputLabel>
+              <Select
+                value={name}
+                onChange={(event) =>
+                  props.updateTariffInState(id, "name", event.target.value)
+                }
+                disabled={disabled}
+              >
+                <MenuItem value={"water"}>Подача воды</MenuItem>
+                <MenuItem value={"hot_water"}>Подогрев воды</MenuItem>
+                <MenuItem value={"disposal_water"}>Водоотведение</MenuItem>
+                <MenuItem value={"electricity_day"}>Электро-ия. день</MenuItem>
+                <MenuItem value={"electricity_night"}>Электро-ия. ночь</MenuItem>
+              </Select>
+            </FormControl>
             <CurrencyTextField
               className={classes.textField}
               label="Тариф"
