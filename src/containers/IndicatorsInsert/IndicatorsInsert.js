@@ -299,7 +299,7 @@ class IndicatorsInsert extends Component {
           <div className="ui one column centered grid">
             <div className="column">
               <Typography variant="h4" align="center">
-                Отправка показаний
+                Подать показания
               </Typography>
             </div>
           </div>
