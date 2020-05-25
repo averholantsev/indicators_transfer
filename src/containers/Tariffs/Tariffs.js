@@ -93,18 +93,6 @@ class Tariffs extends Component {
       });
   };
 
-  removeTariffFromList = (removeId) => {
-    let newTariffsList = [...this.state.tariffs];
-
-    newTariffsList = newTariffsList.filter((item) => {
-      return item.id !== removeId;
-    });
-
-    if (this.state.addButtonDisabled) {
-      this.setState({ tariffs: newTariffsList, addButtonDisabled: false });
-    } else this.setState({ tariffs: newTariffsList });
-  };
-
   handleDeleteDialogOpen = (id) => {
     if (typeof id !== "undefined") {
       this.setState({ deleteDialogOpen: true, deleteTariffId: id });
@@ -134,6 +122,18 @@ class Tariffs extends Component {
     });
 
     this.setState({ tariffs: newTariffsList, addButtonDisabled: true });
+  };
+
+  removeTariffFromList = (removeId) => {
+    let newTariffsList = [...this.state.tariffs];
+
+    newTariffsList = newTariffsList.filter((item) => {
+      return item.id !== removeId;
+    });
+
+    if (this.state.addButtonDisabled) {
+      this.setState({ tariffs: newTariffsList, addButtonDisabled: false });
+    } else this.setState({ tariffs: newTariffsList });
   };
 
   updateTariffInState = (id, key, value) => {
