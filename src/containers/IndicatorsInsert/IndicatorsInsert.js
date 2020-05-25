@@ -482,7 +482,7 @@ class IndicatorsInsert extends Component {
                 disableElevation
                 onClick={this.modalHandlerOpen}
               >
-                Отправить показания
+                Отправить
               </ButtonUI>
             </div>
           </div>
