@@ -6,7 +6,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -43,8 +42,8 @@ const useStyles = makeStyles({
     marginBottom: "15px",
   },
   selectPadding: {
-    display: 'flex',
-    flexBasis: "13rem"
+    display: "flex",
+    flexBasis: "13rem",
   },
   buttonClose: {
     position: "absolute",
@@ -120,7 +119,15 @@ const TariffCard = (props) => {
       <CardContent className={classes.cardPadding}>
         <Grid container>
           <Grid item xs={12} className={classes.row}>
-            <FormControl className={classes.textFieldMargin + " " + classes.textField + " " + classes.selectPadding}>
+            <FormControl
+              className={
+                classes.textFieldMargin +
+                " " +
+                classes.textField +
+                " " +
+                classes.selectPadding
+              }
+            >
               <InputLabel>Наименование</InputLabel>
               <Select
                 value={name}
@@ -133,7 +140,9 @@ const TariffCard = (props) => {
                 <MenuItem value={"hot_water"}>Подогрев воды</MenuItem>
                 <MenuItem value={"disposal_water"}>Водоотведение</MenuItem>
                 <MenuItem value={"electricity_day"}>Электро-ия. день</MenuItem>
-                <MenuItem value={"electricity_night"}>Электро-ия. ночь</MenuItem>
+                <MenuItem value={"electricity_night"}>
+                  Электро-ия. ночь
+                </MenuItem>
               </Select>
             </FormControl>
             <CurrencyTextField

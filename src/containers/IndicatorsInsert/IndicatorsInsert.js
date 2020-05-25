@@ -6,8 +6,7 @@ import emailjs from "emailjs-com";
 import CONFIG from "../../configuration.json";
 import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
 
-import InputNum from "../../components/UI/Inputs/InputNum";
-import { Dropdown } from "semantic-ui-react";
+import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import "./IndicatorsInsert.css";
 
 import Dialog from "@material-ui/core/Dialog";
@@ -17,6 +16,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 class IndicatorsInsert extends Component {
   state = {
@@ -39,9 +43,9 @@ class IndicatorsInsert extends Component {
     modalOpen: false,
   };
 
-  addIndicatorHandler = (type, event) => {
+  addIndicatorHandler = (type, value) => {
     //Обновляем показатель
-    const updatedCount = event.target.value;
+    const updatedCount = value;
     const updatedIndicators = { ...this.state.indicators };
     updatedIndicators[type].value = updatedCount;
     updatedIndicators[type].valid = true;
@@ -60,7 +64,7 @@ class IndicatorsInsert extends Component {
     for (let ind in this.state.indicators) {
       const indicators = { ...this.state.indicators };
 
-      if (indicators[ind].value === "") {
+      if (indicators[ind].value === "" || indicators[ind].value === 0) {
         const updatedIndicators = { ...this.state.indicators };
         updatedIndicators[ind].valid = false;
         this.setState({ indicators: updatedIndicators });
@@ -166,14 +170,14 @@ class IndicatorsInsert extends Component {
     return currentYearList;
   };
 
-  setStateMonth = (e, { value }) => {
+  setStateMonth = (e, value) => {
     const updatedMonth = value;
     const updatedMonthYear = { ...this.state.monthYear };
     updatedMonthYear.month = updatedMonth;
     this.setState({ monthYear: updatedMonthYear });
   };
 
-  setStateYear = (e, { value }) => {
+  setStateYear = (e, value) => {
     const updatedYear = value;
     const updatedMonthYear = { ...this.state.monthYear };
     updatedMonthYear.year = updatedYear;
@@ -182,8 +186,7 @@ class IndicatorsInsert extends Component {
 
   render() {
     const errorMessage = "Поле обязательно для заполнения";
-    const inputClasses = ["field"];
-    const inputError = ["field", "error"];
+
     return (
       <div className="ui_center">
         <Dialog
@@ -295,7 +298,7 @@ class IndicatorsInsert extends Component {
           </DialogActions>
         </Dialog>
 
-        <form className="ui form">
+        <form>
           <Typography
             variant="h4"
             align="center"
@@ -311,24 +314,38 @@ class IndicatorsInsert extends Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Dropdown
-                placeholder="Выберите месяц"
-                selection
-                fluid
-                defaultValue={MONTHS_LIST[this.getCurrentMonth()].value}
-                options={MONTHS_LIST}
-                onChange={this.setStateMonth}
-              />
+              <FormControl style={{ width: "100%" }}>
+                <InputLabel>Месяц</InputLabel>
+                <Select
+                  value={this.state.monthYear.month || 0}
+                  onChange={(event) =>
+                    this.setStateMonth(event, event.target.value)
+                  }
+                >
+                  {MONTHS_LIST.map((item) => (
+                    <MenuItem key={item.key} value={item.value}>
+                      {item.text}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <Dropdown
-                placeholder="Выберите месяц"
-                selection
-                fluid
-                defaultValue={this.getCurrentYear()[2].value}
-                options={this.getCurrentYear()}
-                onChange={this.setStateYear}
-              />
+              <FormControl style={{ width: "100%" }}>
+                <InputLabel>Год</InputLabel>
+                <Select
+                  value={this.state.monthYear.year || 2020}
+                  onChange={(event) =>
+                    this.setStateYear(event, event.target.value)
+                  }
+                >
+                  {this.getCurrentYear().map((item) => (
+                    <MenuItem key={item.key} value={item.value}>
+                      {item.text}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
 
@@ -339,41 +356,41 @@ class IndicatorsInsert extends Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <InputNum
-                classEnter={
-                  this.state.indicators.ElectricityDay.valid
-                    ? inputClasses.join(" ")
-                    : inputError.join(" ")
-                }
-                id={"ElectricityDay"}
-                label={"День"}
-                placeholder={"Введите дневное потребление"}
-                name={"ElectricityDay"}
-                changed={(event) =>
-                  this.addIndicatorHandler("ElectricityDay", event)
-                }
+              <CurrencyTextField
+                style={{ width: "100%" }}
+                variant="standard"
+                label="День"
+                currencySymbol=""
                 value={this.state.indicators.ElectricityDay.value}
-                invalid={this.state.indicators.ElectricityDay.valid}
-                errorMessage={errorMessage}
+                minimumValue="0"
+                onChange={(event, value) =>
+                  this.addIndicatorHandler("ElectricityDay", value)
+                }
+                error={!this.state.indicators.ElectricityDay.valid}
+                helperText={
+                  !this.state.indicators.ElectricityDay.valid
+                    ? errorMessage
+                    : null
+                }
               />
             </Grid>
             <Grid item xs={6}>
-              <InputNum
-                classEnter={
-                  this.state.indicators.ElectricityNight.valid
-                    ? inputClasses.join(" ")
-                    : inputError.join(" ")
-                }
-                id={"ElectricityNight"}
-                label={"Ночь"}
-                placeholder={"Введите ночное потребление"}
-                name={"ElectricityNight"}
-                changed={(event) =>
-                  this.addIndicatorHandler("ElectricityNight", event)
-                }
+              <CurrencyTextField
+                style={{ width: "100%" }}
+                variant="standard"
+                label="Ночь"
+                currencySymbol=""
                 value={this.state.indicators.ElectricityNight.value}
-                invalid={this.state.indicators.ElectricityNight.valid}
-                errorMessage={errorMessage}
+                minimumValue="0"
+                onChange={(event, value) =>
+                  this.addIndicatorHandler("ElectricityNight", value)
+                }
+                error={!this.state.indicators.ElectricityNight.valid}
+                helperText={
+                  !this.state.indicators.ElectricityNight.valid
+                    ? errorMessage
+                    : null
+                }
               />
             </Grid>
           </Grid>
@@ -385,41 +402,41 @@ class IndicatorsInsert extends Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <InputNum
-                classEnter={
-                  this.state.indicators.ColdWaterKittchen.valid
-                    ? inputClasses.join(" ")
-                    : inputError.join(" ")
-                }
-                id={"ColdWaterKittchen"}
-                label={"Холодная вода"}
-                placeholder={"Введите потребление"}
-                name={"ColdWaterKittchen"}
-                changed={(event) =>
-                  this.addIndicatorHandler("ColdWaterKittchen", event)
-                }
+              <CurrencyTextField
+                style={{ width: "100%" }}
+                variant="standard"
+                label="Холодная вода"
+                currencySymbol=""
                 value={this.state.indicators.ColdWaterKittchen.value}
-                invalid={this.state.indicators.ColdWaterKittchen.valid}
-                errorMessage={errorMessage}
+                minimumValue="0"
+                onChange={(event, value) =>
+                  this.addIndicatorHandler("ColdWaterKittchen", value)
+                }
+                error={!this.state.indicators.ColdWaterKittchen.valid}
+                helperText={
+                  !this.state.indicators.ColdWaterKittchen.valid
+                    ? errorMessage
+                    : null
+                }
               />
             </Grid>
             <Grid item xs={6}>
-              <InputNum
-                classEnter={
-                  this.state.indicators.HotWaterKittchen.valid
-                    ? inputClasses.join(" ")
-                    : inputError.join(" ")
-                }
-                id={"HotWaterKittchen"}
-                label={"Горячая вода"}
-                placeholder={"Введите потребление"}
-                name={"HotWaterKittchen"}
-                changed={(event) =>
-                  this.addIndicatorHandler("HotWaterKittchen", event)
-                }
+              <CurrencyTextField
+                style={{ width: "100%" }}
+                variant="standard"
+                label="Горячая вода"
+                currencySymbol=""
                 value={this.state.indicators.HotWaterKittchen.value}
-                invalid={this.state.indicators.HotWaterKittchen.valid}
-                errorMessage={errorMessage}
+                minimumValue="0"
+                onChange={(event, value) =>
+                  this.addIndicatorHandler("HotWaterKittchen", value)
+                }
+                error={!this.state.indicators.HotWaterKittchen.valid}
+                helperText={
+                  !this.state.indicators.HotWaterKittchen.valid
+                    ? errorMessage
+                    : null
+                }
               />
             </Grid>
           </Grid>
@@ -431,47 +448,51 @@ class IndicatorsInsert extends Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <InputNum
-                classEnter={
-                  this.state.indicators.ColdWaterBathroom.valid
-                    ? inputClasses.join(" ")
-                    : inputError.join(" ")
-                }
-                id={"ColdWaterBathroom"}
-                label={"Холодная вода"}
-                placeholder={"Введите потребление"}
-                name={"ColdWaterBathroom"}
-                changed={(event) =>
-                  this.addIndicatorHandler("ColdWaterBathroom", event)
-                }
+              <CurrencyTextField
+                style={{ width: "100%" }}
+                variant="standard"
+                label="Холодная вода"
+                currencySymbol=""
                 value={this.state.indicators.ColdWaterBathroom.value}
-                invalid={this.state.indicators.ColdWaterBathroom.valid}
-                errorMessage={errorMessage}
+                minimumValue="0"
+                onChange={(event, value) =>
+                  this.addIndicatorHandler("ColdWaterBathroom", value)
+                }
+                error={!this.state.indicators.ColdWaterBathroom.valid}
+                helperText={
+                  !this.state.indicators.ColdWaterBathroom.valid
+                    ? errorMessage
+                    : null
+                }
               />
             </Grid>
             <Grid item xs={6}>
-              <InputNum
-                classEnter={
-                  this.state.indicators.HotWaterBathroom.valid
-                    ? inputClasses.join(" ")
-                    : inputError.join(" ")
-                }
-                id={"HotWaterBathroom"}
-                label={"Горячая вода"}
-                placeholder={"Введите потребление"}
-                name={"HotWaterBathroom"}
-                changed={(event) =>
-                  this.addIndicatorHandler("HotWaterBathroom", event)
-                }
+              <CurrencyTextField
+                style={{ width: "100%" }}
+                variant="standard"
+                label="Горячая вода"
+                currencySymbol=""
                 value={this.state.indicators.HotWaterBathroom.value}
-                invalid={this.state.indicators.HotWaterBathroom.valid}
-                errorMessage={errorMessage}
+                minimumValue="0"
+                onChange={(event, value) =>
+                  this.addIndicatorHandler("HotWaterBathroom", value)
+                }
+                error={!this.state.indicators.HotWaterBathroom.valid}
+                helperText={
+                  !this.state.indicators.HotWaterBathroom.valid
+                    ? errorMessage
+                    : null
+                }
               />
             </Grid>
           </Grid>
 
           <Grid container justify="center" spacing={2}>
-            <Grid item xs={12} style={{ textAlign: "center", marginTop: "15px" }}>
+            <Grid
+              item
+              xs={12}
+              style={{ textAlign: "center", marginTop: "15px" }}
+            >
               <Button
                 variant="contained"
                 color="primary"
