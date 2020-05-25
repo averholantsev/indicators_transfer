@@ -32,44 +32,14 @@ class OutlayDetails extends Component {
         intake: 822,
       },
     ],
-    tariffs: [
-      {
-        id: "water",
-        cost: 33.03,
-        dateStart: "2019-01-01",
-        dateEnd: "2020-12-31",
-      },
-      {
-        id: "hot_water",
-        cost: 1423.06,
-        dateStart: "2020-01-01",
-        dateEnd: "2020-06-30",
-      },
-      {
-        id: "disposal_water",
-        cost: 23.14,
-        dateStart: "2019-01-01",
-        dateEnd: "2020-12-31",
-      },
-      {
-        id: "day_electricity",
-        cost: 4.17,
-        dateStart: "2020-01-01",
-        dateEnd: "2020-06-30",
-      },
-      {
-        id: "night_electricity",
-        cost: 2.66,
-        dateStart: "2020-01-01",
-        dateEnd: "2020-06-30",
-      },
-    ],
+    tariffs: [],
     currentYear: new Date().getUTCFullYear(),
     error: null,
   };
 
   componentDidMount() {
     this.getListOfIndicators();
+    this.getListOfTariffs();
   }
 
   getListOfIndicators = () => {
@@ -121,6 +91,27 @@ class OutlayDetails extends Component {
         });
         indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
         this.setState({ indicatorsList: this.countOutlay(indicatorsList) });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          error: "Произошла ошибка, обратитесь к Системному Администратору.",
+        });
+      });
+  };
+
+  getListOfTariffs = () => {
+    axios
+      .get(`/tariffs.json`)
+      .then((response) => {
+        console.log("Ответ с сервера: ", response.data);
+
+        let tariffs = Object.keys(response.data).map((item) => {
+          let tariff = response.data[item];
+          tariff.id = item;
+          return tariff;
+        });
+        this.setState({ tariffs: tariffs });
       })
       .catch((error) => {
         console.log(error);
@@ -183,9 +174,9 @@ class OutlayDetails extends Component {
 
     let waterTariff = null;
     try {
-      waterTariff = this.state.tariffs.find(({ id, dateStart, dateEnd }) => {
+      waterTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {
         if (
-          id === "water" &&
+          name === "water" &&
           Date.parse(dateStart) <= date &&
           Date.parse(dateEnd) >= date
         ) {
@@ -198,9 +189,9 @@ class OutlayDetails extends Component {
 
     let disposalTariff = null;
     try {
-      disposalTariff = this.state.tariffs.find(({ id, dateStart, dateEnd }) => {
+      disposalTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {
         if (
-          id === "disposal_water" &&
+          name === "disposal_water" &&
           Date.parse(dateStart) <= date &&
           Date.parse(dateEnd) >= date
         ) {
