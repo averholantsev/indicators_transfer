@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
+
+import "./Tariffs.css";
 import { Loader } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
 
@@ -161,7 +163,7 @@ class Tariffs extends Component {
         />
       ));
     return (
-      <div>
+      <div className="tariffContainer">
         <DialogSimple
           open={this.state.deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}
@@ -170,7 +172,11 @@ class Tariffs extends Component {
           dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
           ё
         />
-        <Typography variant="h4" align="center" style={{marginBottom: "10px"}}>
+        <Typography
+          variant="h4"
+          align="center"
+          style={{ marginBottom: "10px" }}
+        >
           Тарифы
         </Typography>
         <Button
