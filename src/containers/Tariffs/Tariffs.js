@@ -52,7 +52,7 @@ class Tariffs extends Component {
       });
   };
 
-  updateTariffItem = (id) => {
+  updateItemInTariffs = (id) => {
     console.log("Обновление записи", id);
     const oldData = this.state.tariffs.find((item) => item.id === id);
     const newData = {
@@ -72,7 +72,7 @@ class Tariffs extends Component {
       });
   };
 
-  insertTariffItem = () => {
+  insertItemToTariffs = () => {
     console.log("Сохраниение записи");
     const oldData = this.state.tariffs[0];
     const newData = {
@@ -97,7 +97,7 @@ class Tariffs extends Component {
     if (typeof id !== "undefined") {
       this.setState({ deleteDialogOpen: true, deleteTariffId: id });
     } else {
-      this.removeTariffFromList(id);
+      this.removeTariffFromState(id);
     }
   };
 
@@ -106,12 +106,12 @@ class Tariffs extends Component {
   };
 
   handleDeleteDialogContinue = () => {
-    this.removeTariffFromList(this.state.deleteTariffId);
+    this.removeTariffFromState(this.state.deleteTariffId);
     this.deleteItemFromTariffs();
     this.handleDeleteDialogClose();
   };
 
-  addItemToTariffs = () => {
+  addTariffToState = () => {
     let newTariffsList = [...this.state.tariffs];
 
     newTariffsList.unshift({
@@ -124,7 +124,7 @@ class Tariffs extends Component {
     this.setState({ tariffs: newTariffsList, addButtonDisabled: true });
   };
 
-  removeTariffFromList = (removeId) => {
+  removeTariffFromState = (removeId) => {
     let newTariffsList = [...this.state.tariffs];
 
     newTariffsList = newTariffsList.filter((item) => {
@@ -153,12 +153,11 @@ class Tariffs extends Component {
           key={typeof item.id !== "undefined" ? item.id : index}
           tariff={item}
           disabled={typeof item.id !== "undefined" ? true : false}
-          removeTariffFromList={this.removeTariffFromList}
           handleDeleteDialogOpen={this.handleDeleteDialogOpen}
           handleDeleteDialogContinue={this.handleDeleteDialogContinue}
-          updateTariffItem={this.updateTariffItem}
+          updateItemInTariffs={this.updateItemInTariffs}
           updateTariffInState={this.updateTariffInState}
-          insertTariffItem={this.insertTariffItem}
+          insertItemToTariffs={this.insertItemToTariffs}
         />
       ));
     return (
@@ -175,7 +174,7 @@ class Tariffs extends Component {
           Тарифы
         </Typography>
         <Button
-          onClick={() => this.addItemToTariffs(tariffCards)}
+          onClick={() => this.addTariffToState(tariffCards)}
           color="primary"
           disabled={this.state.addButtonDisabled}
         >

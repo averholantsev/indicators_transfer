@@ -83,9 +83,9 @@ const TariffCard = (props) => {
           onClick={() => {
             setDisabled(true);
             if (id) {
-              props.updateTariffItem(id);
+              props.updateItemInTariffs(id);
             } else {
-              props.insertTariffItem();
+              props.insertItemToTariffs();
             }
           }}
           disableRipple
