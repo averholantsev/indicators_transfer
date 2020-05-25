@@ -409,19 +409,19 @@ class IndicatorsInsert extends Component {
               <div className="column">
                 <InputNum
                   classEnter={
-                    this.state.indicators.HotWaterBathroom.valid
+                    this.state.indicators.HotWaterKittchen.valid
                       ? inputClasses.join(" ")
                       : inputError.join(" ")
                   }
-                  id={"HotWaterBathroom"}
+                  id={"HotWaterKittchen"}
                   label={"Горячая вода"}
                   placeholder={"Введите потребление"}
-                  name={"HotWaterBathroom"}
+                  name={"HotWaterKittchen"}
                   changed={(event) =>
-                    this.addIndicatorHandler("HotWaterBathroom", event)
+                    this.addIndicatorHandler("HotWaterKittchen", event)
                   }
-                  value={this.state.indicators.HotWaterBathroom.value}
-                  invalid={this.state.indicators.HotWaterBathroom.valid}
+                  value={this.state.indicators.HotWaterKittchen.value}
+                  invalid={this.state.indicators.HotWaterKittchen.valid}
                   errorMessage={errorMessage}
                 />
               </div>
@@ -455,19 +455,19 @@ class IndicatorsInsert extends Component {
               <div className="column">
                 <InputNum
                   classEnter={
-                    this.state.indicators.HotWaterKittchen.valid
+                    this.state.indicators.HotWaterBathroom.valid
                       ? inputClasses.join(" ")
                       : inputError.join(" ")
                   }
-                  id={"HotWaterKittchen"}
+                  id={"HotWaterBathroom"}
                   label={"Горячая вода"}
                   placeholder={"Введите потребление"}
-                  name={"HotWaterKittchen"}
+                  name={"HotWaterBathroom"}
                   changed={(event) =>
-                    this.addIndicatorHandler("HotWaterKittchen", event)
+                    this.addIndicatorHandler("HotWaterBathroom", event)
                   }
-                  value={this.state.indicators.HotWaterKittchen.value}
-                  invalid={this.state.indicators.HotWaterKittchen.valid}
+                  value={this.state.indicators.HotWaterBathroom.value}
+                  invalid={this.state.indicators.HotWaterBathroom.valid}
                   errorMessage={errorMessage}
                 />
               </div>
