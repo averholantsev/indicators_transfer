@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
-import { Loader } from "semantic-ui-react";
 import "./OutlayDetails.css";
+import Loader from "../../components/UI/Loader/Loader";
 import Outlay from "../../components/Outlay/Outlay";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
@@ -189,15 +189,17 @@ class OutlayDetails extends Component {
 
     let disposalTariff = null;
     try {
-      disposalTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {
-        if (
-          name === "disposal_water" &&
-          Date.parse(dateStart) <= date &&
-          Date.parse(dateEnd) >= date
-        ) {
-          return true;
-        } else return false;
-      }).cost;
+      disposalTariff = this.state.tariffs.find(
+        ({ name, dateStart, dateEnd }) => {
+          if (
+            name === "disposal_water" &&
+            Date.parse(dateStart) <= date &&
+            Date.parse(dateEnd) >= date
+          ) {
+            return true;
+          } else return false;
+        }
+      ).cost;
     } catch (e) {
       console.log("Тариф на водоотведение", e);
     }
@@ -217,16 +219,11 @@ class OutlayDetails extends Component {
   render() {
     let indicatorsList = null;
     if (this.state.indicatorsList.length === 0 && this.state.error == null) {
-      indicatorsList = (
-        <Loader active inline="centered">
-          Загрузка
-        </Loader>
-      );
+      indicatorsList = <Loader />;
     } else if (this.state.indicatorsList.length > 0) {
-      indicatorsList = this.state.indicatorsList
-        .filter((item) => {
-          return item.date.getUTCFullYear() === this.state.currentYear;
-        })
+      indicatorsList = this.state.indicatorsList.filter((item) => {
+        return item.date.getUTCFullYear() === this.state.currentYear;
+      });
 
       if (indicatorsList.length > 0) {
         indicatorsList = indicatorsList.map((item, index) => {
@@ -238,8 +235,12 @@ class OutlayDetails extends Component {
             />
           );
         });
-      } else indicatorsList = (<p style={{ textAlign: "center" }}>{`Нет данных на ${this.state.currentYear} год`}</p>);
-        
+      } else
+        indicatorsList = (
+          <p
+            style={{ textAlign: "center" }}
+          >{`Нет данных на ${this.state.currentYear} год`}</p>
+        );
     } else {
       indicatorsList = (
         <p style={{ textAlign: "center" }}>{this.state.error}</p>
@@ -261,9 +262,7 @@ class OutlayDetails extends Component {
           Текущие расходы
         </Typography>
         <Tabs tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
-        <div className="indicatorsList">
-          {indicatorsList}
-        </div>
+        <div className="indicatorsList">{indicatorsList}</div>
       </div>
     );
   }

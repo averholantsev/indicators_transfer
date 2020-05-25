@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "../../axios-main";
 
 import "./Tariffs.css";
-import { Loader } from "semantic-ui-react";
+import Loader from "../../components/UI/Loader/Loader";
 import Typography from "@material-ui/core/Typography";
 
 import TariffCard from "../../components/TariffCard/TariffCard";
