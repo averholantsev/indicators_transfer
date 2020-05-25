@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import "./AuthForm.css";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import AuthInput from "../../components/AuthComponents/AuthInput";
-import AuthInputPassword from "../../components/AuthComponents/AuthInputPassword";
-import AuthButton from "../../components/AuthComponents/AuthButton";
-import CSSAlert from "../../components/AuthComponents/AuthAlert";
+import AuthInput from "../../components/UI/AuthComponents/AuthInput";
+import AuthInputPassword from "../../components/UI/AuthComponents/AuthInputPassword";
+import AuthButton from "../../components/UI/AuthComponents/AuthButton";
+import CSSAlert from "../../components/UI/AuthComponents/AuthAlert";
 import * as actions from "../../store/actions/index";
 
 // Реализация классового компонента формы

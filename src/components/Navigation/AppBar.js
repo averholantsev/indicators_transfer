@@ -40,6 +40,9 @@ const MenuAppBar = (props) => {
             <Button className={classes.button} component={NavLink} to="/outlay">
               Расходы
             </Button>
+            <Button className={classes.button} component={NavLink} to="/tariffs">
+              Тарифы
+            </Button>
           </ButtonGroup>
           <div className={classes.grow} />
           <div>

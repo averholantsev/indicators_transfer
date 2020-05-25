@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Layout from "./hoc/Layout/Layout";
 import OutlayDetails from "./containers/OutlayDetails/OutlayDetails";
 import IndicatorsInsert from "./containers/IndicatorsInsert/IndicatorsInsert";
+import Tariffs from "./containers/Tariffs/Tariffs";
 import AuthForm from "./containers/AuthForm/AuthForm";
 import Logout from "./containers/AuthForm/Logout/Logout";
 import * as actions from "./store/actions/index";
@@ -27,8 +28,9 @@ class App extends Component {
         <Switch>
           <Route path="/outlay" component={OutlayDetails} />
           <Route path="/send-indicators" component={IndicatorsInsert} />
+          <Route path="/tariffs" component={Tariffs} />
           <Route path="/logout" component={Logout} />
-          <Redirect to="/send-indicators" />
+          <Redirect to="/tariffs" />
         </Switch>
       );
     }
