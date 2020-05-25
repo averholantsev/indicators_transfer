@@ -30,7 +30,7 @@ class App extends Component {
           <Route path="/send-indicators" component={IndicatorsInsert} />
           <Route path="/tariffs" component={Tariffs} />
           <Route path="/logout" component={Logout} />
-          <Redirect to="/tariffs" />
+          <Redirect to="/send-indicators" />
         </Switch>
       );
     }

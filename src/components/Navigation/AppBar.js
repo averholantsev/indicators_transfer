@@ -12,12 +12,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import EventNoteIcon from '@material-ui/icons/EventNote';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+
 const APP_MENU_LIST = [
-  { name: "Показания", path: "/send-indicators" },
-  { name: "Расходы", path: "/outlay" },
-  { name: "Тарифы", path: "/tariffs" },
+  { name: "Показания", path: "/send-indicators", icon: <ListAltIcon/> },
+  { name: "Расходы", path: "/outlay", icon: <EventNoteIcon/> },
+  { name: "Тарифы", path: "/tariffs", icon: <MonetizationOnIcon/> },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuAppBar = (props) => {
   const classes = useStyles();
-  const [sectionTitle, setSectionTitle] = useState("Тарифы");
+  const [sectionTitle, setSectionTitle] = useState("Показания");
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
@@ -91,6 +96,7 @@ const MenuAppBar = (props) => {
                   setSectionTitle(item.name);
                 }}
               >
+                <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.name} />
               </ListItem>
             ))}
