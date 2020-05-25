@@ -170,7 +170,7 @@ class Tariffs extends Component {
           dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
           ё
         />
-        <Typography variant="h4" align="center">
+        <Typography variant="h4" align="center" style={{marginBottom: "10px"}}>
           Тарифы
         </Typography>
         <Button

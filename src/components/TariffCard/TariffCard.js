@@ -20,7 +20,7 @@ import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles({
   root: {
-    marginBottom: "30px",
+    margin: "20px 0",
     position: "relative",
   },
   cardPadding: {
