@@ -21,6 +21,10 @@
   margin-inline-start: 1rem;
 }
 
+.headerMargin {
+  margin-top: 10px !important;
+}
+
 @media (min-width: 500px) {
   .ui_center {
     width: 500px;

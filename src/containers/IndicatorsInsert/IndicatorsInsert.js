@@ -15,7 +15,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
-import ButtonUI from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
 class IndicatorsInsert extends Component {
@@ -185,7 +185,7 @@ class IndicatorsInsert extends Component {
     const inputClasses = ["field"];
     const inputError = ["field", "error"];
     return (
-      <div className="ui center ui_center">
+      <div className="ui_center">
         <Dialog
           open={this.state.modalOpen}
           onClose={this.modalHandlerClose}
@@ -286,206 +286,202 @@ class IndicatorsInsert extends Component {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <ButtonUI onClick={this.modalHandlerClose} color="secondary">
+            <Button onClick={this.modalHandlerClose} color="secondary">
               Отмена
-            </ButtonUI>
-            <ButtonUI onClick={this.sendIndicators} color="primary" autoFocus>
+            </Button>
+            <Button onClick={this.sendIndicators} color="primary" autoFocus>
               Отправить
-            </ButtonUI>
+            </Button>
           </DialogActions>
         </Dialog>
 
         <form className="ui form">
-          <div className="ui one column centered grid">
-            <div className="column">
-              <Typography variant="h4" align="center">
-                Подать показания
+          <Typography
+            variant="h4"
+            align="center"
+            style={{ marginBottom: "10px" }}
+          >
+            Подать показания
+          </Typography>
+
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5" className="headerMargin">
+                Месяц и год
               </Typography>
-            </div>
-          </div>
+            </Grid>
+            <Grid item xs={6}>
+              <Dropdown
+                placeholder="Выберите месяц"
+                selection
+                fluid
+                defaultValue={MONTHS_LIST[this.getCurrentMonth()].value}
+                options={MONTHS_LIST}
+                onChange={this.setStateMonth}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Dropdown
+                placeholder="Выберите месяц"
+                selection
+                fluid
+                defaultValue={this.getCurrentYear()[2].value}
+                options={this.getCurrentYear()}
+                onChange={this.setStateYear}
+              />
+            </Grid>
+          </Grid>
 
-          <div className="ui grid">
-            <div className="row">
-              <div className="column">
-                <Typography variant="h5">Месяц и год</Typography>
-              </div>
-            </div>
-            <div className="two column row">
-              <div className="column">
-                <Dropdown
-                  placeholder="Выберите месяц"
-                  selection
-                  fluid
-                  defaultValue={MONTHS_LIST[this.getCurrentMonth()].value}
-                  options={MONTHS_LIST}
-                  onChange={this.setStateMonth}
-                />
-              </div>
-              <div className="column">
-                <div className="column">
-                  <Dropdown
-                    placeholder="Выберите месяц"
-                    selection
-                    fluid
-                    defaultValue={this.getCurrentYear()[2].value}
-                    options={this.getCurrentYear()}
-                    onChange={this.setStateYear}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5" className="headerMargin">
+                Электроэнергия
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <InputNum
+                classEnter={
+                  this.state.indicators.ElectricityDay.valid
+                    ? inputClasses.join(" ")
+                    : inputError.join(" ")
+                }
+                id={"ElectricityDay"}
+                label={"День"}
+                placeholder={"Введите дневное потребление"}
+                name={"ElectricityDay"}
+                changed={(event) =>
+                  this.addIndicatorHandler("ElectricityDay", event)
+                }
+                value={this.state.indicators.ElectricityDay.value}
+                invalid={this.state.indicators.ElectricityDay.valid}
+                errorMessage={errorMessage}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputNum
+                classEnter={
+                  this.state.indicators.ElectricityNight.valid
+                    ? inputClasses.join(" ")
+                    : inputError.join(" ")
+                }
+                id={"ElectricityNight"}
+                label={"Ночь"}
+                placeholder={"Введите ночное потребление"}
+                name={"ElectricityNight"}
+                changed={(event) =>
+                  this.addIndicatorHandler("ElectricityNight", event)
+                }
+                value={this.state.indicators.ElectricityNight.value}
+                invalid={this.state.indicators.ElectricityNight.valid}
+                errorMessage={errorMessage}
+              />
+            </Grid>
+          </Grid>
 
-          <div className="ui two column centered grid">
-            <div className="left floated column">
-              <Typography variant="h5">Электроэнергия</Typography>
-            </div>
-            <div className="two column row">
-              <div className="column">
-                <InputNum
-                  classEnter={
-                    this.state.indicators.ElectricityDay.valid
-                      ? inputClasses.join(" ")
-                      : inputError.join(" ")
-                  }
-                  id={"ElectricityDay"}
-                  label={"День"}
-                  placeholder={"Введите дневное потребление"}
-                  name={"ElectricityDay"}
-                  changed={(event) =>
-                    this.addIndicatorHandler("ElectricityDay", event)
-                  }
-                  value={this.state.indicators.ElectricityDay.value}
-                  invalid={this.state.indicators.ElectricityDay.valid}
-                  errorMessage={errorMessage}
-                />
-              </div>
-              <div className="column">
-                <InputNum
-                  classEnter={
-                    this.state.indicators.ElectricityNight.valid
-                      ? inputClasses.join(" ")
-                      : inputError.join(" ")
-                  }
-                  id={"ElectricityNight"}
-                  label={"Ночь"}
-                  placeholder={"Введите ночное потребление"}
-                  name={"ElectricityNight"}
-                  changed={(event) =>
-                    this.addIndicatorHandler("ElectricityNight", event)
-                  }
-                  value={this.state.indicators.ElectricityNight.value}
-                  invalid={this.state.indicators.ElectricityNight.valid}
-                  errorMessage={errorMessage}
-                />
-              </div>
-            </div>
-          </div>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5" className="headerMargin">
+                Кухня
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <InputNum
+                classEnter={
+                  this.state.indicators.ColdWaterKittchen.valid
+                    ? inputClasses.join(" ")
+                    : inputError.join(" ")
+                }
+                id={"ColdWaterKittchen"}
+                label={"Холодная вода"}
+                placeholder={"Введите потребление"}
+                name={"ColdWaterKittchen"}
+                changed={(event) =>
+                  this.addIndicatorHandler("ColdWaterKittchen", event)
+                }
+                value={this.state.indicators.ColdWaterKittchen.value}
+                invalid={this.state.indicators.ColdWaterKittchen.valid}
+                errorMessage={errorMessage}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputNum
+                classEnter={
+                  this.state.indicators.HotWaterKittchen.valid
+                    ? inputClasses.join(" ")
+                    : inputError.join(" ")
+                }
+                id={"HotWaterKittchen"}
+                label={"Горячая вода"}
+                placeholder={"Введите потребление"}
+                name={"HotWaterKittchen"}
+                changed={(event) =>
+                  this.addIndicatorHandler("HotWaterKittchen", event)
+                }
+                value={this.state.indicators.HotWaterKittchen.value}
+                invalid={this.state.indicators.HotWaterKittchen.valid}
+                errorMessage={errorMessage}
+              />
+            </Grid>
+          </Grid>
 
-          <div className="ui two column centered grid indicator_container">
-            <div className="left floated column">
-              <Typography variant="h5">Кухня</Typography>
-            </div>
-            <div className="two column row">
-              <div className="column">
-                <InputNum
-                  classEnter={
-                    this.state.indicators.ColdWaterKittchen.valid
-                      ? inputClasses.join(" ")
-                      : inputError.join(" ")
-                  }
-                  id={"ColdWaterKittchen"}
-                  label={"Холодная вода"}
-                  placeholder={"Введите потребление"}
-                  name={"ColdWaterKittchen"}
-                  changed={(event) =>
-                    this.addIndicatorHandler("ColdWaterKittchen", event)
-                  }
-                  value={this.state.indicators.ColdWaterKittchen.value}
-                  invalid={this.state.indicators.ColdWaterKittchen.valid}
-                  errorMessage={errorMessage}
-                />
-              </div>
-              <div className="column">
-                <InputNum
-                  classEnter={
-                    this.state.indicators.HotWaterKittchen.valid
-                      ? inputClasses.join(" ")
-                      : inputError.join(" ")
-                  }
-                  id={"HotWaterKittchen"}
-                  label={"Горячая вода"}
-                  placeholder={"Введите потребление"}
-                  name={"HotWaterKittchen"}
-                  changed={(event) =>
-                    this.addIndicatorHandler("HotWaterKittchen", event)
-                  }
-                  value={this.state.indicators.HotWaterKittchen.value}
-                  invalid={this.state.indicators.HotWaterKittchen.valid}
-                  errorMessage={errorMessage}
-                />
-              </div>
-            </div>
-          </div>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5" className="headerMargin">
+                Ванная
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <InputNum
+                classEnter={
+                  this.state.indicators.ColdWaterBathroom.valid
+                    ? inputClasses.join(" ")
+                    : inputError.join(" ")
+                }
+                id={"ColdWaterBathroom"}
+                label={"Холодная вода"}
+                placeholder={"Введите потребление"}
+                name={"ColdWaterBathroom"}
+                changed={(event) =>
+                  this.addIndicatorHandler("ColdWaterBathroom", event)
+                }
+                value={this.state.indicators.ColdWaterBathroom.value}
+                invalid={this.state.indicators.ColdWaterBathroom.valid}
+                errorMessage={errorMessage}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputNum
+                classEnter={
+                  this.state.indicators.HotWaterBathroom.valid
+                    ? inputClasses.join(" ")
+                    : inputError.join(" ")
+                }
+                id={"HotWaterBathroom"}
+                label={"Горячая вода"}
+                placeholder={"Введите потребление"}
+                name={"HotWaterBathroom"}
+                changed={(event) =>
+                  this.addIndicatorHandler("HotWaterBathroom", event)
+                }
+                value={this.state.indicators.HotWaterBathroom.value}
+                invalid={this.state.indicators.HotWaterBathroom.valid}
+                errorMessage={errorMessage}
+              />
+            </Grid>
+          </Grid>
 
-          <div className="ui two column centered grid indicator_container">
-            <div className="left floated column">
-              <Typography variant="h5">Ванная</Typography>
-            </div>
-            <div className="two column row">
-              <div className="column">
-                <InputNum
-                  classEnter={
-                    this.state.indicators.ColdWaterBathroom.valid
-                      ? inputClasses.join(" ")
-                      : inputError.join(" ")
-                  }
-                  id={"ColdWaterBathroom"}
-                  label={"Холодная вода"}
-                  placeholder={"Введите потребление"}
-                  name={"ColdWaterBathroom"}
-                  changed={(event) =>
-                    this.addIndicatorHandler("ColdWaterBathroom", event)
-                  }
-                  value={this.state.indicators.ColdWaterBathroom.value}
-                  invalid={this.state.indicators.ColdWaterBathroom.valid}
-                  errorMessage={errorMessage}
-                />
-              </div>
-              <div className="column">
-                <InputNum
-                  classEnter={
-                    this.state.indicators.HotWaterBathroom.valid
-                      ? inputClasses.join(" ")
-                      : inputError.join(" ")
-                  }
-                  id={"HotWaterBathroom"}
-                  label={"Горячая вода"}
-                  placeholder={"Введите потребление"}
-                  name={"HotWaterBathroom"}
-                  changed={(event) =>
-                    this.addIndicatorHandler("HotWaterBathroom", event)
-                  }
-                  value={this.state.indicators.HotWaterBathroom.value}
-                  invalid={this.state.indicators.HotWaterBathroom.valid}
-                  errorMessage={errorMessage}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="ui one column centered grid">
-            <div style={{ textAlign: "center" }} className="column">
-              <ButtonUI
+          <Grid container justify="center" spacing={2}>
+            <Grid item xs={12} style={{ textAlign: "center", marginTop: "15px" }}>
+              <Button
                 variant="contained"
                 color="primary"
                 disableElevation
                 onClick={this.modalHandlerOpen}
               >
                 Отправить
-              </ButtonUI>
-            </div>
-          </div>
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </div>
     );
