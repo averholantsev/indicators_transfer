@@ -18,11 +18,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const APP_MENU_LIST = [
   { name: "Показания", path: "/send-indicators", icon: <ListAltIcon/> },
   { name: "Расходы", path: "/outlay", icon: <EventNoteIcon/> },
   { name: "Тарифы", path: "/tariffs", icon: <MonetizationOnIcon/> },
+  { name: "Профиль", path: "/profile", icon: <AccountCircleIcon/> },
 ];
 
 const useStyles = makeStyles((theme) => ({

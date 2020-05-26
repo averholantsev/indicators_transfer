@@ -17,6 +17,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
@@ -298,212 +301,214 @@ class IndicatorsInsert extends Component {
           </DialogActions>
         </Dialog>
 
-        <form>
-          <Typography
-            variant="h4"
-            align="center"
-            style={{ marginBottom: "10px" }}
-          >
-            Подать показания
-          </Typography>
+        <Typography
+          variant="h4"
+          align="center"
+          style={{ marginBottom: "10px" }}
+        >
+          Подать показания
+        </Typography>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" className="headerMargin">
-                Месяц и год
-              </Typography>
+        <Card className="card">
+          <CardContent className="cardPadding">
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" className="headerMargin">
+                  Месяц и год
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl style={{ width: "100%" }}>
+                  <InputLabel>Месяц</InputLabel>
+                  <Select
+                    value={this.state.monthYear.month || 0}
+                    onChange={(event) =>
+                      this.setStateMonth(event, event.target.value)
+                    }
+                  >
+                    {MONTHS_LIST.map((item) => (
+                      <MenuItem key={item.key} value={item.value}>
+                        {item.text}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl style={{ width: "100%" }}>
+                  <InputLabel>Год</InputLabel>
+                  <Select
+                    value={this.state.monthYear.year || 2020}
+                    onChange={(event) =>
+                      this.setStateYear(event, event.target.value)
+                    }
+                  >
+                    {this.getCurrentYear().map((item) => (
+                      <MenuItem key={item.key} value={item.value}>
+                        {item.text}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <FormControl style={{ width: "100%" }}>
-                <InputLabel>Месяц</InputLabel>
-                <Select
-                  value={this.state.monthYear.month || 0}
-                  onChange={(event) =>
-                    this.setStateMonth(event, event.target.value)
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" className="headerMargin">
+                  Электроэнергия
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <CurrencyTextField
+                  style={{ width: "100%" }}
+                  variant="standard"
+                  label="День"
+                  currencySymbol=""
+                  value={this.state.indicators.ElectricityDay.value}
+                  minimumValue="0"
+                  onChange={(event, value) =>
+                    this.addIndicatorHandler("ElectricityDay", value)
                   }
-                >
-                  {MONTHS_LIST.map((item) => (
-                    <MenuItem key={item.key} value={item.value}>
-                      {item.text}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl style={{ width: "100%" }}>
-                <InputLabel>Год</InputLabel>
-                <Select
-                  value={this.state.monthYear.year || 2020}
-                  onChange={(event) =>
-                    this.setStateYear(event, event.target.value)
+                  error={!this.state.indicators.ElectricityDay.valid}
+                  helperText={
+                    !this.state.indicators.ElectricityDay.valid
+                      ? errorMessage
+                      : null
                   }
-                >
-                  {this.getCurrentYear().map((item) => (
-                    <MenuItem key={item.key} value={item.value}>
-                      {item.text}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <CurrencyTextField
+                  style={{ width: "100%" }}
+                  variant="standard"
+                  label="Ночь"
+                  currencySymbol=""
+                  value={this.state.indicators.ElectricityNight.value}
+                  minimumValue="0"
+                  onChange={(event, value) =>
+                    this.addIndicatorHandler("ElectricityNight", value)
+                  }
+                  error={!this.state.indicators.ElectricityNight.valid}
+                  helperText={
+                    !this.state.indicators.ElectricityNight.valid
+                      ? errorMessage
+                      : null
+                  }
+                />
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" className="headerMargin">
-                Электроэнергия
-              </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" className="headerMargin">
+                  Кухня
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <CurrencyTextField
+                  style={{ width: "100%" }}
+                  variant="standard"
+                  label="Холодная вода"
+                  currencySymbol=""
+                  value={this.state.indicators.ColdWaterKittchen.value}
+                  minimumValue="0"
+                  onChange={(event, value) =>
+                    this.addIndicatorHandler("ColdWaterKittchen", value)
+                  }
+                  error={!this.state.indicators.ColdWaterKittchen.valid}
+                  helperText={
+                    !this.state.indicators.ColdWaterKittchen.valid
+                      ? errorMessage
+                      : null
+                  }
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <CurrencyTextField
+                  style={{ width: "100%" }}
+                  variant="standard"
+                  label="Горячая вода"
+                  currencySymbol=""
+                  value={this.state.indicators.HotWaterKittchen.value}
+                  minimumValue="0"
+                  onChange={(event, value) =>
+                    this.addIndicatorHandler("HotWaterKittchen", value)
+                  }
+                  error={!this.state.indicators.HotWaterKittchen.valid}
+                  helperText={
+                    !this.state.indicators.HotWaterKittchen.valid
+                      ? errorMessage
+                      : null
+                  }
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <CurrencyTextField
-                style={{ width: "100%" }}
-                variant="standard"
-                label="День"
-                currencySymbol=""
-                value={this.state.indicators.ElectricityDay.value}
-                minimumValue="0"
-                onChange={(event, value) =>
-                  this.addIndicatorHandler("ElectricityDay", value)
-                }
-                error={!this.state.indicators.ElectricityDay.valid}
-                helperText={
-                  !this.state.indicators.ElectricityDay.valid
-                    ? errorMessage
-                    : null
-                }
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CurrencyTextField
-                style={{ width: "100%" }}
-                variant="standard"
-                label="Ночь"
-                currencySymbol=""
-                value={this.state.indicators.ElectricityNight.value}
-                minimumValue="0"
-                onChange={(event, value) =>
-                  this.addIndicatorHandler("ElectricityNight", value)
-                }
-                error={!this.state.indicators.ElectricityNight.valid}
-                helperText={
-                  !this.state.indicators.ElectricityNight.valid
-                    ? errorMessage
-                    : null
-                }
-              />
-            </Grid>
-          </Grid>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" className="headerMargin">
-                Кухня
-              </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" className="headerMargin">
+                  Ванная
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <CurrencyTextField
+                  style={{ width: "100%" }}
+                  variant="standard"
+                  label="Холодная вода"
+                  currencySymbol=""
+                  value={this.state.indicators.ColdWaterBathroom.value}
+                  minimumValue="0"
+                  onChange={(event, value) =>
+                    this.addIndicatorHandler("ColdWaterBathroom", value)
+                  }
+                  error={!this.state.indicators.ColdWaterBathroom.valid}
+                  helperText={
+                    !this.state.indicators.ColdWaterBathroom.valid
+                      ? errorMessage
+                      : null
+                  }
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <CurrencyTextField
+                  style={{ width: "100%" }}
+                  variant="standard"
+                  label="Горячая вода"
+                  currencySymbol=""
+                  value={this.state.indicators.HotWaterBathroom.value}
+                  minimumValue="0"
+                  onChange={(event, value) =>
+                    this.addIndicatorHandler("HotWaterBathroom", value)
+                  }
+                  error={!this.state.indicators.HotWaterBathroom.valid}
+                  helperText={
+                    !this.state.indicators.HotWaterBathroom.valid
+                      ? errorMessage
+                      : null
+                  }
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <CurrencyTextField
-                style={{ width: "100%" }}
-                variant="standard"
-                label="Холодная вода"
-                currencySymbol=""
-                value={this.state.indicators.ColdWaterKittchen.value}
-                minimumValue="0"
-                onChange={(event, value) =>
-                  this.addIndicatorHandler("ColdWaterKittchen", value)
-                }
-                error={!this.state.indicators.ColdWaterKittchen.valid}
-                helperText={
-                  !this.state.indicators.ColdWaterKittchen.valid
-                    ? errorMessage
-                    : null
-                }
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CurrencyTextField
-                style={{ width: "100%" }}
-                variant="standard"
-                label="Горячая вода"
-                currencySymbol=""
-                value={this.state.indicators.HotWaterKittchen.value}
-                minimumValue="0"
-                onChange={(event, value) =>
-                  this.addIndicatorHandler("HotWaterKittchen", value)
-                }
-                error={!this.state.indicators.HotWaterKittchen.valid}
-                helperText={
-                  !this.state.indicators.HotWaterKittchen.valid
-                    ? errorMessage
-                    : null
-                }
-              />
-            </Grid>
-          </Grid>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" className="headerMargin">
-                Ванная
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <CurrencyTextField
-                style={{ width: "100%" }}
-                variant="standard"
-                label="Холодная вода"
-                currencySymbol=""
-                value={this.state.indicators.ColdWaterBathroom.value}
-                minimumValue="0"
-                onChange={(event, value) =>
-                  this.addIndicatorHandler("ColdWaterBathroom", value)
-                }
-                error={!this.state.indicators.ColdWaterBathroom.valid}
-                helperText={
-                  !this.state.indicators.ColdWaterBathroom.valid
-                    ? errorMessage
-                    : null
-                }
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CurrencyTextField
-                style={{ width: "100%" }}
-                variant="standard"
-                label="Горячая вода"
-                currencySymbol=""
-                value={this.state.indicators.HotWaterBathroom.value}
-                minimumValue="0"
-                onChange={(event, value) =>
-                  this.addIndicatorHandler("HotWaterBathroom", value)
-                }
-                error={!this.state.indicators.HotWaterBathroom.valid}
-                helperText={
-                  !this.state.indicators.HotWaterBathroom.valid
-                    ? errorMessage
-                    : null
-                }
-              />
-            </Grid>
-          </Grid>
-
-          <Grid container justify="center" spacing={2}>
-            <Grid
-              item
-              xs={12}
-              style={{ textAlign: "center", marginTop: "15px" }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                disableElevation
-                onClick={this.modalHandlerOpen}
+            <Grid container justify="center" spacing={2}>
+              <Grid
+                item
+                xs={12}
+                style={{ textAlign: "center", marginTop: "15px" }}
               >
-                Отправить
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                  onClick={this.modalHandlerOpen}
+                >
+                  Отправить
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
+          </CardContent>
+        </Card>
       </div>
     );
   }

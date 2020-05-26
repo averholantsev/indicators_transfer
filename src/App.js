@@ -8,6 +8,7 @@ import IndicatorsInsert from "./containers/IndicatorsInsert/IndicatorsInsert";
 import Tariffs from "./containers/Tariffs/Tariffs";
 import AuthForm from "./containers/AuthForm/AuthForm";
 import Logout from "./containers/AuthForm/Logout/Logout";
+import UsersProfile from './containers/UsersProfile/UsersProfile'
 import * as actions from "./store/actions/index";
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
           <Route path="/outlay" component={OutlayDetails} />
           <Route path="/send-indicators" component={IndicatorsInsert} />
           <Route path="/tariffs" component={Tariffs} />
+          <Route path="/profile" component={UsersProfile} />
           <Route path="/logout" component={Logout} />
           <Redirect to="/send-indicators" />
         </Switch>
