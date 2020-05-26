@@ -5,6 +5,7 @@ import Loader from "../../components/UI/Loader/Loader";
 import Outlay from "../../components/Outlay/Outlay";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
+import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
 
 class OutlayDetails extends Component {
   // TODO Хранить в бд первоначальные результаты
@@ -35,6 +36,8 @@ class OutlayDetails extends Component {
     tariffs: [],
     currentYear: new Date().getUTCFullYear(),
     error: null,
+    deleteDialogOpen: false,
+    deleteIndicatorId: null,
   };
 
   componentDidMount() {
@@ -119,6 +122,40 @@ class OutlayDetails extends Component {
           error: "Произошла ошибка, обратитесь к Системному Администратору.",
         });
       });
+  };
+
+  deleteItemFromIndicators = () => {
+    axios
+      .delete(`/indicators/${this.state.deleteIndicatorId}.json`)
+      .then((response) => {
+        console.log("Ответ с сервера: ", response.data);
+        this.setState({ deleteIndicatorId: null });
+      })
+      .catch((error) => {
+        console.log("Ошибка: ", error);
+      });
+  };
+
+  handleDeleteDialogOpen = (id) => {
+    this.setState({ deleteDialogOpen: true, deleteIndicatorId: id });
+  };
+
+  handleDeleteDialogClose = () => {
+    this.setState({ deleteDialogOpen: false });
+  };
+
+  handleDeleteDialogContinue = () => {
+    this.removeIndicatorFromState(this.state.deleteIndicatorId);
+    this.deleteItemFromIndicators();
+    this.handleDeleteDialogClose();
+  };
+
+  removeIndicatorFromState = (removeId) => {
+    let newIndicatorsList = [...this.state.indicatorsList];
+    newIndicatorsList = newIndicatorsList.filter((item) => {
+      return item.id !== removeId;
+    });
+    this.setState({ indicatorsList: newIndicatorsList });
   };
 
   countOutlay = (indicatorsList) => {
@@ -232,6 +269,7 @@ class OutlayDetails extends Component {
               key={index}
               indicatorsList={item}
               costNovogor={this.countCostNovogor(item.indicators, item.date)}
+              handleDeleteDialogOpen={this.handleDeleteDialogOpen}
             />
           );
         });
@@ -258,6 +296,14 @@ class OutlayDetails extends Component {
 
     return (
       <div className="outlayContainer">
+        <DialogSimple
+          open={this.state.deleteDialogOpen}
+          handleClose={this.handleDeleteDialogClose}
+          handleContinue={this.handleDeleteDialogContinue}
+          dialogTitle="Вы уверены?"
+          dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
+          ё
+        />
         <Typography variant="h4" align="center">
           Текущие расходы
         </Typography>

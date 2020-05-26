@@ -7,10 +7,26 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 
-const outlay = (props) => {
-  const { date, indicators } = props.indicatorsList;
-  const { costNovogor } = props
+const useStyles = makeStyles({
+  root: {
+    position: "relative",
+    marginTop: "30px",
+  },
+  buttonClose: {
+    position: "absolute",
+    right: "-5px",
+    top: "-5px"
+  },
+});
+
+const Outlay = (props) => {
+  const classes = useStyles();
+  const { id, date, indicators } = props.indicatorsList;
+  const { costNovogor } = props;
 
   let indicatorMonth = "";
   switch (date.getMonth()) {
@@ -55,7 +71,20 @@ const outlay = (props) => {
   }
 
   return (
-    <TableContainer component={Paper} style={{ marginTop: "30px" }}>
+    <TableContainer component={Paper} className={classes.root} >
+      <IconButton
+        className={classes.buttonClose}
+        aria-label="Удалить"
+        component="span"
+        color="secondary"
+        onClick={() => {
+          props.handleDeleteDialogOpen(id);
+        }}
+        disableRipple
+        disableFocusRipple
+      >
+        <CloseIcon />
+      </IconButton>
       <Typography variant="h6" align="center">
         {indicatorMonth} {date.getFullYear()}
       </Typography>
@@ -89,4 +118,4 @@ const outlay = (props) => {
   );
 };
 
-export default outlay;
+export default Outlay;
