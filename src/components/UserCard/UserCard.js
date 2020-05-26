@@ -65,7 +65,7 @@ const UserCard = (props) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Верхоланцев"
+              label="Фамилия"
               value={lastName}
               fullWidth
               onChange={(event) =>
