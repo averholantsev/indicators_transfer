@@ -221,7 +221,7 @@ class OutlayDetails extends Component {
         } else return false;
       }).cost;
     } catch (e) {
-      console.log("Тариф на воду", e);
+      console.log("Тариф на воду загружается...");
     }
 
     let disposalTariff = null;
@@ -238,7 +238,7 @@ class OutlayDetails extends Component {
         }
       ).cost;
     } catch (e) {
-      console.log("Тариф на водоотведение", e);
+      console.log("Тариф на водоотведение загружается...");
     }
 
     let novogorCost = (
@@ -255,7 +255,10 @@ class OutlayDetails extends Component {
   // TODO: Добавить возможность редактирования и удаления записей
   render() {
     let indicatorsList = null;
-    if (this.state.indicatorsList.length === 0 && this.state.error == null) {
+    if (
+      this.state.indicatorsList.length === 0 &&
+      this.state.error == null
+    ) {
       indicatorsList = <Loader />;
     } else if (this.state.indicatorsList.length > 0) {
       indicatorsList = this.state.indicatorsList.filter((item) => {
