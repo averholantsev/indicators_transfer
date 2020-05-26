@@ -188,7 +188,7 @@ class IndicatorsInsert extends Component {
     const errorMessage = "Поле обязательно для заполнения";
 
     return (
-      <div className="ui_center">
+      <div>
         <Dialog
           open={this.state.modalOpen}
           onClose={this.modalHandlerClose}

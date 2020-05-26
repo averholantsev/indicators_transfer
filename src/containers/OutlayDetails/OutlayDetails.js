@@ -298,7 +298,7 @@ class OutlayDetails extends Component {
     }
 
     return (
-      <div className="outlayContainer">
+      <div>
         <DialogSimple
           open={this.state.deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}

@@ -1,13 +1,3 @@
-.outlayContainer {
-  padding: 0 2rem;
-}
-
 .indicatorsList {
   padding-top: 20px;
-}
-
-@media (min-width: 500px) {
-  .outlayContainer {
-    width: 500px;
-  }
 }

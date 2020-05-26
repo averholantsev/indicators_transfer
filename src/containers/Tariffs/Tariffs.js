@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
 
-import "./Tariffs.css";
 import Loader from "../../components/UI/Loader/Loader";
 import Typography from "@material-ui/core/Typography";
 
@@ -163,7 +162,7 @@ class Tariffs extends Component {
         />
       ));
     return (
-      <div className="tariffContainer">
+      <div>
         <DialogSimple
           open={this.state.deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}
