@@ -129,22 +129,24 @@ class IndicatorsInsert extends Component {
     ).toISOString();
 
     const indicators = {
-      Electricity: {
-        Day: this.state.indicators.ElectricityDay.value,
-        Night: this.state.indicators.ElectricityNight.value,
+      electricity: {
+        day: this.state.indicators.ElectricityDay.value,
+        night: this.state.indicators.ElectricityNight.value,
       },
-      ColdWater: {
-        Kittchen: this.state.indicators.ColdWaterKittchen.value,
-        Bathroom: this.state.indicators.ColdWaterBathroom.value,
+      coldWater: {
+        kittchen: this.state.indicators.ColdWaterKittchen.value,
+        bathroom: this.state.indicators.ColdWaterBathroom.value,
       },
-      HotWater: {
-        Kittchen: this.state.indicators.HotWaterKittchen.value,
-        Bathroom: this.state.indicators.HotWaterBathroom.value,
+      hotWater: {
+        kittchen: this.state.indicators.HotWaterKittchen.value,
+        bathroom: this.state.indicators.HotWaterBathroom.value,
       },
-      CurrentDate: { today: dateOfIndicators, year: this.state.monthYear.year },
+      currentDate: { today: dateOfIndicators, year: this.state.monthYear.year },
+      userId: localStorage.getItem('userId')
     };
+    const token = localStorage.getItem('token');
     axios
-      .post("/indicators.json", indicators)
+      .post(`/indicators.json?auth=${token}`, indicators)
       .then((response) => {
         this.setState({ modalOpen: false });
         this.sendEmailHandler();

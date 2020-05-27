@@ -6,34 +6,13 @@ import Outlay from "../../components/Outlay/Outlay";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
+import { withSnackbar } from "notistack";
 
 class OutlayDetails extends Component {
-  // TODO Хранить в бд первоначальные результаты
   state = {
-    indicatorsList: [],
-    prevIndicators: [
-      {
-        name: "Эл-я день:",
-        intake: 18572,
-      },
-      {
-        name: "Эл-я ночь:",
-        intake: 6699,
-      },
-      {
-        name: "Холодная вода:",
-        intake: 402,
-      },
-      {
-        name: "Горячая вода:",
-        intake: 420,
-      },
-      {
-        name: "Водоотведение:",
-        intake: 822,
-      },
-    ],
-    tariffs: [],
+    indicatorsList: null,
+    prevIndicators: null,
+    tariffs: null,
     currentYear: new Date().getUTCFullYear(),
     error: null,
     deleteDialogOpen: false,
@@ -41,95 +20,121 @@ class OutlayDetails extends Component {
   };
 
   componentDidMount() {
-    this.getListOfIndicators();
-    this.getListOfTariffs();
+    this.getDataFromFirebase();
   }
 
-  getListOfIndicators = () => {
-    axios
-      .get(`/indicators.json`)
-      .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+  getDataFromFirebase = () => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
-        let indicatorsList = Object.keys(response.data).map((key) => {
-          return {
-            id: key,
-            date: new Date(response.data[key].CurrentDate.today),
-            indicators: [
-              {
-                id: "day_electricity",
-                name: "Эл-я день:",
-                intake: Number(response.data[key].Electricity.Day),
-              },
-              {
-                id: "night_electricity",
-                name: "Эл-я ночь:",
-                intake: Number(response.data[key].Electricity.Night),
-              },
-              {
-                id: "cold_water",
-                name: "Холодная вода:",
-                intake:
-                  Number(response.data[key].ColdWater.Bathroom) +
-                  Number(response.data[key].ColdWater.Kittchen),
-              },
-              {
-                id: "hot_water",
-                name: "Горячая вода:",
-                intake:
-                  Number(response.data[key].HotWater.Bathroom) +
-                  Number(response.data[key].HotWater.Kittchen),
-              },
-              {
-                id: "disposal_water",
-                name: "Водоотведение:",
-                intake:
-                  Number(response.data[key].ColdWater.Bathroom) +
-                  Number(response.data[key].ColdWater.Kittchen) +
-                  Number(response.data[key].HotWater.Bathroom) +
-                  Number(response.data[key].HotWater.Kittchen),
-              },
-            ],
-          };
-        });
-        indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
-        this.setState({ indicatorsList: this.countOutlay(indicatorsList) });
+    const url_1 = `/users.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+    const url_2 = `/tariffs.json`;
+    const url_3 = `/indicators.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+
+    const promise1 = axios.get(url_1);
+    const promise2 = axios.get(url_2);
+    const promise3 = axios.get(url_3);
+
+    Promise.all([promise1, promise2, promise3])
+      .then((values) => {
+        console.log("Текущие расходы | запрос данных: ", values);
+
+        const prevIndicators = this.getUserDetails(values[0].data);
+        const tariffs = this.getListOfTariffs(values[1].data);
+        let indicatorsList = this.getListOfIndicators(values[2].data);
+
+        indicatorsList = this.countOutlay(indicatorsList, prevIndicators);
+
+        if (indicatorsList.length !== 0) {
+          this.setState({
+            prevIndicators: prevIndicators,
+            tariffs: tariffs,
+            indicatorsList: indicatorsList,
+          });
+        } else {
+          this.setState({
+            prevIndicators: prevIndicators,
+            tariffs: tariffs,
+            error: "Передайте показания",
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
         this.setState({
-          error: "Произошла ошибка, обратитесь к Системному Администратору.",
+          error: "Произошла ошибка, попробуйте обновить страницу.",
         });
       });
   };
 
-  getListOfTariffs = () => {
-    axios
-      .get(`/tariffs.json`)
-      .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+  getUserDetails = (data) => {
+    let prevIndicators = data[Object.keys(data)].prevIndicators;
 
-        let tariffs = Object.keys(response.data).map((item) => {
-          let tariff = response.data[item];
-          tariff.id = item;
-          return tariff;
-        });
-        this.setState({ tariffs: tariffs });
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          error: "Произошла ошибка, обратитесь к Системному Администратору.",
-        });
-      });
+    return prevIndicators;
+  };
+
+  getListOfTariffs = (data) => {
+    let tariffs = Object.keys(data).map((item) => {
+      let tariff = data[item];
+      tariff.id = item;
+      return tariff;
+    });
+    return tariffs;
+  };
+
+  getListOfIndicators = (data) => {
+    let indicatorsList = Object.keys(data).map((key) => {
+      return {
+        id: key,
+        date: new Date(data[key].currentDate.today),
+        indicators: [
+          {
+            id: "day_electricity",
+            name: "Эл-я день:",
+            intake: data[key].electricity.day,
+          },
+          {
+            id: "night_electricity",
+            name: "Эл-я ночь:",
+            intake: data[key].electricity.night,
+          },
+          {
+            id: "cold_water",
+            name: "Холодная вода:",
+            intake: data[key].coldWater.bathroom + data[key].coldWater.kittchen,
+          },
+          {
+            id: "hot_water",
+            name: "Горячая вода:",
+            intake: data[key].hotWater.bathroom + data[key].hotWater.kittchen,
+          },
+          {
+            id: "disposal_water",
+            name: "Водоотведение:",
+            intake:
+              data[key].coldWater.bathroom +
+              data[key].coldWater.kittchen +
+              data[key].hotWater.bathroom +
+              data[key].hotWater.kittchen,
+          },
+        ],
+      };
+    });
+    indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
+    return indicatorsList;
   };
 
   deleteItemFromIndicators = () => {
+    const token = localStorage.getItem("token");
     axios
-      .delete(`/indicators/${this.state.deleteIndicatorId}.json`)
+      .delete(`/indicators/${this.state.deleteIndicatorId}.json?auth=${token}`)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ deleteIndicatorId: null });
+        this.props.enqueueSnackbar("Объект успешно удален!", {
+          variant: "info",
+          preventDuplicate: true,
+        });
       })
       .catch((error) => {
         console.log("Ошибка: ", error);
@@ -158,7 +163,7 @@ class OutlayDetails extends Component {
     this.setState({ indicatorsList: newIndicatorsList });
   };
 
-  countOutlay = (indicatorsList) => {
+  countOutlay = (indicatorsList, prevIndicators) => {
     let newIndicatorsList = [...indicatorsList];
 
     for (let i = 0; i < newIndicatorsList.length; i++) {
@@ -166,8 +171,7 @@ class OutlayDetails extends Component {
         newIndicatorsList[i].indicators = newIndicatorsList[i].indicators.map(
           (item, index) => {
             let newItem = { ...item };
-            newItem["outlay"] =
-              newItem.intake - this.state.prevIndicators[index].intake;
+            newItem["outlay"] = newItem.intake - prevIndicators[index].intake;
             return newItem;
           }
         );
@@ -183,6 +187,7 @@ class OutlayDetails extends Component {
         );
       }
     }
+
     return newIndicatorsList;
   };
 
@@ -252,15 +257,14 @@ class OutlayDetails extends Component {
     this.setState({ currentYear: year });
   };
 
-  // TODO: Добавить возможность редактирования и удаления записей
   render() {
     let indicatorsList = null;
     if (
-      this.state.indicatorsList.length === 0 &&
-      this.state.error == null
+      this.state.indicatorsList === null &&
+      this.state.error === null
     ) {
       indicatorsList = <Loader />;
-    } else if (this.state.indicatorsList.length > 0) {
+    } else if (this.state.indicatorsList !== null) {
       indicatorsList = this.state.indicatorsList.filter((item) => {
         return item.date.getUTCFullYear() === this.state.currentYear;
       });
@@ -317,4 +321,4 @@ class OutlayDetails extends Component {
   }
 }
 
-export default OutlayDetails;
+export default withSnackbar(OutlayDetails);

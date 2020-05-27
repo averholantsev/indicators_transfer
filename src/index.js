@@ -13,6 +13,8 @@ import { HashRouter } from "react-router-dom";
 import history from "./store/history";
 import reducer from "./store/reducers/auth";
 
+import { SnackbarProvider } from "notistack";
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
@@ -20,7 +22,15 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 const app = (
   <Provider store={store}>
     <HashRouter history={history} basename={"/"}>
-      <App />
+      <SnackbarProvider
+        maxSnack={1}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+      >
+        <App />
+      </SnackbarProvider>
     </HashRouter>
   </Provider>
 );

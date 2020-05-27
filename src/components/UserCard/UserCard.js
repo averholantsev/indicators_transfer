@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
   buttonPosition: {
     textAlign: "center",
-  }
+  },
 });
 
 const UserCard = (props) => {
@@ -55,7 +55,7 @@ const UserCard = (props) => {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Амя"
+              label="Имя"
               value={firstName}
               fullWidth
               onChange={(event) =>
@@ -137,13 +137,21 @@ const UserCard = (props) => {
                 value={item.intake}
                 minimumValue="0"
                 onChange={(_, value) =>
-                  props.updateUserDataInState(item.name, value)
+                  props.updateIndicatorsInState(item.id, value)
                 }
               />
             </Grid>
           ))}
+
           <Grid className={classes.buttonPosition} item xs={12}>
-            <Button variant="contained" color="primary" disableElevation>
+            <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={() => {
+                props.updateUserDetails(props.userId);
+              }}
+            >
               Сохранить
             </Button>
           </Grid>

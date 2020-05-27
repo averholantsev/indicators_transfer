@@ -8,6 +8,8 @@ import TariffCard from "../../components/TariffCard/TariffCard";
 import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
 import Button from "@material-ui/core/Button";
 
+import { withSnackbar } from "notistack";
+
 class Tariffs extends Component {
   state = {
     tariffs: [],
@@ -47,6 +49,10 @@ class Tariffs extends Component {
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ deleteTariffId: null });
+        this.props.enqueueSnackbar("Объект успешно удален!", {
+          variant: "info",
+          preventDuplicate: true,
+        });
       })
       .catch((error) => {
         console.log("Ошибка: ", error);
@@ -67,6 +73,10 @@ class Tariffs extends Component {
       .patch(`/tariffs/${id}.json`, newData)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
+        this.props.enqueueSnackbar("Данные успешно сохранены!", {
+          variant: "success",
+          preventDuplicate: true,
+        });
       })
       .catch((error) => {
         console.log("Ошибка: ", error);
@@ -88,6 +98,10 @@ class Tariffs extends Component {
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ addButtonDisabled: false });
+        this.props.enqueueSnackbar("Данные успешно сохранены!", {
+          variant: "success",
+          preventDuplicate: true,
+        });
       })
       .catch((error) => {
         console.log("Ошибка: ", error);
@@ -191,4 +205,4 @@ class Tariffs extends Component {
   }
 }
 
-export default Tariffs;
+export default withSnackbar(Tariffs);

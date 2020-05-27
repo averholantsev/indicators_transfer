@@ -9,7 +9,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Typography from "@material-ui/core/Typography";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -78,13 +78,11 @@ const MenuAppBar = (props) => {
             <ExitToAppIcon />
           </IconButton>
         </Toolbar>
-        <SwipeableDrawer
+        <Drawer
           className={classes.drawer}
           anchor="left"
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
-          onOpen={() => console.log("Список открыт")}
-          disableBackdropTransition={true}
         >
           <List className={classes.list}>
             {APP_MENU_LIST.map((item) => (
@@ -103,7 +101,7 @@ const MenuAppBar = (props) => {
               </ListItem>
             ))}
           </List>
-        </SwipeableDrawer>
+        </Drawer>
       </AppBar>
     </div>
   );
