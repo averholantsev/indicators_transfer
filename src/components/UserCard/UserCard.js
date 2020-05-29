@@ -109,7 +109,7 @@ const UserCard = (props) => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h5" align="center">
-              Начальные показатели
+              Первичные показатели
             </Typography>
           </Grid>
           <Grid item xs={12}>

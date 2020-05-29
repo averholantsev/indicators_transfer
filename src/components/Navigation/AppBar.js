@@ -30,6 +30,7 @@ const APP_MENU_LIST = [
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: "100%"
   },
   button: {
     "&:hover": {

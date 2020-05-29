@@ -9,9 +9,14 @@ import AppBar from "../../components/Navigation/AppBar";
 class Layout extends Component {
   render() {
     return (
-      <Grid container>
+      <Grid
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
         {this.props.isAuth && (
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{width: "100%"}}>
             <AppBar />
           </Grid>
         )}

@@ -9,6 +9,7 @@ import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
 import Button from "@material-ui/core/Button";
 
 import { withSnackbar } from "notistack";
+import Grid from "@material-ui/core/Grid";
 
 class Tariffs extends Component {
   state = {
@@ -192,13 +193,23 @@ class Tariffs extends Component {
         >
           Тарифы
         </Typography>
-        <Button
-          onClick={() => this.addTariffToState(tariffCards)}
-          color="primary"
-          disabled={this.state.addButtonDisabled}
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          justify="center"
+          alignItems="center"
+          alignContent="center"
+          wrap="nowrap"
         >
-          Добавить тариф
-        </Button>
+          <Button
+            onClick={() => this.addTariffToState(tariffCards)}
+            color="primary"
+            disabled={this.state.addButtonDisabled}
+          >
+            Добавить тариф
+          </Button>
+        </Grid>
         {tariffCards}
       </div>
     );

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
+import { NavLink } from "react-router-dom";
 
 import "./AuthForm.css";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -7,7 +9,8 @@ import AuthInput from "../../components/UI/AuthComponents/AuthInput";
 import AuthInputPassword from "../../components/UI/AuthComponents/AuthInputPassword";
 import AuthButton from "../../components/UI/AuthComponents/AuthButton";
 import CSSAlert from "../../components/UI/AuthComponents/AuthAlert";
-import * as actions from "../../store/actions/index";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 
 // Реализация классового компонента формы
 class AuthForm extends Component {
@@ -17,13 +20,13 @@ class AuthForm extends Component {
     rememberMe: false,
     validateFields: {
       email: false,
-      password: false
+      password: false,
     },
     fieldValidationErrors: {
       email: "Обязательное поле!",
-      password: "Обязательное поле!"
+      password: "Обязательное поле!",
     },
-    willSend: true
+    willSend: true,
   };
 
   //Функция для обновления состояния полей ввода
@@ -61,7 +64,7 @@ class AuthForm extends Component {
     }
     this.setState({
       validateFields: validateFieldsUpdate,
-      fieldValidationErrors: fieldValidationErrors
+      fieldValidationErrors: fieldValidationErrors,
     });
   };
 
@@ -80,8 +83,7 @@ class AuthForm extends Component {
       //Отправка POST запроса на backend
       this.props.onAuth(
         this.state.email,
-        this.state.password,
-        this.state.rememberMe
+        this.state.password
       );
     } else {
       this.setState({ willSend: false });
@@ -106,7 +108,9 @@ class AuthForm extends Component {
               <LockOutlinedIcon />
             </div>
           </div>
-          <h1 className="authHeader">Вход в аккаунт</h1>
+          <Typography className="authHeader" variant="h5" align="center">
+            Система коммунальных показателей
+          </Typography>
           {this.props.errorMessage ? (
             <CSSAlert severity="error">{this.props.errorMessage}</CSSAlert>
           ) : null}
@@ -137,6 +141,11 @@ class AuthForm extends Component {
           <AuthButton onClick={this.formSenderHandler}>
             Войти в аккаунт
           </AuthButton>
+          <Typography>
+            <Link component={NavLink} to="/registration" variant="body2">
+              Еще нет аккаунта? Регистрация
+            </Link>
+          </Typography>
         </form>
       </div>
     );
@@ -154,8 +163,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password) =>
-      dispatch(actions.auth(email, password))
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
   };
 };
 

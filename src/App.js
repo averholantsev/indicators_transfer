@@ -3,12 +3,13 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Layout from "./hoc/Layout/Layout";
-import OutlayDetails from "./containers/OutlayDetails/OutlayDetails";
 import IndicatorsInsert from "./containers/IndicatorsInsert/IndicatorsInsert";
+import OutlayDetails from "./containers/OutlayDetails/OutlayDetails";
 import Tariffs from "./containers/Tariffs/Tariffs";
+import UsersProfile from "./containers/UsersProfile/UsersProfile";
 import AuthForm from "./containers/AuthForm/AuthForm";
 import Logout from "./containers/AuthForm/Logout/Logout";
-import UsersProfile from './containers/UsersProfile/UsersProfile'
+import RegistrationForm from "./containers/RegistrationForm/RegistrationForm";
 import * as actions from "./store/actions/index";
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path="/auth" component={AuthForm} />
+        <Route path="/registration" component={RegistrationForm} />
         <Redirect to="/auth" />
       </Switch>
     );

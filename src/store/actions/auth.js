@@ -52,7 +52,50 @@ export const auth = (email, password) => {
       })
       .catch((error) => {
         console.log(error);
-        dispatch(authFail(error.response.data.error));
+        dispatch(authFail(error.response.data.error.code));
+      });
+  };
+};
+
+export const registration = (email, password, userDetails) => {
+  return (dispatch) => {
+    dispatch(authStart());
+
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    };
+
+    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${CONFIG.AUTH_API_KEY}`;
+    
+    axios
+      .post(url, authData)
+      .then((response) => {
+        console.log(response);
+        const expirationDate = new Date(
+          new Date().getTime() + response.data.expiresIn * 1000
+        );
+
+        localStorage.setItem("token", response.data.idToken);
+        localStorage.setItem("expirationDate", expirationDate);
+        localStorage.setItem("userId", response.data.localId);
+
+        dispatch(authSuccess(response.data.idToken, response.data.localId));
+        dispatch(checkAuthTimeout(response.data.expiresIn));
+
+        axios
+        .post(`/users.json?auth=${response.data.idToken}`, userDetails)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(authFail(error.response.data.error.code));
       });
   };
 };
@@ -75,7 +118,7 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 export const authCheckState = () => {
-  return dispatch => {
+  return (dispatch) => {
     const token = localStorage.getItem("token");
     if (!token) {
       dispatch(authLogout());
@@ -88,7 +131,7 @@ export const authCheckState = () => {
         dispatch(authSuccess(token, userId));
         dispatch(
           checkAuthTimeout(
-            (expirationDate.getTime() - new Date().getTime())/1000
+            (expirationDate.getTime() - new Date().getTime()) / 1000
           )
         );
       }

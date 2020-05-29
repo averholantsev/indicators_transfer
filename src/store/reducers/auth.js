@@ -25,6 +25,8 @@ const authFail = (state, action) => {
   let errorMessage;
   if (action.error === 401) {
     errorMessage = "Ошибка авторизации, проверьте данные и повторите попытку";
+  }else if (action.error === 400) {
+    errorMessage = "Пользователь с таким Email уже существует";
   } else {
     errorMessage = "Произошла ошибка, попробуйте повторите попытку позднее";
   }
