@@ -142,7 +142,7 @@ class RegistrationForm extends Component {
         day: this.state.prevIndicators.electricityDay.value,
         night: this.state.prevIndicators.electricityNight.value,
       },
-      kittchen: {
+      kitchen: {
         coldWater: this.state.prevIndicators.kitchenColdWater.value,
         hotWater: this.state.prevIndicators.kitchenHotWater.value,
       },

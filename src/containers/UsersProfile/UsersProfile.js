@@ -4,6 +4,7 @@ import axios from "../../axios-main";
 import UserCard from "../../components/UserCard/UserCard";
 import Loader from "../../components/UI/Loader/Loader";
 import Typography from "@material-ui/core/Typography";
+import CardBody from "../../components/UI/CardBody/CardBody";
 
 import { withSnackbar } from "notistack";
 
@@ -14,12 +15,12 @@ class UsersProfile extends Component {
   };
 
   componentDidMount() {
-    this.getUserDetails(localStorage.getItem('userId'));
+    this.getUserDetails(localStorage.getItem("userId"));
   }
 
   getUserDetails = (id) => {
     console.log("Получение данных по UserId: ", id);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     axios
       .get(`/users.json?auth=${token}&orderBy="userId"&equalTo="${id}"`)
       .then((response) => {
@@ -42,7 +43,7 @@ class UsersProfile extends Component {
   updateUserDetails = (id) => {
     console.log("Обновление записи по Id: ", id);
     const newData = this.state.userDetails;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     axios
       .patch(`/users/${id}.json?auth=${token}`, newData)
       .then((response) => {
@@ -64,12 +65,22 @@ class UsersProfile extends Component {
     this.setState({ userDetails: newUserDetails });
   };
 
-  updateIndicatorsInState = (id, value) => {
+  updateIndicatorsInState = (key1, key2, value) => {
     let newUserDetails = { ...this.state.userDetails };
-    let indexOfNewIndicator = newUserDetails.prevIndicators.findIndex(
-      (item) => item.id === id
-    );
-    newUserDetails.prevIndicators[indexOfNewIndicator].intake = value;
+
+    switch (key1) {
+      case 'electricity':
+        newUserDetails.electricity[key2] = value;
+        break;
+      case 'kitchen':
+        newUserDetails.kitchen[key2] = value;
+        break;
+      case 'bathroom':
+        newUserDetails.bathroom[key2] = value;
+        break;
+      default:
+        break;
+    }
 
     this.setState({ userDetails: newUserDetails });
   };
@@ -87,13 +98,15 @@ class UsersProfile extends Component {
         {this.state.userDetails === null ? (
           <Loader />
         ) : (
-          <UserCard
-            userDetails={this.state.userDetails}
-            userId={this.state.userId}
-            updateUserDataInState={this.updateUserDataInState}
-            updateIndicatorsInState={this.updateIndicatorsInState}
-            updateUserDetails={this.updateUserDetails}
-          />
+          <CardBody>
+            <UserCard
+              userDetails={this.state.userDetails}
+              userId={this.state.userId}
+              updateUserDataInState={this.updateUserDataInState}
+              updateIndicatorsInState={this.updateIndicatorsInState}
+              updateUserDetails={this.updateUserDetails}
+            />
+          </CardBody>
         )}
       </div>
     );
