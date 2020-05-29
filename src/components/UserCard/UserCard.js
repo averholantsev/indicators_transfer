@@ -191,6 +191,18 @@ const UserCard = (props) => {
           }
         />
       </Grid>
+      <Grid className={classes.buttonPosition} item xs={12}>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={() => {
+            props.updateUserDetails(props.userId);
+          }}
+        >
+          Сохранить
+        </Button>
+      </Grid>
     </Grid>
   );
 };
