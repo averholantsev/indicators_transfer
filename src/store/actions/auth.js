@@ -84,6 +84,7 @@ export const registration = (email, password, userDetails) => {
         dispatch(authSuccess(response.data.idToken, response.data.localId));
         dispatch(checkAuthTimeout(response.data.expiresIn));
 
+        userDetails["userId"] = response.data.localId;
         axios
         .post(`/users.json?auth=${response.data.idToken}`, userDetails)
         .then((response) => {
