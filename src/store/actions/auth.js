@@ -52,7 +52,7 @@ export const auth = (email, password) => {
       })
       .catch((error) => {
         console.log(error);
-        dispatch(authFail(error.response.data.error.code));
+        dispatch(authFail(error.response.data.error));
       });
   };
 };
@@ -96,7 +96,7 @@ export const registration = (email, password, userFormData) => {
       })
       .catch((error) => {
         console.log(error);
-        dispatch(authFail(error.response.data.error.code));
+        dispatch(authFail(error.response.data.error));
       });
   };
 };

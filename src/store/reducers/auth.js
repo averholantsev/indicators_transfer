@@ -23,10 +23,20 @@ const authSuccess = (state, action) => {
 
 const authFail = (state, action) => {
   let errorMessage;
-  if (action.error === 401) {
+  console.log(action.error);
+  
+  if (action.error.code === 401) {
     errorMessage = "Ошибка авторизации, проверьте данные и повторите попытку";
-  }else if (action.error === 400) {
+  } else if (
+    action.error.code === 400 &&
+    action.error.message === "EMAIL_EXISTS"
+  ) {
     errorMessage = "Пользователь с таким Email уже существует";
+  } else if (
+    action.error.code === 400 &&
+    action.error.message === "EMAIL_NOT_FOUND"
+  ) {
+    errorMessage = "Пользователь с таким Email еще не зарегистрирован";
   } else {
     errorMessage = "Произошла ошибка, попробуйте повторите попытку позднее";
   }
