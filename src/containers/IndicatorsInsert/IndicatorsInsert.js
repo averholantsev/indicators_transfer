@@ -28,12 +28,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 class IndicatorsInsert extends Component {
   state = {
     indicators: {
-      ElectricityDay: { value: "", valid: true },
-      ElectricityNight: { value: "", valid: true },
-      ColdWaterKittchen: { value: "", valid: true },
-      ColdWaterBathroom: { value: "", valid: true },
-      HotWaterKittchen: { value: "", valid: true },
-      HotWaterBathroom: { value: "", valid: true },
+      electricityDay: { value: "", valid: true },
+      electricityNight: { value: "", valid: true },
+      coldWaterKitchen: { value: "", valid: true },
+      coldWaterBathroom: { value: "", valid: true },
+      hotWaterKitchen: { value: "", valid: true },
+      hotWaterBathroom: { value: "", valid: true },
     },
     monthYear: {
       month: new Date().getMonth(),
@@ -76,12 +76,12 @@ class IndicatorsInsert extends Component {
     }
 
     if (
-      this.state.indicators.ElectricityDay.valid &&
-      this.state.indicators.ElectricityNight.valid &&
-      this.state.indicators.ColdWaterKittchen.valid &&
-      this.state.indicators.ColdWaterBathroom.valid &&
-      this.state.indicators.HotWaterKittchen.valid &&
-      this.state.indicators.HotWaterBathroom.valid
+      this.state.indicators.electricityDay.valid &&
+      this.state.indicators.electricityNight.valid &&
+      this.state.indicators.coldWaterKitchen.valid &&
+      this.state.indicators.coldWaterBathroom.valid &&
+      this.state.indicators.hotWaterKitchen.valid &&
+      this.state.indicators.hotWaterBathroom.valid
     )
       this.setState({ modalOpen: true });
   };
@@ -92,12 +92,12 @@ class IndicatorsInsert extends Component {
       address: this.state.emailData.address,
       month: MONTHS_LIST[this.state.monthYear.month].text,
       year: this.state.monthYear.year,
-      electricityDay: this.state.indicators.ElectricityDay.value,
-      electricityNight: this.state.indicators.ElectricityNight.value,
-      coldWaterKittchen: this.state.indicators.ColdWaterKittchen.value,
-      coldWaterBathroom: this.state.indicators.ColdWaterBathroom.value,
-      hotWaterKittchen: this.state.indicators.HotWaterKittchen.value,
-      hotWaterBathroom: this.state.indicators.HotWaterBathroom.value,
+      electricityDay: this.state.indicators.electricityDay.value,
+      electricityNight: this.state.indicators.electricityNight.value,
+      coldWaterKitchen: this.state.indicators.coldWaterKitchen.value,
+      coldWaterBathroom: this.state.indicators.coldWaterBathroom.value,
+      hotWaterKitchen: this.state.indicators.hotWaterKitchen.value,
+      hotWaterBathroom: this.state.indicators.hotWaterBathroom.value,
     };
 
     emailjs
@@ -130,16 +130,16 @@ class IndicatorsInsert extends Component {
 
     const indicators = {
       electricity: {
-        day: this.state.indicators.ElectricityDay.value,
-        night: this.state.indicators.ElectricityNight.value,
+        day: this.state.indicators.electricityDay.value,
+        night: this.state.indicators.electricityNight.value,
       },
       coldWater: {
-        kittchen: this.state.indicators.ColdWaterKittchen.value,
-        bathroom: this.state.indicators.ColdWaterBathroom.value,
+        kitchen: this.state.indicators.coldWaterKitchen.value,
+        bathroom: this.state.indicators.coldWaterBathroom.value,
       },
       hotWater: {
-        kittchen: this.state.indicators.HotWaterKittchen.value,
-        bathroom: this.state.indicators.HotWaterBathroom.value,
+        kitchen: this.state.indicators.hotWaterKitchen.value,
+        bathroom: this.state.indicators.hotWaterBathroom.value,
       },
       currentDate: { today: dateOfIndicators, year: this.state.monthYear.year },
       userId: localStorage.getItem('userId')
@@ -223,7 +223,7 @@ class IndicatorsInsert extends Component {
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">
-                    {this.state.indicators.ElectricityDay.value}
+                    {this.state.indicators.electricityDay.value}
                   </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -233,7 +233,7 @@ class IndicatorsInsert extends Component {
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">
-                    {this.state.indicators.ElectricityNight.value}
+                    {this.state.indicators.electricityNight.value}
                   </Typography>
                 </Grid>
               </Grid>
@@ -250,7 +250,7 @@ class IndicatorsInsert extends Component {
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">
-                    {this.state.indicators.ColdWaterKittchen.value}
+                    {this.state.indicators.coldWaterKitchen.value}
                   </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -260,7 +260,7 @@ class IndicatorsInsert extends Component {
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">
-                    {this.state.indicators.HotWaterKittchen.value}
+                    {this.state.indicators.hotWaterKitchen.value}
                   </Typography>
                 </Grid>
               </Grid>
@@ -277,7 +277,7 @@ class IndicatorsInsert extends Component {
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">
-                    {this.state.indicators.ColdWaterBathroom.value}
+                    {this.state.indicators.coldWaterBathroom.value}
                   </Typography>
                 </Grid>
                 <Grid item xs={3}>
@@ -287,7 +287,7 @@ class IndicatorsInsert extends Component {
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">
-                    {this.state.indicators.HotWaterBathroom.value}
+                    {this.state.indicators.hotWaterBathroom.value}
                   </Typography>
                 </Grid>
               </Grid>
@@ -367,14 +367,14 @@ class IndicatorsInsert extends Component {
                   variant="standard"
                   label="День"
                   currencySymbol=""
-                  value={this.state.indicators.ElectricityDay.value}
+                  value={this.state.indicators.electricityDay.value}
                   minimumValue="0"
                   onChange={(event, value) =>
-                    this.addIndicatorHandler("ElectricityDay", value)
+                    this.addIndicatorHandler("electricityDay", value)
                   }
-                  error={!this.state.indicators.ElectricityDay.valid}
+                  error={!this.state.indicators.electricityDay.valid}
                   helperText={
-                    !this.state.indicators.ElectricityDay.valid
+                    !this.state.indicators.electricityDay.valid
                       ? errorMessage
                       : null
                   }
@@ -386,14 +386,14 @@ class IndicatorsInsert extends Component {
                   variant="standard"
                   label="Ночь"
                   currencySymbol=""
-                  value={this.state.indicators.ElectricityNight.value}
+                  value={this.state.indicators.electricityNight.value}
                   minimumValue="0"
                   onChange={(event, value) =>
-                    this.addIndicatorHandler("ElectricityNight", value)
+                    this.addIndicatorHandler("electricityNight", value)
                   }
-                  error={!this.state.indicators.ElectricityNight.valid}
+                  error={!this.state.indicators.electricityNight.valid}
                   helperText={
-                    !this.state.indicators.ElectricityNight.valid
+                    !this.state.indicators.electricityNight.valid
                       ? errorMessage
                       : null
                   }
@@ -413,14 +413,14 @@ class IndicatorsInsert extends Component {
                   variant="standard"
                   label="Холодная вода"
                   currencySymbol=""
-                  value={this.state.indicators.ColdWaterKittchen.value}
+                  value={this.state.indicators.coldWaterKitchen.value}
                   minimumValue="0"
                   onChange={(event, value) =>
-                    this.addIndicatorHandler("ColdWaterKittchen", value)
+                    this.addIndicatorHandler("coldWaterKitchen", value)
                   }
-                  error={!this.state.indicators.ColdWaterKittchen.valid}
+                  error={!this.state.indicators.coldWaterKitchen.valid}
                   helperText={
-                    !this.state.indicators.ColdWaterKittchen.valid
+                    !this.state.indicators.coldWaterKitchen.valid
                       ? errorMessage
                       : null
                   }
@@ -432,14 +432,14 @@ class IndicatorsInsert extends Component {
                   variant="standard"
                   label="Горячая вода"
                   currencySymbol=""
-                  value={this.state.indicators.HotWaterKittchen.value}
+                  value={this.state.indicators.hotWaterKitchen.value}
                   minimumValue="0"
                   onChange={(event, value) =>
-                    this.addIndicatorHandler("HotWaterKittchen", value)
+                    this.addIndicatorHandler("hotWaterKitchen", value)
                   }
-                  error={!this.state.indicators.HotWaterKittchen.valid}
+                  error={!this.state.indicators.hotWaterKitchen.valid}
                   helperText={
-                    !this.state.indicators.HotWaterKittchen.valid
+                    !this.state.indicators.hotWaterKitchen.valid
                       ? errorMessage
                       : null
                   }
@@ -459,14 +459,14 @@ class IndicatorsInsert extends Component {
                   variant="standard"
                   label="Холодная вода"
                   currencySymbol=""
-                  value={this.state.indicators.ColdWaterBathroom.value}
+                  value={this.state.indicators.coldWaterBathroom.value}
                   minimumValue="0"
                   onChange={(event, value) =>
-                    this.addIndicatorHandler("ColdWaterBathroom", value)
+                    this.addIndicatorHandler("coldWaterBathroom", value)
                   }
-                  error={!this.state.indicators.ColdWaterBathroom.valid}
+                  error={!this.state.indicators.coldWaterBathroom.valid}
                   helperText={
-                    !this.state.indicators.ColdWaterBathroom.valid
+                    !this.state.indicators.coldWaterBathroom.valid
                       ? errorMessage
                       : null
                   }
@@ -478,14 +478,14 @@ class IndicatorsInsert extends Component {
                   variant="standard"
                   label="Горячая вода"
                   currencySymbol=""
-                  value={this.state.indicators.HotWaterBathroom.value}
+                  value={this.state.indicators.hotWaterBathroom.value}
                   minimumValue="0"
                   onChange={(event, value) =>
-                    this.addIndicatorHandler("HotWaterBathroom", value)
+                    this.addIndicatorHandler("hotWaterBathroom", value)
                   }
-                  error={!this.state.indicators.HotWaterBathroom.valid}
+                  error={!this.state.indicators.hotWaterBathroom.valid}
                   helperText={
-                    !this.state.indicators.HotWaterBathroom.valid
+                    !this.state.indicators.hotWaterBathroom.valid
                       ? errorMessage
                       : null
                   }

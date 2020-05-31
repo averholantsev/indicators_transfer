@@ -68,7 +68,42 @@ class OutlayDetails extends Component {
   };
 
   getUserDetails = (data) => {
-    let prevIndicators = data[Object.keys(data)].prevIndicators;
+    const prevIndicatorsData = data[Object.keys(data)].prevIndicators;
+    let prevIndicators = [
+      {
+        id: "day_electricity",
+        name: "Эл-я день:",
+        intake: prevIndicatorsData.electricity.day,
+      },
+      {
+        id: "night_electricity",
+        name: "Эл-я ночь:",
+        intake: prevIndicatorsData.electricity.night,
+      },
+      {
+        id: "cold_water",
+        name: "Холодная вода:",
+        intake:
+          prevIndicatorsData.bathroom.coldWater +
+          prevIndicatorsData.kitchen.coldWater,
+      },
+      {
+        id: "hot_water",
+        name: "Горячая вода:",
+        intake:
+          prevIndicatorsData.bathroom.hotWater +
+          prevIndicatorsData.kitchen.hotWater,
+      },
+      {
+        id: "disposal_water",
+        name: "Водоотведение:",
+        intake:
+          prevIndicatorsData.bathroom.coldWater +
+          prevIndicatorsData.kitchen.coldWater +
+          prevIndicatorsData.bathroom.hotWater +
+          prevIndicatorsData.kitchen.hotWater,
+      },
+    ];
 
     return prevIndicators;
   };
@@ -101,21 +136,21 @@ class OutlayDetails extends Component {
           {
             id: "cold_water",
             name: "Холодная вода:",
-            intake: data[key].coldWater.bathroom + data[key].coldWater.kittchen,
+            intake: data[key].coldWater.bathroom + data[key].coldWater.kitchen,
           },
           {
             id: "hot_water",
             name: "Горячая вода:",
-            intake: data[key].hotWater.bathroom + data[key].hotWater.kittchen,
+            intake: data[key].hotWater.bathroom + data[key].hotWater.kitchen,
           },
           {
             id: "disposal_water",
             name: "Водоотведение:",
             intake:
               data[key].coldWater.bathroom +
-              data[key].coldWater.kittchen +
+              data[key].coldWater.kitchen +
               data[key].hotWater.bathroom +
-              data[key].hotWater.kittchen,
+              data[key].hotWater.kitchen,
           },
         ],
       };
@@ -193,6 +228,12 @@ class OutlayDetails extends Component {
   };
 
   countCostNovogor = (indicators, date) => {
+    let indicatorsDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+
     let coldWater = null;
     try {
       coldWater = indicators.find(({ id }) => id === "cold_water").outlay;
@@ -220,8 +261,8 @@ class OutlayDetails extends Component {
       waterTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {
         if (
           name === "water" &&
-          Date.parse(dateStart) <= date &&
-          Date.parse(dateEnd) >= date
+          new Date(dateStart) <= indicatorsDate &&
+          new Date(dateEnd) >= indicatorsDate
         ) {
           return true;
         } else return false;
@@ -236,8 +277,8 @@ class OutlayDetails extends Component {
         ({ name, dateStart, dateEnd }) => {
           if (
             name === "disposal_water" &&
-            Date.parse(dateStart) <= date &&
-            Date.parse(dateEnd) >= date
+            new Date(dateStart) <= indicatorsDate &&
+            new Date(dateEnd) >= indicatorsDate
           ) {
             return true;
           } else return false;
@@ -246,6 +287,19 @@ class OutlayDetails extends Component {
     } catch (e) {
       console.log("Тариф на водоотведение загружается...");
     }
+
+    console.log(
+      "Холодная вода: ",
+      coldWater,
+      "Горячая вода: ",
+      hotWater,
+      "Тариф на воду: ",
+      waterTariff,
+      "Водоотведение: ",
+      disposalWater,
+      "Тариф на водоотведение: ",
+      disposalTariff
+    );
 
     let novogorCost = (
       (coldWater + hotWater) * waterTariff +
@@ -260,10 +314,7 @@ class OutlayDetails extends Component {
 
   render() {
     let indicatorsList = null;
-    if (
-      this.state.indicatorsList === null &&
-      this.state.error === null
-    ) {
+    if (this.state.indicatorsList === null && this.state.error === null) {
       indicatorsList = <Loader />;
     } else if (this.state.indicatorsList !== null) {
       indicatorsList = this.state.indicatorsList.filter((item) => {
