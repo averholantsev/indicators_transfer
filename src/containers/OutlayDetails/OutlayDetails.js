@@ -163,6 +163,7 @@ class OutlayDetails extends Component {
     this.setState({ indicatorsList: newIndicatorsList });
   };
 
+  // TODO Починить!
   countOutlay = (indicatorsList, prevIndicators) => {
     let newIndicatorsList = [...indicatorsList];
 

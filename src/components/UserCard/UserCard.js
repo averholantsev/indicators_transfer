@@ -29,11 +29,17 @@ const UserCard = (props) => {
     userEmail,
     accountantEmail,
     address,
-    electricity,
-    bathroom,
-    kitchen,
-    prevIndicatorsDate,
   } = props.userDetails;
+
+  const {
+    prevIndicatorsDate,
+    electricityDay,
+    electricityNight,
+    kitchenColdWater,
+    kitchenHotWater,
+    bathroomColdWater,
+    bathroomHotWater,
+  } = props.prevIndicators;
 
   return (
     <Grid container spacing={3}>
@@ -45,37 +51,51 @@ const UserCard = (props) => {
       <Grid item xs={6}>
         <TextField
           label="Имя"
-          value={firstName}
+          value={firstName.value}
           fullWidth
           onChange={(event) =>
             props.updateUserDataInState("firstName", event.target.value)
+          }
+          error={!firstName.valid && firstName.touched}
+          helperText={
+            !firstName.valid && firstName.touched
+              ? firstName.errorMessage
+              : null
           }
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           label="Фамилия"
-          value={lastName}
+          value={lastName.value}
           fullWidth
           onChange={(event) =>
             props.updateUserDataInState("lastName", event.target.value)
+          }
+          error={!lastName.valid && lastName.touched}
+          helperText={
+            !lastName.valid && lastName.touched ? lastName.errorMessage : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
           label="Адрес"
-          value={address}
+          value={address.value}
           fullWidth
           onChange={(event) =>
             props.updateUserDataInState("address", event.target.value)
+          }
+          error={!address.valid && address.touched}
+          helperText={
+            !address.valid && address.touched ? address.errorMessage : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
           label="Ваша почта"
-          value={userEmail}
+          value={userEmail.value}
           disabled
           fullWidth
           onChange={(event) =>
@@ -86,10 +106,16 @@ const UserCard = (props) => {
       <Grid item xs={12}>
         <TextField
           label="Почта бухгалтерии"
-          value={accountantEmail}
+          value={accountantEmail.value}
           fullWidth
           onChange={(event) =>
             props.updateUserDataInState("accountantEmail", event.target.value)
+          }
+          error={!accountantEmail.valid && accountantEmail.touched}
+          helperText={
+            !accountantEmail.valid && accountantEmail.touched
+              ? accountantEmail.errorMessage
+              : null
           }
         />
       </Grid>
@@ -106,9 +132,15 @@ const UserCard = (props) => {
             disabled={props.isDisabled}
             label="Дата первичных показателей"
             format="dd.MM.yyyy"
-            value={prevIndicatorsDate}
+            value={prevIndicatorsDate.value}
             onChange={(date) =>
-              props.updateUserDataInState("prevIndicatorsDate", date)
+              props.updatePrevIndicatorsInState("prevIndicatorsDate", date)
+            }
+            error={!prevIndicatorsDate.valid && prevIndicatorsDate.touched}
+            helperText={
+              !prevIndicatorsDate.valid && prevIndicatorsDate.touched
+                ? prevIndicatorsDate.errorMessage
+                : null
             }
           />
         </MuiPickersUtilsProvider>
@@ -119,10 +151,16 @@ const UserCard = (props) => {
           disabled={props.isDisabled}
           label="Электроэнергия: День"
           currencySymbol=""
-          value={electricity.day}
+          value={electricityDay.value}
           minimumValue="0"
           onChange={(_, value) =>
-            props.updateIndicatorsInState("electricity", "day", value)
+            props.updatePrevIndicatorsInState("electricityDay", value)
+          }
+          error={!electricityDay.valid && electricityDay.touched}
+          helperText={
+            !electricityDay.valid && electricityDay.touched
+              ? electricityDay.errorMessage
+              : null
           }
         />
       </Grid>
@@ -132,10 +170,16 @@ const UserCard = (props) => {
           disabled={props.isDisabled}
           label="Электроэнергия: Ночь"
           currencySymbol=""
-          value={electricity.night}
+          value={electricityNight.value}
           minimumValue="0"
           onChange={(_, value) =>
-            props.updateIndicatorsInState("electricity", "night", value)
+            props.updatePrevIndicatorsInState("electricityNight", value)
+          }
+          error={!electricityNight.valid && electricityNight.touched}
+          helperText={
+            !electricityNight.valid && electricityNight.touched
+              ? electricityNight.errorMessage
+              : null
           }
         />
       </Grid>
@@ -145,10 +189,16 @@ const UserCard = (props) => {
           disabled={props.isDisabled}
           label="Кухня: Холодная вода"
           currencySymbol=""
-          value={kitchen.coldWater}
+          value={kitchenColdWater.value}
           minimumValue="0"
           onChange={(_, value) =>
-            props.updateIndicatorsInState("kitchen", "coldWater", value)
+            props.updatePrevIndicatorsInState("kitchenColdWater", value)
+          }
+          error={!kitchenColdWater.valid && kitchenColdWater.touched}
+          helperText={
+            !kitchenColdWater.valid && kitchenColdWater.touched
+              ? kitchenColdWater.errorMessage
+              : null
           }
         />
       </Grid>
@@ -158,10 +208,16 @@ const UserCard = (props) => {
           disabled={props.isDisabled}
           label="Кухня: Горячая вода"
           currencySymbol=""
-          value={kitchen.hotWater}
+          value={kitchenHotWater.value}
           minimumValue="0"
           onChange={(_, value) =>
-            props.updateIndicatorsInState("kitchen", "hotWater", value)
+            props.updatePrevIndicatorsInState("kitchenHotWater", value)
+          }
+          error={!kitchenHotWater.valid && kitchenHotWater.touched}
+          helperText={
+            !kitchenHotWater.valid && kitchenHotWater.touched
+              ? kitchenHotWater.errorMessage
+              : null
           }
         />
       </Grid>
@@ -171,10 +227,16 @@ const UserCard = (props) => {
           disabled={props.isDisabled}
           label="Ванная: Холодная вода"
           currencySymbol=""
-          value={bathroom.coldWater}
+          value={bathroomColdWater.value}
           minimumValue="0"
           onChange={(_, value) =>
-            props.updateIndicatorsInState("bathroom", "coldWater", value)
+            props.updatePrevIndicatorsInState("bathroomColdWater", value)
+          }
+          error={!bathroomColdWater.valid && bathroomColdWater.touched}
+          helperText={
+            !bathroomColdWater.valid && bathroomColdWater.touched
+              ? bathroomColdWater.errorMessage
+              : null
           }
         />
       </Grid>
@@ -184,10 +246,16 @@ const UserCard = (props) => {
           disabled={props.isDisabled}
           label="Ванная: Горячая вода"
           currencySymbol=""
-          value={bathroom.hotWater}
+          value={bathroomHotWater.value}
           minimumValue="0"
           onChange={(_, value) =>
-            props.updateIndicatorsInState("bathroom", "hotWater", value)
+            props.updatePrevIndicatorsInState("bathroomHotWater", value)
+          }
+          error={!bathroomHotWater.valid && bathroomHotWater.touched}
+          helperText={
+            !bathroomHotWater.valid && bathroomHotWater.touched
+              ? bathroomHotWater.errorMessage
+              : null
           }
         />
       </Grid>
@@ -197,7 +265,7 @@ const UserCard = (props) => {
           color="primary"
           disableElevation
           onClick={() => {
-            props.updateUserDetails(props.userId);
+            if (props.checkFormValidity()) props.updateUserDetails();
           }}
         >
           Сохранить

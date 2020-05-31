@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { NavLink } from "react-router-dom";
+import { checkFieldValidity } from '../../components/Helpers/FormHelper'
 
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
@@ -131,36 +132,40 @@ class RegistrationForm extends Component {
   };
 
   registration = () => {
-    const userDetails = {
-      firstName: this.state.userDetails.firstName.value,
-      lastName: this.state.userDetails.lastName.value,
-      userEmail: this.state.userDetails.userEmail.value,
-      accountantEmail: this.state.userDetails.accountantEmail.value,
-      address: this.state.userDetails.address.value,
-      prevIndicatorsDate: this.state.prevIndicators.prevIndicatorsDate.value ,
-      electricity: {
-        day: this.state.prevIndicators.electricityDay.value,
-        night: this.state.prevIndicators.electricityNight.value,
+    const userFormData = {
+      userDetails: {
+        firstName: this.state.userDetails.firstName.value,
+        lastName: this.state.userDetails.lastName.value,
+        userEmail: this.state.userDetails.userEmail.value,
+        accountantEmail: this.state.userDetails.accountantEmail.value,
+        address: this.state.userDetails.address.value,
       },
-      kitchen: {
-        coldWater: this.state.prevIndicators.kitchenColdWater.value,
-        hotWater: this.state.prevIndicators.kitchenHotWater.value,
-      },
-      bathroom: {
-        coldWater: this.state.prevIndicators.bathroomColdWater.value,
-        hotWater: this.state.prevIndicators.bathroomHotWater.value,
+      prevIndicators: {
+        prevIndicatorsDate: this.state.prevIndicators.prevIndicatorsDate.value,
+        electricity: {
+          day: this.state.prevIndicators.electricityDay.value,
+          night: this.state.prevIndicators.electricityNight.value,
+        },
+        kitchen: {
+          coldWater: this.state.prevIndicators.kitchenColdWater.value,
+          hotWater: this.state.prevIndicators.kitchenHotWater.value,
+        },
+        bathroom: {
+          coldWater: this.state.prevIndicators.bathroomColdWater.value,
+          hotWater: this.state.prevIndicators.bathroomHotWater.value,
+        },
       },
     };
 
     this.props.onRegistration(
       this.state.userDetails.userEmail.value,
       this.state.userDetails.password.value,
-      userDetails
+      userFormData
     );
   };
 
   updateUserDataInState = (key, value) => {
-    let validation = this.checkFieldValidity(
+    let validation = checkFieldValidity(
       value,
       this.state.userDetails[key].validation
     );
@@ -181,7 +186,7 @@ class RegistrationForm extends Component {
   };
 
   updatePrevIndicatorsInState = (key, value) => {
-    let validation = this.checkFieldValidity(
+    let validation = checkFieldValidity(
       value,
       this.state.prevIndicators[key].validation
     );
@@ -204,60 +209,7 @@ class RegistrationForm extends Component {
     });
   };
 
-  checkFieldValidity(value, rules) {
-    let validation = {
-      isValid: true,
-      errorMessage: null,
-    };
-
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      validation.isValid = value.trim() !== "" && validation.isValid;
-      validation.errorMessage = !validation.isValid
-        ? "Поле обязательно для заполнения"
-        : "";
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      validation.isValid = pattern.test(value) && validation.isValid;
-      validation.errorMessage =
-        value === ""
-          ? "Поле обязательно для заполнения"
-          : "Пожалуйста, введите корректный email";
-    }
-
-    if (rules.isDate) {
-      validation.isValid = value !== null && validation.isValid;
-      validation.errorMessage = !validation.isValid
-        ? "Поле обязательно для заполнения"
-        : "";
-    }
-
-    if (rules.isNumber) {
-      validation.isValid = value !== 0 && validation.isValid;
-      validation.errorMessage = !validation.isValid
-        ? "Поле обязательно для заполнения"
-        : "";
-    }
-
-    if (rules.isPassord) {
-      validation.isValid = value.length >= 6 && validation.isValid;
-      if (value.length < 6 && value.length > 0)
-        validation.errorMessage =
-          "Пароль должен состоять из более чем 6 символов";
-      else if (value.length === 0)
-        validation.errorMessage = "Поле обязательно для заполнения";
-      else validation.errorMessage = "";
-    }
-
-    return validation;
-  }
-
-  checkFormValidity(formId, stateData) {
+  checkFormValidity = (formId, stateData) => {
     if (formId === "userDetails" && typeof stateData !== "undefined") {
       const {
         firstName,
@@ -411,7 +363,7 @@ class RegistrationForm extends Component {
           prevIndicatorsValid={this.state.prevIndicatorsValid}
           updateUserDataInState={this.updateUserDataInState}
           updatePrevIndicatorsInState={this.updatePrevIndicatorsInState}
-          checkFormValidity={this.checkFormValidity.bind(this)}
+          checkFormValidity={this.checkFormValidity}
           registration={this.registration}
         />
       </div>

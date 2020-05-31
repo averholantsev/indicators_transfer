@@ -57,7 +57,7 @@ export const auth = (email, password) => {
   };
 };
 
-export const registration = (email, password, userDetails) => {
+export const registration = (email, password, userFormData) => {
   return (dispatch) => {
     dispatch(authStart());
 
@@ -84,9 +84,9 @@ export const registration = (email, password, userDetails) => {
         dispatch(authSuccess(response.data.idToken, response.data.localId));
         dispatch(checkAuthTimeout(response.data.expiresIn));
 
-        userDetails["userId"] = response.data.localId;
+        userFormData["userId"] = response.data.localId;
         axios
-        .post(`/users.json?auth=${response.data.idToken}`, userDetails)
+        .post(`/users.json?auth=${response.data.idToken}`, userFormData)
         .then((response) => {
           console.log(response);
         })
