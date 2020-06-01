@@ -68,7 +68,7 @@ export const registration = (email, password, userFormData) => {
     };
 
     let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${CONFIG.AUTH_API_KEY}`;
-    
+
     axios
       .post(url, authData)
       .then((response) => {
@@ -86,13 +86,13 @@ export const registration = (email, password, userFormData) => {
 
         userFormData["userId"] = response.data.localId;
         axios
-        .post(`/users.json?auth=${response.data.idToken}`, userFormData)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .post(`/users.json?auth=${response.data.idToken}`, userFormData)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -135,7 +135,41 @@ export const authCheckState = () => {
             (expirationDate.getTime() - new Date().getTime()) / 1000
           )
         );
+        dispatch(loadUserData());
       }
     }
+  };
+};
+
+export const loadUserDataSuccess = (userDetails, prevIndicators, userIdDb) => {
+  return {
+    type: actionTypes.LOAD_USERDATA_SUCCESS,
+    userDetails: userDetails,
+    prevIndicators: prevIndicators,
+    userIdDb: userIdDb,
+  };
+};
+
+export const loadUserData = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    axios
+      .get(`/users.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`)
+      .then((response) => {
+        console.log(response);
+        let dataFromDB = response.data[Object.keys(response.data)];
+
+        dispatch(
+          loadUserDataSuccess(
+            dataFromDB.userDetails,
+            dataFromDB.prevIndicators,
+            Object.keys(response.data)[0]
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };

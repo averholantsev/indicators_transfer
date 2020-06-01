@@ -6,6 +6,9 @@ const initialState = {
   userId: null,
   error: null,
   loading: false,
+  userDetails: null,
+  prevIndicators: null,
+  userIdDb: null,
 };
 
 const authStart = (state) => {
@@ -24,7 +27,7 @@ const authSuccess = (state, action) => {
 const authFail = (state, action) => {
   let errorMessage;
   console.log(action.error);
-  
+
   if (action.error.code === 401) {
     errorMessage = "Ошибка авторизации, проверьте данные и повторите попытку";
   } else if (
@@ -50,6 +53,14 @@ const authLogout = (state) => {
   return updateObject(state, { token: null, userId: null });
 };
 
+const loadUserData = (state, action) => {
+  return updateObject(state, {
+    userDetails: action.userDetails,
+    prevIndicators: action.prevIndicators,
+    userIdDb: action.userIdDb,
+  });
+};
+
 const reduser = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
@@ -60,6 +71,8 @@ const reduser = (state = initialState, action) => {
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state);
+    case actionTypes.LOAD_USERDATA_SUCCESS:
+      return loadUserData(state, action);
     default:
       return state;
   }

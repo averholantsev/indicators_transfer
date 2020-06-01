@@ -2,9 +2,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "../../axios-main";
-import emailjs from "emailjs-com";
-import CONFIG from "../../configuration.json";
 import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
+import { connect } from "react-redux";
 
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import "./IndicatorsInsert.css";
@@ -38,10 +37,6 @@ class IndicatorsInsert extends Component {
     monthYear: {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-    },
-    emailData: {
-      recipient: CONFIG.RECIPIENT,
-      address: CONFIG.ADDRESS,
     },
     modalOpen: false,
   };
@@ -88,8 +83,8 @@ class IndicatorsInsert extends Component {
 
   sendEmailHandler = () => {
     let templateParams = {
-      recipient: this.state.emailData.recipient,
-      address: this.state.emailData.address,
+      recipient: this.props.userDetails.accountantEmail,
+      address: this.props.userDetails.address,
       month: MONTHS_LIST[this.state.monthYear.month].text,
       year: this.state.monthYear.year,
       electricityDay: this.state.indicators.electricityDay.value,
@@ -100,7 +95,9 @@ class IndicatorsInsert extends Component {
       hotWaterBathroom: this.state.indicators.hotWaterBathroom.value,
     };
 
-    emailjs
+    console.log(templateParams);
+    
+    /* emailjs
       .send(
         CONFIG.SERVICE_ID,
         CONFIG.TEMPLATE_ID,
@@ -114,7 +111,7 @@ class IndicatorsInsert extends Component {
         (error) => {
           console.log("FAILED...", error);
         }
-      );
+      ); */
   };
 
   sendIndicators = () => {
@@ -515,4 +512,10 @@ class IndicatorsInsert extends Component {
   }
 }
 
-export default withRouter(IndicatorsInsert);
+const mapStateToProps = (state) => {
+  return {
+    userDetails: state.userDetails,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(IndicatorsInsert));

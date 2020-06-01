@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import { connect } from "react-redux";
 
 import "./Layout.css";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import AppBar from "../../components/Navigation/AppBar";
 
 class Layout extends Component {
@@ -17,7 +18,7 @@ class Layout extends Component {
       >
         {this.props.isAuth && (
           <Grid item xs={12} style={{width: "100%"}}>
-            <AppBar />
+            <AppBar userDetails={this.props.userDetails}/>
           </Grid>
         )}
         <Grid item xs={12} style={{width: "100%"}}>
@@ -28,4 +29,10 @@ class Layout extends Component {
   }
 }
 
-export default Layout;
+const mapStateToProps = (state) => {
+  return {
+    userDetails: state.userDetails,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,22 +16,22 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ListAltIcon from "@material-ui/icons/ListAlt";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const APP_MENU_LIST = [
-  { name: "Показания", path: "/send-indicators", icon: <ListAltIcon/> },
-  { name: "Расходы", path: "/outlay", icon: <EventNoteIcon/> },
-  { name: "Тарифы", path: "/tariffs", icon: <MonetizationOnIcon/> },
-  { name: "Профиль", path: "/profile", icon: <AccountCircleIcon/> },
+  { name: "Показания", path: "/send-indicators", icon: <ListAltIcon /> },
+  { name: "Расходы", path: "/outlay", icon: <EventNoteIcon /> },
+  { name: "Тарифы", path: "/tariffs", icon: <MonetizationOnIcon /> },
+  { name: "Профиль", path: "/profile", icon: <AccountCircleIcon /> },
 ];
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "100%"
+    width: "100%",
   },
   button: {
     "&:hover": {
@@ -49,6 +50,7 @@ const MenuAppBar = (props) => {
   const classes = useStyles();
   const [sectionTitle, setSectionTitle] = useState("Показания");
   const [openDrawer, setOpenDrawer] = useState(false);
+  const titleShow = useMediaQuery('(min-width:425px)');
 
   return (
     <div className={classes.root}>
@@ -63,10 +65,15 @@ const MenuAppBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6">
             {sectionTitle}
           </Typography>
           <div className={classes.grow} />
+          {props.userDetails && titleShow ? (
+            <Typography variant="h6">
+              {props.userDetails.firstName + " " + props.userDetails.lastName}
+            </Typography>
+          ) : null}
 
           <IconButton
             aria-label="account of current user"
