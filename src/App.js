@@ -26,7 +26,7 @@ class App extends Component {
       </Switch>
     );
 
-    if (this.props.isAuth) {
+    if (localStorage.getItem("userId")) {
       routes = (
         <Switch>
           <Route path="/outlay" component={OutlayDetails} />

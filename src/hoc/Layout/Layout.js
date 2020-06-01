@@ -20,7 +20,7 @@ class Layout extends Component {
             <AppBar />
           </Grid>
         )}
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{width: "100%"}}>
           <Paper className="paper">{this.props.children}</Paper>
         </Grid>
       </Grid>
