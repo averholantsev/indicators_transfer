@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import AppBar from "../../components/Navigation/AppBar";
 
 class Layout extends Component {
-  render() {
+render() {
     return (
       <Grid
         container
@@ -17,11 +17,11 @@ class Layout extends Component {
         alignItems="center"
       >
         {this.props.isAuth && (
-          <Grid item xs={12} style={{width: "100%"}}>
+          <Grid item xs={12} style={{ width: "100%" }}>
             <AppBar userDetails={this.props.userDetails}/>
           </Grid>
         )}
-        <Grid item xs={12} style={{width: "100%"}}>
+        <Grid item xs={12} style={{ width: "100%" }}>
           <Paper className="paper">{this.props.children}</Paper>
         </Grid>
       </Grid>

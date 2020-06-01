@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -48,9 +48,28 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuAppBar = (props) => {
   const classes = useStyles();
-  const [sectionTitle, setSectionTitle] = useState("Показания");
+
+  let sectionTitleName = "";
+  switch (window.location.hash) {
+    case "#/send-indicators":
+      sectionTitleName = "Показания";
+      break;
+    case "#/outlay":
+      sectionTitleName = "Расходы";
+      break;
+    case "#/tariffs":
+      sectionTitleName = "Тарифы";
+      break;
+    case "#/profile":
+      sectionTitleName = "Профиль";
+      break;
+    default:
+      break;
+  }
+
+  const [sectionTitle, setSectionTitle] = useState(sectionTitleName);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const titleShow = useMediaQuery('(min-width:425px)');
+  const titleShow = useMediaQuery("(min-width:425px)");
 
   return (
     <div className={classes.root}>
@@ -65,9 +84,7 @@ const MenuAppBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">
-            {sectionTitle}
-          </Typography>
+          <Typography variant="h6">{sectionTitle}</Typography>
           <div className={classes.grow} />
           {props.userDetails && titleShow ? (
             <Typography variant="h6">

@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import axios from "../../axios-main";
 import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
 import { connect } from "react-redux";
+import emailjs from 'emailjs-com'
+import * as CONFIG from '../../configuration.json'
 
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import "./IndicatorsInsert.css";
@@ -38,6 +40,7 @@ class IndicatorsInsert extends Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
     },
+    sendDataToAccountant: false,
     modalOpen: false,
   };
 
@@ -97,7 +100,7 @@ class IndicatorsInsert extends Component {
 
     console.log(templateParams);
     
-    /* emailjs
+    emailjs
       .send(
         CONFIG.SERVICE_ID,
         CONFIG.TEMPLATE_ID,
@@ -111,7 +114,7 @@ class IndicatorsInsert extends Component {
         (error) => {
           console.log("FAILED...", error);
         }
-      ); */
+      );
   };
 
   sendIndicators = () => {
@@ -147,7 +150,7 @@ class IndicatorsInsert extends Component {
       .then((response) => {
         console.log(response);
         this.setState({ modalOpen: false });
-        this.sendEmailHandler();
+        if (this.state.sendDataToAccountant) this.sendEmailHandler();
         this.props.history.push("/outlay");
       })
       .catch((error) => {
