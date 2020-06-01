@@ -337,6 +337,8 @@ class RegistrationForm extends Component {
   }
 
   render() {
+    if (this.props.errorMessage) window.scrollTo(0, 0);
+
     return (
       <div>
         <Typography

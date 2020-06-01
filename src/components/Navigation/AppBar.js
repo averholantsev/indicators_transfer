@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const MenuAppBar = (props) => {
   const classes = useStyles();
 
-  let sectionTitleName = "";
+  let sectionTitleName = "Показания";  
   switch (window.location.hash) {
     case "#/send-indicators":
       sectionTitleName = "Показания";
@@ -79,7 +79,7 @@ const MenuAppBar = (props) => {
             edge="start"
             className={classes.menuButton}
             color="inherit"
-            aria-label="menu"
+            aria-label="menu" 
             onClick={() => setOpenDrawer(true)}
           >
             <MenuIcon />
