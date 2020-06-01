@@ -4,8 +4,8 @@ import { withRouter } from "react-router-dom";
 import axios from "../../axios-main";
 import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
 import { connect } from "react-redux";
-import emailjs from 'emailjs-com'
-import * as CONFIG from '../../configuration.json'
+import emailjs from "emailjs-com";
+import * as CONFIG from "../../configuration.json";
 
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 import "./IndicatorsInsert.css";
@@ -25,6 +25,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Switch from "../../components/UI/Switch/Switch";
 
 class IndicatorsInsert extends Component {
   state = {
@@ -40,7 +41,7 @@ class IndicatorsInsert extends Component {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
     },
-    sendDataToAccountant: false,
+    sendDataToAccountant: true,
     modalOpen: false,
   };
 
@@ -99,7 +100,7 @@ class IndicatorsInsert extends Component {
     };
 
     console.log(templateParams);
-    
+
     emailjs
       .send(
         CONFIG.SERVICE_ID,
@@ -190,6 +191,10 @@ class IndicatorsInsert extends Component {
     this.setState({ monthYear: updatedMonthYear });
   };
 
+  switchChange = () => {
+    this.setState({ sendDataToAccountant: !this.state.sendDataToAccountant });
+  }
+
   render() {
     const errorMessage = "Поле обязательно для заполнения";
 
@@ -208,87 +213,87 @@ class IndicatorsInsert extends Component {
             {this.state.monthYear.year} г.
           </DialogTitle>
           <DialogContent dividers>
-            <Grid container>
-              <Grid container>
-                <Grid item xs={12}>
-                  <Typography variant="h6" align="center">
-                    Электроэнергия
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    День:
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    {this.state.indicators.electricityDay.value}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    Ночь:
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    {this.state.indicators.electricityNight.value}
-                  </Typography>
-                </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center">
+                  Электроэнергия
+                </Typography>
               </Grid>
-              <Grid container>
-                <Grid item xs={12}>
-                  <Typography variant="h6" align="center">
-                    Кухня
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    Холодная вода:
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    {this.state.indicators.coldWaterKitchen.value}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    Горячая вода:
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    {this.state.indicators.hotWaterKitchen.value}
-                  </Typography>
-                </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  День:
+                </Typography>
               </Grid>
-              <Grid container>
-                <Grid item xs={12}>
-                  <Typography variant="h6" align="center">
-                    Ванная
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    Холодная вода:
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    {this.state.indicators.coldWaterBathroom.value}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    Горячая вода:
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="body1" align="center">
-                    {this.state.indicators.hotWaterBathroom.value}
-                  </Typography>
-                </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  {this.state.indicators.electricityDay.value}
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  Ночь:
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  {this.state.indicators.electricityNight.value}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center">
+                  Кухня
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  Холодная вода:
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  {this.state.indicators.coldWaterKitchen.value}
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  Горячая вода:
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  {this.state.indicators.hotWaterKitchen.value}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center">
+                  Ванная
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  Холодная вода:
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  {this.state.indicators.coldWaterBathroom.value}
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  Горячая вода:
+                </Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="body1" align="center">
+                  {this.state.indicators.hotWaterBathroom.value}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Switch label="Отправить в бухгалтерию" checked={this.state.sendDataToAccountant} switchChange={this.switchChange}/>
               </Grid>
             </Grid>
           </DialogContent>
