@@ -10,7 +10,6 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
 import { HashRouter } from "react-router-dom";
-import history from "./store/history";
 import reducer from "./store/reducers/auth";
 
 import { SnackbarProvider } from "notistack";
@@ -21,7 +20,7 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
   <Provider store={store}>
-    <HashRouter history={history} basename={"/"}>
+    <HashRouter basename={"/"}>
       <SnackbarProvider
         maxSnack={1}
         anchorOrigin={{

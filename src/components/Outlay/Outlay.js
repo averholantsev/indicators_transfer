@@ -18,8 +18,9 @@ const useStyles = makeStyles({
   },
   buttonClose: {
     position: "absolute",
-    right: "-5px",
-    top: "-5px"
+    right: "5px",
+    top: "5px",
+    padding: 0,
   },
 });
 

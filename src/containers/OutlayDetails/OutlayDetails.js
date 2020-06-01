@@ -258,11 +258,11 @@ class OutlayDetails extends Component {
 
     let waterTariff = null;
     try {
-      waterTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {
+      waterTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {        
         if (
           name === "water" &&
-          new Date(dateStart) <= indicatorsDate &&
-          new Date(dateEnd) >= indicatorsDate
+          indicatorsDate.setDate(indicatorsDate.getDate() + 1) >= new Date(dateStart) &&
+          indicatorsDate.setDate(indicatorsDate.getDate() + 1) <= new Date(dateEnd)
         ) {
           return true;
         } else return false;
@@ -274,11 +274,11 @@ class OutlayDetails extends Component {
     let disposalTariff = null;
     try {
       disposalTariff = this.state.tariffs.find(
-        ({ name, dateStart, dateEnd }) => {
+        ({ name, dateStart, dateEnd }) => {          
           if (
             name === "disposal_water" &&
-            new Date(dateStart) <= indicatorsDate &&
-            new Date(dateEnd) >= indicatorsDate
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) >= new Date(dateStart) &&
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) <= new Date(dateEnd)
           ) {
             return true;
           } else return false;

@@ -6,10 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 
 import FormControl from "@material-ui/core/FormControl";
@@ -35,11 +32,7 @@ const useStyles = makeStyles({
     display: "flex",
   },
   textField: {
-    flexGrow: 1,
-  },
-  textFieldMargin: {
-    marginRight: "15px",
-    marginBottom: "15px",
+    width: "100%",
   },
   selectPadding: {
     display: "flex",
@@ -117,17 +110,9 @@ const TariffCard = (props) => {
         <CloseIcon />
       </IconButton>
       <CardContent className={classes.cardPadding}>
-        <Grid container>
-          <Grid item xs={12} className={classes.row}>
-            <FormControl
-              className={
-                classes.textFieldMargin +
-                " " +
-                classes.textField +
-                " " +
-                classes.selectPadding
-              }
-            >
+        <Grid container spacing={3}>
+          <Grid item xs={6} className={classes.row}>
+            <FormControl className={classes.textField}>
               <InputLabel>Наименование</InputLabel>
               <Select
                 value={name}
@@ -145,6 +130,8 @@ const TariffCard = (props) => {
                 </MenuItem>
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={6} className={classes.row}>
             <CurrencyTextField
               className={classes.textField}
               label="Тариф"
@@ -158,37 +145,34 @@ const TariffCard = (props) => {
               }
             />
           </Grid>
-          <Grid item xs={12} className={classes.row}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid item xs={6} className={classes.row}>
+              <DatePicker
+                clearable
                 label="Действителен c"
                 format="dd.MM.yyyy"
                 value={dateStart}
                 className={classes.textFieldMargin + " " + classes.textField}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
                 disabled={disabled}
                 onChange={(date) =>
                   props.updateTariffInState(id, "dateStart", date)
                 }
               />
-
-              <KeyboardDatePicker
+            </Grid>
+            <Grid item xs={6} className={classes.row}>
+              <DatePicker
+                clearable
                 label="Действителен по"
                 format="dd.MM.yyyy"
                 value={dateEnd}
                 className={classes.textField}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
                 disabled={disabled}
                 onChange={(date) =>
                   props.updateTariffInState(id, "dateEnd", date)
                 }
               />
-            </MuiPickersUtilsProvider>
-          </Grid>
+            </Grid>
+          </MuiPickersUtilsProvider>
         </Grid>
       </CardContent>
     </Card>

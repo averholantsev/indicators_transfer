@@ -119,14 +119,10 @@ class IndicatorsInsert extends Component {
 
   sendIndicators = () => {
     let dateOfIndicators = new Date(
-      this.state.monthYear.year,
-      this.state.monthYear.month,
-      1,
-      5,
-      0,
-      0,
-      0
-    ).toISOString();
+      Date.UTC(this.state.monthYear.year, this.state.monthYear.month, 1, 5)
+    ).setUTCHours(0, 0, 0, 0);
+
+    console.log(new Date(dateOfIndicators).toUTCString());
 
     const indicators = {
       electricity: {
@@ -141,13 +137,18 @@ class IndicatorsInsert extends Component {
         kitchen: this.state.indicators.hotWaterKitchen.value,
         bathroom: this.state.indicators.hotWaterBathroom.value,
       },
-      currentDate: { today: dateOfIndicators, year: this.state.monthYear.year },
-      userId: localStorage.getItem('userId')
+      currentDate: {
+        today: new Date(dateOfIndicators).toUTCString(),
+        year: this.state.monthYear.year,
+      },
+      userId: localStorage.getItem("userId"),
     };
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
+
     axios
       .post(`/indicators.json?auth=${token}`, indicators)
       .then((response) => {
+        console.log(response);
         this.setState({ modalOpen: false });
         this.sendEmailHandler();
         this.props.history.push("/outlay");
@@ -201,12 +202,10 @@ class IndicatorsInsert extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
-            <Typography variant="h5" align="center">
-              Проверьте показатели за{" "}
-              {MONTHS_LIST[this.state.monthYear.month].text}{" "}
-              {this.state.monthYear.year} г.
-            </Typography>
+          <DialogTitle id="alert-dialog-title" align="center">
+            Проверьте показатели за{" "}
+            {MONTHS_LIST[this.state.monthYear.month].text}{" "}
+            {this.state.monthYear.year} г.
           </DialogTitle>
           <DialogContent dividers>
             <Grid container>
