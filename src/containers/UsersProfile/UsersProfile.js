@@ -192,7 +192,8 @@ class UsersProfile extends Component {
         this.setState({
           userDetails: newUserDetails,
           prevIndicators: prevIndicators,
-          id: Object.keys(response.data)[0]
+          id: Object.keys(response.data)[0],
+          userId: dataFromDB.userId,
         });
       })
       .catch((error) => {
@@ -338,7 +339,7 @@ class UsersProfile extends Component {
         >
           Профиль пользователя
         </Typography>
-        {this.state.userDetails === null ? (
+        {this.state.userId === null ? (
           <Loader />
         ) : (
           <CardBody>
