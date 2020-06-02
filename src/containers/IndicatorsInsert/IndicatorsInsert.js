@@ -333,7 +333,7 @@ class IndicatorsInsert extends Component {
                     }
                   >
                     {MONTHS_LIST.map((item) => (
-                      <MenuItem key={item.key} value={item.value}>
+                      <MenuItem key={item.value} value={item.value}>
                         {item.text}
                       </MenuItem>
                     ))}
