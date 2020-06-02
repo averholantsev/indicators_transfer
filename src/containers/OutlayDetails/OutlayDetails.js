@@ -36,7 +36,7 @@ class OutlayDetails extends Component {
     const userId = localStorage.getItem("userId");
 
     const url_1 = `/users.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
-    const url_2 = `/tariffs.json`;
+    const url_2 = `/tariffs.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
     const url_3 = `/indicators.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
 
     const promise1 = axios.get(url_1);

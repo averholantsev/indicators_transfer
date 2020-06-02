@@ -26,8 +26,11 @@ class Tariffs extends Component {
   }
 
   getListOfTariffs = () => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
     axios
-      .get(`/tariffs.json`)
+      .get(`/tariffs.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
 
@@ -71,6 +74,7 @@ class Tariffs extends Component {
           };
           tariff.id = item;
           tariff.tariffValid = true;
+          tariff.userId = response.data[item].userId;
           return tariff;
         });
         this.setState({ tariffs: tariffs });
@@ -84,8 +88,9 @@ class Tariffs extends Component {
   };
 
   deleteItemFromTariffs = () => {
+    const token = localStorage.getItem("token");
     axios
-      .delete(`/tariffs/${this.state.deleteTariffId}.json`)
+      .delete(`/tariffs/${this.state.deleteTariffId}.json?auth=${token}`)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ deleteTariffId: null });
@@ -101,16 +106,18 @@ class Tariffs extends Component {
 
   updateItemInTariffs = (id) => {
     console.log("Обновление записи", id);
+    const token = localStorage.getItem("token");
     const oldData = this.state.tariffs.find((item) => item.id === id);
     const newData = {
       cost: oldData.cost.value,
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
+      userId: oldData.userId,
     };
     console.log("Сформированные данные", newData);
     axios
-      .patch(`/tariffs/${id}.json`, newData)
+      .patch(`/tariffs/${id}.json?auth=${token}`, newData)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.props.enqueueSnackbar("Данные успешно сохранены!", {
@@ -125,16 +132,19 @@ class Tariffs extends Component {
 
   insertItemToTariffs = () => {
     console.log("Сохраниение записи");
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
     const oldData = this.state.tariffs[0];
     const newData = {
       cost: oldData.cost.value,
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
+      userId: userId,
     };
     console.log("Сформированные данные", newData);
     axios
-      .post(`/tariffs.json`, newData)
+      .post(`/tariffs.json?auth=${token}`, newData)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ addButtonDisabled: false });
