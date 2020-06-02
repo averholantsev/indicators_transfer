@@ -184,7 +184,7 @@ class Tariffs extends Component {
           handleContinue={this.handleDeleteDialogContinue}
           dialogTitle="Вы уверены?"
           dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
-          ё
+          activeButtonName="Удалить"
         />
         <Typography
           variant="h4"

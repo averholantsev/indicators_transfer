@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
+import { connect } from "react-redux";
+
 import "./OutlayDetails.css";
 import Loader from "../../components/UI/Loader/Loader";
 import Outlay from "../../components/Outlay/Outlay";
@@ -7,9 +9,13 @@ import Tabs from "../../components/UI/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
 import { withSnackbar } from "notistack";
+import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
+import emailjs from "emailjs-com";
+import * as CONFIG from "../../configuration.json";
 
 class OutlayDetails extends Component {
   state = {
+    allIndicators: null,
     indicatorsList: null,
     prevIndicators: null,
     tariffs: null,
@@ -17,6 +23,8 @@ class OutlayDetails extends Component {
     error: null,
     deleteDialogOpen: false,
     deleteIndicatorId: null,
+    sendDialogOpen: false,
+    sendIndicatorId: null,
   };
 
   componentDidMount() {
@@ -47,6 +55,11 @@ class OutlayDetails extends Component {
 
         if (indicatorsList.length !== 0) {
           this.setState({
+            allIndicators: Object.keys(values[2].data).map((item) => {
+              let id = item;
+              let data = values[2].data[id];
+              return { id, data };
+            }),
             prevIndicators: prevIndicators,
             tariffs: tariffs,
             indicatorsList: indicatorsList,
@@ -159,6 +172,48 @@ class OutlayDetails extends Component {
     return indicatorsList;
   };
 
+  sendEmailHandler = () => {
+    const indicator = this.getOneIndicator();
+    
+    let templateParams = {
+      recipient: this.props.userDetails.accountantEmail,
+      address: this.props.userDetails.address,
+      month: MONTHS_LIST[new Date(indicator.currentDate.today).getMonth()].text,
+      year: indicator.currentDate.year,
+      electricityDay: indicator.electricity.day,
+      electricityNight: indicator.electricity.night,
+      coldWaterKitchen: indicator.coldWater.kitchen,
+      coldWaterBathroom:  indicator.coldWater.bathroom,
+      hotWaterKitchen: indicator.hotWater.kitchen,
+      hotWaterBathroom: indicator.hotWater.bathroom,
+    };
+
+    emailjs
+      .send(
+        CONFIG.SERVICE_ID,
+        CONFIG.TEMPLATE_ID,
+        templateParams,
+        CONFIG.USER_ID
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          this.props.enqueueSnackbar("Данные успешно переданы на почту!", {
+            variant: "success",
+            preventDuplicate: true,
+          });
+        },
+        (error) => {
+          console.log("FAILED...", error);
+        }
+      );
+  };
+
+  getOneIndicator = () => {
+    let oneIndicator = this.state.allIndicators.find(({ id }) => id === this.state.sendIndicatorId);
+    return oneIndicator.data;
+  };
+
   deleteItemFromIndicators = () => {
     const token = localStorage.getItem("token");
     axios
@@ -176,6 +231,14 @@ class OutlayDetails extends Component {
       });
   };
 
+  removeIndicatorFromState = (removeId) => {
+    let newIndicatorsList = [...this.state.indicatorsList];
+    newIndicatorsList = newIndicatorsList.filter((item) => {
+      return item.id !== removeId;
+    });
+    this.setState({ indicatorsList: newIndicatorsList });
+  };
+
   handleDeleteDialogOpen = (id) => {
     this.setState({ deleteDialogOpen: true, deleteIndicatorId: id });
   };
@@ -190,15 +253,19 @@ class OutlayDetails extends Component {
     this.handleDeleteDialogClose();
   };
 
-  removeIndicatorFromState = (removeId) => {
-    let newIndicatorsList = [...this.state.indicatorsList];
-    newIndicatorsList = newIndicatorsList.filter((item) => {
-      return item.id !== removeId;
-    });
-    this.setState({ indicatorsList: newIndicatorsList });
+  handleSendDialogOpen = (id) => {
+    this.setState({ sendDialogOpen: true, sendIndicatorId: id });
   };
 
-  // TODO Починить!
+  handleSendDialogClose = () => {
+    this.setState({ sendDialogOpen: false });
+  };
+
+  handleSendDialogContinue = () => {
+    this.sendEmailHandler();
+    this.handleSendDialogClose();
+  };
+
   countOutlay = (indicatorsList, prevIndicators) => {
     let newIndicatorsList = [...indicatorsList];
 
@@ -258,11 +325,13 @@ class OutlayDetails extends Component {
 
     let waterTariff = null;
     try {
-      waterTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {        
+      waterTariff = this.state.tariffs.find(({ name, dateStart, dateEnd }) => {
         if (
           name === "water" &&
-          indicatorsDate.setDate(indicatorsDate.getDate() + 1) >= new Date(dateStart) &&
-          indicatorsDate.setDate(indicatorsDate.getDate() + 1) <= new Date(dateEnd)
+          indicatorsDate.setDate(indicatorsDate.getDate() + 1) >=
+            new Date(dateStart) &&
+          indicatorsDate.setDate(indicatorsDate.getDate() + 1) <=
+            new Date(dateEnd)
         ) {
           return true;
         } else return false;
@@ -274,11 +343,13 @@ class OutlayDetails extends Component {
     let disposalTariff = null;
     try {
       disposalTariff = this.state.tariffs.find(
-        ({ name, dateStart, dateEnd }) => {          
+        ({ name, dateStart, dateEnd }) => {
           if (
             name === "disposal_water" &&
-            indicatorsDate.setDate(indicatorsDate.getDate() + 1) >= new Date(dateStart) &&
-            indicatorsDate.setDate(indicatorsDate.getDate() + 1) <= new Date(dateEnd)
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) >=
+              new Date(dateStart) &&
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) <=
+              new Date(dateEnd)
           ) {
             return true;
           } else return false;
@@ -287,19 +358,6 @@ class OutlayDetails extends Component {
     } catch (e) {
       console.log("Тариф на водоотведение загружается...");
     }
-
-    console.log(
-      "Холодная вода: ",
-      coldWater,
-      "Горячая вода: ",
-      hotWater,
-      "Тариф на воду: ",
-      waterTariff,
-      "Водоотведение: ",
-      disposalWater,
-      "Тариф на водоотведение: ",
-      disposalTariff
-    );
 
     let novogorCost = (
       (coldWater + hotWater) * waterTariff +
@@ -329,6 +387,7 @@ class OutlayDetails extends Component {
               indicatorsList={item}
               costNovogor={this.countCostNovogor(item.indicators, item.date)}
               handleDeleteDialogOpen={this.handleDeleteDialogOpen}
+              handleSendDialogOpen={this.handleSendDialogOpen}
             />
           );
         });
@@ -356,12 +415,20 @@ class OutlayDetails extends Component {
     return (
       <div>
         <DialogSimple
+          open={this.state.sendDialogOpen}
+          handleClose={this.handleSendDialogClose}
+          handleContinue={this.handleSendDialogContinue}
+          dialogTitle="Отправка показателей"
+          dialogContent="Вы уверены, что хотите отправить показатели на адрес электронной почты бухгалтерии?"
+          activeButtonName="Отправить"
+        />
+        <DialogSimple
           open={this.state.deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}
           handleContinue={this.handleDeleteDialogContinue}
           dialogTitle="Вы уверены?"
           dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
-          ё
+          activeButtonName="Удалить"
         />
         <Typography variant="h4" align="center">
           Текущие расходы
@@ -373,4 +440,11 @@ class OutlayDetails extends Component {
   }
 }
 
-export default withSnackbar(OutlayDetails);
+const mapStateToProps = (state) => {
+  return {
+    userDetails: state.userDetails,
+  };
+};
+
+
+export default withSnackbar(connect(mapStateToProps)(OutlayDetails));

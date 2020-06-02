@@ -27,7 +27,7 @@ export default function DialogSimple(props) {
           Отмена
         </Button>
         <Button onClick={props.handleContinue} color="secondary" autoFocus>
-          Удалить
+          {props.activeButtonName}
         </Button>
       </DialogActions>
     </Dialog>

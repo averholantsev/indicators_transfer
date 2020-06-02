@@ -7,8 +7,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import EmailIcon from '@material-ui/icons/Email';
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -19,6 +20,12 @@ const useStyles = makeStyles({
   buttonClose: {
     position: "absolute",
     right: "5px",
+    top: "5px",
+    padding: 0,
+  },
+  buttonSend: {
+    position: "absolute",
+    left: "5px",
     top: "5px",
     padding: 0,
   },
@@ -73,6 +80,19 @@ const Outlay = (props) => {
 
   return (
     <TableContainer component={Paper} className={classes.root} >
+      <IconButton
+        className={classes.buttonSend}
+        aria-label="Отправить"
+        component="span"
+        color="primary"
+        onClick={() => {
+          props.handleSendDialogOpen(id);
+        }}
+        disableRipple
+        disableFocusRipple
+      >
+        <EmailIcon />
+      </IconButton>
       <IconButton
         className={classes.buttonClose}
         aria-label="Удалить"
