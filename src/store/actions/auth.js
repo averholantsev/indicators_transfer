@@ -8,11 +8,14 @@ export const authStart = () => {
   };
 };
 
+export const authSuccessDone = (token, userId) => {
+  return { type: actionTypes.AUTH_SUCCESS, idToken: token, userId: userId };
+};
+
 export const authSuccess = (token, userId) => {
-  return {
-    type: actionTypes.AUTH_SUCCESS,
-    idToken: token,
-    userId: userId,
+  return (dispatch) => {
+    dispatch(loadUserData());
+    dispatch(authSuccessDone(token, userId));
   };
 };
 
