@@ -10,6 +10,7 @@ import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
 
 import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -40,14 +41,21 @@ const useStyles = makeStyles({
   },
   buttonClose: {
     position: "absolute",
-    right: "0",
+    padding: "5px",
+    top: "5px",
+    right: "5px",
   },
   buttonEdit: {
     position: "absolute",
-    right: "30px",
+    padding: "5px",
+    top: "5px",
+    right: "35px",
   },
   buttonIconSuccess: {
     color: "#4caf50",
+  },
+  buttonIconSuccessDisabled: {
+    color: "#9E9E9E",
   },
   buttonSuccess: {
     "&:hover": {
@@ -58,7 +66,7 @@ const useStyles = makeStyles({
 
 const TariffCard = (props) => {
   const classes = useStyles();
-  const { id, name, cost, dateEnd, dateStart } = props.tariff;
+  const { id, name, cost, dateEnd, dateStart, tariffValid } = props.tariff;
   const [disabled, setDisabled] = useState(props.disabled);
 
   return (
@@ -81,6 +89,7 @@ const TariffCard = (props) => {
           aria-label="Сохранить"
           component="span"
           color="secondary"
+          disabled={!tariffValid}
           onClick={() => {
             setDisabled(true);
             if (id) {
@@ -92,7 +101,7 @@ const TariffCard = (props) => {
           disableRipple
           disableFocusRipple
         >
-          <SaveIcon className={classes.buttonIconSuccess} />
+          <SaveIcon className={!tariffValid ? classes.buttonIconSuccessDisabled : classes.buttonIconSuccess} />
         </IconButton>
       )}
 
@@ -115,11 +124,12 @@ const TariffCard = (props) => {
             <FormControl className={classes.textField}>
               <InputLabel>Наименование</InputLabel>
               <Select
-                value={name}
+                value={name.value}
                 onChange={(event) =>
                   props.updateTariffInState(id, "name", event.target.value)
                 }
                 disabled={disabled}
+                error={!name.valid && name.touched}
               >
                 <MenuItem value={"water"}>Подача воды</MenuItem>
                 <MenuItem value={"hot_water"}>Подогрев воды</MenuItem>
@@ -129,6 +139,9 @@ const TariffCard = (props) => {
                   Электро-ия. ночь
                 </MenuItem>
               </Select>
+              {!name.valid && name.touched ? (
+                <FormHelperText>{name.errorMessage}</FormHelperText>
+              ) : null}
             </FormControl>
           </Grid>
           <Grid item xs={6} className={classes.row}>
@@ -136,12 +149,16 @@ const TariffCard = (props) => {
               className={classes.textField}
               label="Тариф"
               currencySymbol="₽"
-              value={cost}
+              value={cost.value}
               minimumValue="0"
               maximumValue="5000"
               disabled={disabled}
               onChange={(event, value) =>
                 props.updateTariffInState(id, "cost", value)
+              }
+              error={!cost.valid && cost.touched}
+              helperText={
+                !cost.valid && cost.touched ? cost.errorMessage : null
               }
             />
           </Grid>
@@ -151,11 +168,17 @@ const TariffCard = (props) => {
                 clearable
                 label="Действителен c"
                 format="dd.MM.yyyy"
-                value={dateStart}
+                value={dateStart.value}
                 className={classes.textFieldMargin + " " + classes.textField}
                 disabled={disabled}
                 onChange={(date) =>
                   props.updateTariffInState(id, "dateStart", date)
+                }
+                error={!dateStart.valid && dateStart.touched}
+                helperText={
+                  !dateStart.valid && dateStart.touched
+                    ? dateStart.errorMessage
+                    : null
                 }
               />
             </Grid>
@@ -164,11 +187,17 @@ const TariffCard = (props) => {
                 clearable
                 label="Действителен по"
                 format="dd.MM.yyyy"
-                value={dateEnd}
+                value={dateEnd.value}
                 className={classes.textField}
                 disabled={disabled}
                 onChange={(date) =>
                   props.updateTariffInState(id, "dateEnd", date)
+                }
+                error={!dateEnd.valid && dateEnd.touched}
+                helperText={
+                  !dateEnd.valid && dateEnd.touched
+                    ? dateEnd.errorMessage
+                    : null
                 }
               />
             </Grid>

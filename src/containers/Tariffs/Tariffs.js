@@ -11,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import { withSnackbar } from "notistack";
 import Grid from "@material-ui/core/Grid";
 
+import { checkFieldValidity } from "../../components/Helpers/FormHelper";
+
 class Tariffs extends Component {
   state = {
     tariffs: [],
@@ -30,8 +32,45 @@ class Tariffs extends Component {
         console.log("Ответ с сервера: ", response.data);
 
         let tariffs = Object.keys(response.data).map((item) => {
-          let tariff = response.data[item];
+          let tariff = {};
+          tariff.name = {
+            value: response.data[item].name,
+            validation: {
+              required: true,
+            },
+            valid: true,
+            errorMessage: "",
+            touched: true,
+          };
+          tariff.cost = {
+            value: response.data[item].cost,
+            validation: {
+              isNumber: true,
+            },
+            valid: true,
+            errorMessage: "",
+            touched: true,
+          };
+          tariff.dateStart = {
+            value: response.data[item].dateStart,
+            validation: {
+              isDate: true,
+            },
+            valid: true,
+            errorMessage: "",
+            touched: true,
+          };
+          tariff.dateEnd = {
+            value: response.data[item].dateEnd,
+            validation: {
+              isDate: true,
+            },
+            valid: true,
+            errorMessage: "",
+            touched: true,
+          };
           tariff.id = item;
+          tariff.tariffValid = true;
           return tariff;
         });
         this.setState({ tariffs: tariffs });
@@ -64,10 +103,10 @@ class Tariffs extends Component {
     console.log("Обновление записи", id);
     const oldData = this.state.tariffs.find((item) => item.id === id);
     const newData = {
-      cost: oldData.cost,
-      dateEnd: oldData.dateEnd,
-      dateStart: oldData.dateStart,
-      name: oldData.name,
+      cost: oldData.cost.value,
+      dateEnd: oldData.dateEnd.value,
+      dateStart: oldData.dateStart.value,
+      name: oldData.name.value,
     };
     console.log("Сформированные данные", newData);
     axios
@@ -88,10 +127,10 @@ class Tariffs extends Component {
     console.log("Сохраниение записи");
     const oldData = this.state.tariffs[0];
     const newData = {
-      cost: oldData.cost,
-      dateEnd: oldData.dateEnd,
-      dateStart: oldData.dateStart,
-      name: oldData.name,
+      cost: oldData.cost.value,
+      dateEnd: oldData.dateEnd.value,
+      dateStart: oldData.dateStart.value,
+      name: oldData.name.value,
     };
     console.log("Сформированные данные", newData);
     axios
@@ -131,10 +170,42 @@ class Tariffs extends Component {
     let newTariffsList = [...this.state.tariffs];
 
     newTariffsList.unshift({
-      cost: 0,
-      dateEnd: null,
-      dateStart: null,
-      name: "",
+      name: {
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      cost: {
+        value: 0,
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      dateStart: {
+        value: null,
+        validation: {
+          isDate: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      dateEnd: {
+        value: null,
+        validation: {
+          isDate: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
     });
 
     this.setState({ tariffs: newTariffsList, addButtonDisabled: true });
@@ -153,11 +224,45 @@ class Tariffs extends Component {
   };
 
   updateTariffInState = (id, key, value) => {
-    let newState = [...this.state.tariffs];
-    let changeIndex = newState.findIndex((item) => item.id === id);
-    newState[changeIndex][key] = value;
+    let newTariff = [...this.state.tariffs];
+    let changeIndex = newTariff.findIndex((item) => item.id === id);
 
-    this.setState({ tariffs: newState });
+    let validation = checkFieldValidity(
+      value,
+      newTariff[changeIndex][key].validation
+    );
+    
+    newTariff[changeIndex] = {
+      ...this.state.tariffs[changeIndex],
+      [key]: {
+        ...this.state.tariffs[changeIndex][key],
+        value: value,
+        valid: validation.isValid,
+        errorMessage: validation.errorMessage,
+        touched: true,
+      },
+    };
+
+    let formValid = this.checkFormValidity(newTariff[changeIndex]);
+
+    newTariff[changeIndex].tariffValid = formValid;
+
+    this.setState({ tariffs: newTariff });
+  };
+
+  checkFormValidity = (tariff) => {
+    const { name, cost, dateStart, dateEnd } = tariff;
+
+    if (
+      name.valid &&
+      cost.valid &&
+      dateStart.valid &&
+      dateEnd.valid
+    ) {
+      return true;
+    }
+
+    return false;
   };
 
   render() {
