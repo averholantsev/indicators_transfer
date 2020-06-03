@@ -33,13 +33,11 @@ class IndicatorsInsert extends Component {
   };
 
   addIndicatorHandler = (type, value) => {
-    //Обновляем показатель
     const updatedCount = value;
     const updatedIndicators = { ...this.state.indicators };
     updatedIndicators[type].value = updatedCount;
     updatedIndicators[type].valid = true;
 
-    //Обновляем state
     this.setState({ indicators: updatedIndicators });
   };
 
@@ -109,8 +107,6 @@ class IndicatorsInsert extends Component {
     let dateOfIndicators = new Date(
       Date.UTC(this.state.monthYear.year, this.state.monthYear.month, 1, 5)
     ).setUTCHours(0, 0, 0, 0);
-
-    console.log(new Date(dateOfIndicators).toUTCString());
 
     const indicators = {
       electricity: {
@@ -194,10 +190,7 @@ class IndicatorsInsert extends Component {
           sendIndicators={this.sendIndicators}
         />
 
-        <Typography
-          variant="h4"
-          align="center"
-        >
+        <Typography variant="h4" align="center">
           Подать показания
         </Typography>
 
