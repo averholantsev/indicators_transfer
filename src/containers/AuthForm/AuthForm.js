@@ -86,12 +86,12 @@ class AuthForm extends Component {
   };
 
   //Функция для отправки данных формы
-  formSenderHandler = () => {
-    this.props.onAuth(this.state.email, this.state.password);
+  formSenderHandler = () => {  
+    this.props.onAuth(this.state.auth.email.value, this.state.auth.password.value);
   };
 
   render() {
-    const { email, password, authValid } = this.state.auth;
+    const { email, password } = this.state.auth;
 
     return (
       <div className="auth_container">
@@ -135,7 +135,7 @@ class AuthForm extends Component {
           />
           <AuthButton
             onClick={
-              authValid
+              this.state.authValid
                 ? () => this.formSenderHandler()
                 : () => this.checkFormValidity()
             }
