@@ -138,7 +138,6 @@ export const authCheckState = () => {
             (expirationDate.getTime() - new Date().getTime()) / 1000
           )
         );
-        dispatch(loadUserData());
       }
     }
   };
