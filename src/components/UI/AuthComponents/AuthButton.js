@@ -10,7 +10,7 @@ const CSSButton = withStyles({
   }
 })(Button);
 
-const AuthButton = (props) => {
+export const AuthButton = (props) => {
   return <CSSButton variant="contained" color="primary" {...props}>{props.children}</CSSButton>;
 };
 

@@ -8,7 +8,7 @@ const CSSAlert = withStyles({
   },
 })(Alert);
 
-const AuthAlert = (props) => {
+export const AuthAlert = (props) => {
   return <CSSAlert {...props}>{props.children}</CSSAlert>;
 };
 

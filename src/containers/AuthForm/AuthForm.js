@@ -1,104 +1,97 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
 import { NavLink } from "react-router-dom";
+import * as actions from "../../store/actions/index";
 
 import "./AuthForm.css";
+import { checkFieldValidity } from "../../components/Helpers/FormHelper";
+import {
+  AuthButton,
+  AuthInput,
+  AuthInputPassword,
+  AuthAlert,
+} from "../../components/UI/AuthComponents/index";
+import { Typography, Link } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import AuthInput from "../../components/UI/AuthComponents/AuthInput";
-import AuthInputPassword from "../../components/UI/AuthComponents/AuthInputPassword";
-import AuthButton from "../../components/UI/AuthComponents/AuthButton";
-import CSSAlert from "../../components/UI/AuthComponents/AuthAlert";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 
 // Реализация классового компонента формы
 class AuthForm extends Component {
   state = {
-    email: "",
-    password: "",
-    rememberMe: false,
-    validateFields: {
-      email: false,
-      password: false,
+    auth: {
+      email: {
+        value: "",
+        validation: {
+          isEmail: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      password: {
+        value: "",
+        validation: {
+          isPassord: true,
+        },
+        valid: false,
+        touched: false,
+      },
     },
-    fieldValidationErrors: {
-      email: "Обязательное поле!",
-      password: "Обязательное поле!",
-    },
-    willSend: true,
+    authValid: false,
   };
 
   //Функция для обновления состояния полей ввода
-  inputHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.validation(name, value);
+  inputHandler = (key, value) => {
+    let validation = checkFieldValidity(value, this.state.auth[key].validation);
+    let newAuthState = {
+      ...this.state.auth,
+      [key]: {
+        ...this.state.auth[key],
+        value: value,
+        valid: validation.isValid,
+        errorMessage: validation.errorMessage,
+        touched: true,
+      },
+    };
 
-    //Обновление State значения почты или пароля
-    this.setState({ [name]: value });
+    let formValid = this.checkFormValidity(newAuthState);
+
+    this.setState({ auth: newAuthState, authValid: formValid });
   };
 
-  //Валидация
-  validation = (name, value) => {
-    const reg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
-    let validateFieldsUpdate = { ...this.state.validateFields };
-    let fieldValidationErrors = { ...this.state.fieldValidationErrors };
-    switch (name) {
-      case "email":
-        validateFieldsUpdate.email = reg.test(value);
-        if (value.length === 0) {
-          fieldValidationErrors.email = "Обязательное поле!";
-        } else fieldValidationErrors.email = "Проверьте корректность почты";
-        break;
-      case "password":
-        validateFieldsUpdate.password = value.length >= 6;
-        if (value.length === 0) {
-          fieldValidationErrors.password = "Обязательное поле!";
-        } else
-          fieldValidationErrors.password =
-            "Пароль должен быть более 6 символов";
-        break;
-      default:
-        break;
+  checkFormValidity = (stateData) => {
+    if (typeof stateData !== "undefined") {
+      const { email, password } = stateData;
+      if (email.valid && password.valid) {
+        return true;
+      }
     }
-    this.setState({
-      validateFields: validateFieldsUpdate,
-      fieldValidationErrors: fieldValidationErrors,
-    });
-  };
 
-  //Функция для обновления состояния чекбокса
-  checkboxHandler = () => {
-    let checkbox = this.state.rememberMe;
+    if (typeof stateData === "undefined") {
+      let newAuthState = {
+        ...this.state.auth,
+        email: {
+          ...this.state.auth.email,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+        password: {
+          ...this.state.auth.password,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+      };
+      this.setState({ auth: newAuthState });
+    }
 
-    this.setState({ rememberMe: !checkbox });
+    return false;
   };
 
   //Функция для отправки данных формы
   formSenderHandler = () => {
-    //Проверка на заполненные поля
-    if (this.state.validateFields.email && this.state.validateFields.password) {
-      this.setState({ willSend: true });
-      //Отправка POST запроса на backend
-      this.props.onAuth(
-        this.state.email,
-        this.state.password
-      );
-    } else {
-      this.setState({ willSend: false });
-    }
+    this.props.onAuth(this.state.email, this.state.password);
   };
 
   render() {
-    //Вспомогательные переменные для отображения валидации и подсказки
-    let emailError = false;
-    let passwordError = false;
-
-    if (!this.state.willSend) {
-      emailError = !this.state.validateFields.email;
-      passwordError = !this.state.validateFields.password;
-    }
+    const { email, password, authValid } = this.state.auth;
 
     return (
       <div className="auth_container">
@@ -112,33 +105,41 @@ class AuthForm extends Component {
             Система коммунальных показателей
           </Typography>
           {this.props.errorMessage ? (
-            <CSSAlert severity="error">{this.props.errorMessage}</CSSAlert>
+            <AuthAlert severity="error">{this.props.errorMessage}</AuthAlert>
           ) : null}
           <AuthInput
             key="email"
             id="email"
             label="Почта"
             name="email"
-            error={emailError}
+            error={!email.valid && email.touched}
             helperText={
-              emailError ? this.state.fieldValidationErrors.email : null
+              !email.valid && email.touched ? email.errorMessage : null
             }
-            onChange={this.inputHandler}
-            value={this.state.email}
+            onChange={(event) => this.inputHandler("email", event.target.value)}
+            value={email.value}
           />
           <AuthInputPassword
             key="password"
             id="password"
             label="Пароль"
             name="password"
-            error={passwordError}
+            error={!password.valid && password.touched}
             helperText={
-              passwordError ? this.state.fieldValidationErrors.password : null
+              !password.valid && password.touched ? password.errorMessage : null
             }
-            onChange={this.inputHandler}
-            value={this.state.password}
+            onChange={(event) =>
+              this.inputHandler("password", event.target.value)
+            }
+            value={password.value}
           />
-          <AuthButton onClick={this.formSenderHandler}>
+          <AuthButton
+            onClick={
+              authValid
+                ? () => this.formSenderHandler()
+                : () => this.checkFormValidity()
+            }
+          >
             Войти в аккаунт
           </AuthButton>
           <Typography>

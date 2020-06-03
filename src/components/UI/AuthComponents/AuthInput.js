@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const AuthInput = (props: any) => {
+export const AuthInput = (props: any) => {
   const classes = useStyles();
   return <TextField className={classes.root} variant="outlined" inputProps={{className: classes.input}} {...props} />;
 };

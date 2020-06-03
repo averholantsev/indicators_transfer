@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const AuthInputPassword = (props) => {
+export const AuthInputPassword = (props) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     showPassword: false
