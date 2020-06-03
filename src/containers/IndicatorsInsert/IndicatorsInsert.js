@@ -197,7 +197,6 @@ class IndicatorsInsert extends Component {
         <Typography
           variant="h4"
           align="center"
-          style={{ marginBottom: "10px" }}
         >
           Подать показания
         </Typography>
