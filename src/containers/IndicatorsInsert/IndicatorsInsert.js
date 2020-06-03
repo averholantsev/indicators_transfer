@@ -8,6 +8,7 @@ import emailjs from "emailjs-com";
 import "./IndicatorsInsert.css";
 import * as CONFIG from "../../configuration.json";
 import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
+import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 
 import DialogCheck from "../../components/IndicatorsInsertForm/DialogCheck";
 import CardBody from "../../components/UI/CardBody/CardBody";
@@ -17,13 +18,62 @@ import { Typography } from "@material-ui/core";
 class IndicatorsInsert extends Component {
   state = {
     indicators: {
-      electricityDay: { value: "", valid: true },
-      electricityNight: { value: "", valid: true },
-      coldWaterKitchen: { value: "", valid: true },
-      coldWaterBathroom: { value: "", valid: true },
-      hotWaterKitchen: { value: "", valid: true },
-      hotWaterBathroom: { value: "", valid: true },
+      electricityDay: {
+        value: "",
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      electricityNight: {
+        value: "",
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      coldWaterKitchen: {
+        value: "",
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      coldWaterBathroom: {
+        value: "",
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      hotWaterKitchen: {
+        value: "",
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
+      hotWaterBathroom: {
+        value: "",
+        validation: {
+          isNumber: true,
+        },
+        valid: false,
+        errorMessage: "",
+        touched: false,
+      },
     },
+    indicatorsValid: false,
     monthYear: {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
@@ -32,13 +82,93 @@ class IndicatorsInsert extends Component {
     modalOpen: false,
   };
 
-  addIndicatorHandler = (type, value) => {
-    const updatedCount = value;
-    const updatedIndicators = { ...this.state.indicators };
-    updatedIndicators[type].value = updatedCount;
-    updatedIndicators[type].valid = true;
+  updateIndicatorsInState = (key, value) => {
+    let validation = checkFieldValidity(
+      value,
+      this.state.indicators[key].validation
+    );
+    let newIndicators = {
+      ...this.state.indicators,
+      [key]: {
+        ...this.state.indicators[key],
+        value: value,
+        valid: validation.isValid,
+        errorMessage: validation.errorMessage,
+        touched: true,
+      },
+    };
 
-    this.setState({ indicators: updatedIndicators });
+    let formValid = this.checkFormValidity(newIndicators);
+
+    this.setState({
+      indicators: newIndicators,
+      indicatorsValid: formValid,
+    });
+  };
+
+  checkFormValidity = (stateData) => {
+    console.log(typeof stateData);
+
+    if (typeof stateData !== "undefined") {
+      const {
+        electricityDay,
+        electricityNight,
+        coldWaterKitchen,
+        coldWaterBathroom,
+        hotWaterKitchen,
+        hotWaterBathroom,
+      } = stateData;
+
+      if (
+        electricityDay.valid &&
+        electricityNight.valid &&
+        coldWaterKitchen.valid &&
+        coldWaterBathroom.valid &&
+        hotWaterKitchen.valid &&
+        hotWaterBathroom.valid
+      ) {
+        return true;
+      }
+    }
+
+    if (typeof stateData === "undefined") {
+      let newIndicators = {
+        ...this.state.indicators,
+        electricityDay: {
+          ...this.state.indicators.electricityDay,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+        electricityNight: {
+          ...this.state.indicators.electricityNight,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+        coldWaterKitchen: {
+          ...this.state.indicators.coldWaterKitchen,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+        coldWaterBathroom: {
+          ...this.state.indicators.coldWaterBathroom,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+        hotWaterKitchen: {
+          ...this.state.indicators.hotWaterKitchen,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+        hotWaterBathroom: {
+          ...this.state.indicators.hotWaterBathroom,
+          touched: true,
+          errorMessage: "Поле обязательно для заполнения",
+        },
+      };
+      this.setState({ indicators: newIndicators });
+    }
+
+    return false;
   };
 
   modalHandlerClose = () => {
@@ -159,17 +289,11 @@ class IndicatorsInsert extends Component {
     return currentYearList;
   };
 
-  setStateMonth = (e, value) => {
-    const updatedMonth = value;
-    const updatedMonthYear = { ...this.state.monthYear };
-    updatedMonthYear.month = updatedMonth;
-    this.setState({ monthYear: updatedMonthYear });
-  };
-
-  setStateYear = (e, value) => {
-    const updatedYear = value;
-    const updatedMonthYear = { ...this.state.monthYear };
-    updatedMonthYear.year = updatedYear;
+  setStateMonthYear = (key, value) => {
+    const updatedMonthYear = { 
+      ...this.state.monthYear,
+      [key]: value
+    };
     this.setState({ monthYear: updatedMonthYear });
   };
 
@@ -198,11 +322,12 @@ class IndicatorsInsert extends Component {
           <Indicators
             indicators={this.state.indicators}
             monthYear={this.state.monthYear}
-            setStateMonth={this.setStateMonth}
-            setStateYear={this.setStateYear}
+            indicatorsValid={this.state.indicatorsValid}
+            setStateMonthYear={this.setStateMonthYear}
             getCurrentYear={this.getCurrentYear}
-            addIndicatorHandler={this.addIndicatorHandler}
+            updateIndicatorsInState={this.updateIndicatorsInState}
             modalHandlerOpen={this.modalHandlerOpen}
+            checkFormValidity={this.checkFormValidity}
           />
         </CardBody>
       </div>

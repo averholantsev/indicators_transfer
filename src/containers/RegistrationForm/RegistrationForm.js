@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import { NavLink } from "react-router-dom";
-import { checkFieldValidity } from '../../components/Helpers/FormHelper'
+import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
@@ -334,7 +334,7 @@ class RegistrationForm extends Component {
     }
 
     return false;
-  }
+  };
 
   render() {
     if (this.props.errorMessage) window.scrollTo(0, 0);

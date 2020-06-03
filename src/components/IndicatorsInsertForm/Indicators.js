@@ -13,7 +13,14 @@ import {
 } from "@material-ui/core";
 
 const Indicators = (props) => {
-  const errorMessage = "Поле обязательно для заполнения";
+  const {
+    electricityDay,
+    electricityNight,
+    coldWaterKitchen,
+    coldWaterBathroom,
+    hotWaterKitchen,
+    hotWaterBathroom,
+  } = props.indicators;
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -26,7 +33,7 @@ const Indicators = (props) => {
           <InputLabel>Месяц</InputLabel>
           <Select
             value={props.monthYear.month || 0}
-            onChange={(event) => props.setStateMonth(event, event.target.value)}
+            onChange={(event) => props.setStateMonthYear("month", event.target.value)}
           >
             {MONTHS_LIST.map((item) => (
               <MenuItem key={item.value} value={item.value}>
@@ -41,7 +48,7 @@ const Indicators = (props) => {
           <InputLabel>Год</InputLabel>
           <Select
             value={props.monthYear.year || 2020}
-            onChange={(event) => props.setStateYear(event, event.target.value)}
+            onChange={(event) => props.setStateMonthYear("year", event.target.value)}
           >
             {props.getCurrentYear().map((item) => (
               <MenuItem key={item.value} value={item.value}>
@@ -63,14 +70,14 @@ const Indicators = (props) => {
           variant="standard"
           label="День"
           currencySymbol=""
-          value={props.indicators.electricityDay.value}
+          value={electricityDay.value}
           minimumValue="0"
           onChange={(event, value) =>
-            props.addIndicatorHandler("electricityDay", value)
+            props.updateIndicatorsInState("electricityDay", value)
           }
-          error={!props.indicators.electricityDay.valid}
+          error={!electricityDay.valid && electricityDay.touched}
           helperText={
-            !props.indicators.electricityDay.valid ? errorMessage : null
+            !electricityDay.valid && electricityDay.touched ? electricityDay.errorMessage : null
           }
         />
       </Grid>
@@ -80,14 +87,14 @@ const Indicators = (props) => {
           variant="standard"
           label="Ночь"
           currencySymbol=""
-          value={props.indicators.electricityNight.value}
+          value={electricityNight.value}
           minimumValue="0"
           onChange={(event, value) =>
-            props.addIndicatorHandler("electricityNight", value)
+            props.updateIndicatorsInState("electricityNight", value)
           }
-          error={!props.indicators.electricityNight.valid}
+          error={!electricityNight.valid && electricityNight.touched}
           helperText={
-            !props.indicators.electricityNight.valid ? errorMessage : null
+            !electricityNight.valid && electricityNight.touched ? electricityNight.errorMessage : null
           }
         />
       </Grid>
@@ -103,14 +110,14 @@ const Indicators = (props) => {
           variant="standard"
           label="Холодная вода"
           currencySymbol=""
-          value={props.indicators.coldWaterKitchen.value}
+          value={coldWaterKitchen.value}
           minimumValue="0"
           onChange={(event, value) =>
-            props.addIndicatorHandler("coldWaterKitchen", value)
+            props.updateIndicatorsInState("coldWaterKitchen", value)
           }
-          error={!props.indicators.coldWaterKitchen.valid}
+          error={!coldWaterKitchen.valid && coldWaterKitchen.touched}
           helperText={
-            !props.indicators.coldWaterKitchen.valid ? errorMessage : null
+            !coldWaterKitchen.valid && coldWaterKitchen.touched ? coldWaterKitchen.errorMessage : null
           }
         />
       </Grid>
@@ -120,14 +127,14 @@ const Indicators = (props) => {
           variant="standard"
           label="Горячая вода"
           currencySymbol=""
-          value={props.indicators.hotWaterKitchen.value}
+          value={hotWaterKitchen.value}
           minimumValue="0"
           onChange={(event, value) =>
-            props.addIndicatorHandler("hotWaterKitchen", value)
+            props.updateIndicatorsInState("hotWaterKitchen", value)
           }
-          error={!props.indicators.hotWaterKitchen.valid}
+          error={!hotWaterKitchen.valid && hotWaterKitchen.touched}
           helperText={
-            !props.indicators.hotWaterKitchen.valid ? errorMessage : null
+            !hotWaterKitchen.valid && hotWaterKitchen.touched ? hotWaterKitchen.errorMessage : null
           }
         />
       </Grid>
@@ -143,14 +150,14 @@ const Indicators = (props) => {
           variant="standard"
           label="Холодная вода"
           currencySymbol=""
-          value={props.indicators.coldWaterBathroom.value}
+          value={coldWaterBathroom.value}
           minimumValue="0"
           onChange={(event, value) =>
-            props.addIndicatorHandler("coldWaterBathroom", value)
+            props.updateIndicatorsInState("coldWaterBathroom", value)
           }
-          error={!props.indicators.coldWaterBathroom.valid}
+          error={!coldWaterBathroom.valid && coldWaterBathroom.touched}
           helperText={
-            !props.indicators.coldWaterBathroom.valid ? errorMessage : null
+            !coldWaterBathroom.valid && coldWaterBathroom.touched ? coldWaterBathroom.errorMessage : null
           }
         />
       </Grid>
@@ -160,14 +167,14 @@ const Indicators = (props) => {
           variant="standard"
           label="Горячая вода"
           currencySymbol=""
-          value={props.indicators.hotWaterBathroom.value}
+          value={hotWaterBathroom.value}
           minimumValue="0"
           onChange={(event, value) =>
-            props.addIndicatorHandler("hotWaterBathroom", value)
+            props.updateIndicatorsInState("hotWaterBathroom", value)
           }
-          error={!props.indicators.hotWaterBathroom.valid}
+          error={!hotWaterBathroom.valid && hotWaterBathroom.touched}
           helperText={
-            !props.indicators.hotWaterBathroom.valid ? errorMessage : null
+            !hotWaterBathroom.valid && hotWaterBathroom.touched ? hotWaterBathroom.errorMessage : null
           }
         />
       </Grid>
@@ -177,7 +184,7 @@ const Indicators = (props) => {
           variant="contained"
           color="primary"
           disableElevation
-          onClick={props.modalHandlerOpen}
+          onClick={props.indicatorsValid ? props.modalHandlerOpen : () => props.checkFormValidity()}
         >
           Отправить
         </Button>
