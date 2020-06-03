@@ -15,7 +15,6 @@ import * as CONFIG from "../../configuration.json";
 
 class OutlayDetails extends Component {
   state = {
-    allIndicators: null,
     indicatorsList: null,
     prevIndicators: null,
     tariffs: null,
@@ -55,11 +54,6 @@ class OutlayDetails extends Component {
 
         if (indicatorsList.length !== 0) {
           this.setState({
-            allIndicators: Object.keys(values[2].data).map((item) => {
-              let id = item;
-              let data = values[2].data[id];
-              return { id, data };
-            }),
             prevIndicators: prevIndicators,
             tariffs: tariffs,
             indicatorsList: indicatorsList,
@@ -135,6 +129,7 @@ class OutlayDetails extends Component {
       return {
         id: key,
         date: new Date(data[key].currentDate.today),
+        year: data[key].currentDate.year,
         indicators: [
           {
             id: "day_electricity",
@@ -150,11 +145,15 @@ class OutlayDetails extends Component {
             id: "cold_water",
             name: "Холодная вода:",
             intake: data[key].coldWater.bathroom + data[key].coldWater.kitchen,
+            bathroom: data[key].coldWater.bathroom,
+            kitchen: data[key].coldWater.kitchen,
           },
           {
             id: "hot_water",
             name: "Горячая вода:",
             intake: data[key].hotWater.bathroom + data[key].hotWater.kitchen,
+            bathroom: data[key].hotWater.bathroom,
+            kitchen: data[key].hotWater.kitchen,
           },
           {
             id: "disposal_water",
@@ -174,20 +173,20 @@ class OutlayDetails extends Component {
 
   sendEmailHandler = () => {
     const indicator = this.getOneIndicator();
-    
+
     let templateParams = {
       recipient: this.props.userDetails.accountantEmail,
       address: this.props.userDetails.address,
-      month: MONTHS_LIST[new Date(indicator.currentDate.today).getMonth()].text,
-      year: indicator.currentDate.year,
-      electricityDay: indicator.electricity.day,
-      electricityNight: indicator.electricity.night,
-      coldWaterKitchen: indicator.coldWater.kitchen,
-      coldWaterBathroom:  indicator.coldWater.bathroom,
-      hotWaterKitchen: indicator.hotWater.kitchen,
-      hotWaterBathroom: indicator.hotWater.bathroom,
+      month: MONTHS_LIST[new Date(indicator.date).getMonth()].text,
+      year: indicator.year,
+      electricityDay: indicator.indicators[0].intake,
+      electricityNight: indicator.indicators[1].intake,
+      coldWaterKitchen: indicator.indicators[2].kitchen,
+      coldWaterBathroom: indicator.indicators[2].bathroom,
+      hotWaterKitchen: indicator.indicators[3].kitchen,
+      hotWaterBathroom: indicator.indicators[3].bathroom,
     };
-
+    
     emailjs
       .send(
         CONFIG.SERVICE_ID,
@@ -210,8 +209,10 @@ class OutlayDetails extends Component {
   };
 
   getOneIndicator = () => {
-    let oneIndicator = this.state.allIndicators.find(({ id }) => id === this.state.sendIndicatorId);
-    return oneIndicator.data;
+    let oneIndicator = this.state.indicatorsList.find(
+      ({ id }) => id === this.state.sendIndicatorId
+    );
+    return oneIndicator;
   };
 
   deleteItemFromIndicators = () => {
@@ -445,6 +446,5 @@ const mapStateToProps = (state) => {
     userDetails: state.userDetails,
   };
 };
-
 
 export default withSnackbar(connect(mapStateToProps)(OutlayDetails));
