@@ -109,12 +109,12 @@ const Outlay = (props) => {
       <Typography variant="h6" align="center">
         {indicatorMonth} {date.getFullYear()}
       </Typography>
-      <Table aria-label="simple table">
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Показатель</TableCell>
-            <TableCell align="center">Расход</TableCell>
-            <TableCell align="center">Потребление</TableCell>
+            <TableCell><b>Показатель</b></TableCell>
+            <TableCell align="center"><b>Расход</b></TableCell>
+            <TableCell align="center"><b>Потребление</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -128,7 +128,12 @@ const Outlay = (props) => {
             </TableRow>
           ))}
           <TableRow>
-            <TableCell component="th" scope="row">
+            <TableCell align="center" colSpan={3}>
+              <b>Расчет стоимости</b>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" colSpan={2}>
               Новогор
             </TableCell>
             <TableCell align="center">{costNovogor}</TableCell>
