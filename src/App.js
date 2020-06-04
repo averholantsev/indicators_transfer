@@ -13,7 +13,7 @@ import RegistrationForm from "./containers/RegistrationForm/RegistrationForm";
 import * as actions from "./store/actions/index";
 
 class App extends Component {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.onTryAutoSignup();
   }
   
