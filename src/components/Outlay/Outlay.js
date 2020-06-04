@@ -142,13 +142,13 @@ const Outlay = (props) => {
             <TableCell component="th" scope="row" colSpan={2}>
               Водоснабжение
             </TableCell>
-            <TableCell align="center">{costWaterSupply}</TableCell>
+            <TableCell align="center">{costWaterSupply} ₽</TableCell>
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row" colSpan={2}>
               Электроэнергия
             </TableCell>
-            <TableCell align="center">{costElectricity}</TableCell>
+            <TableCell align="center">{costElectricity} ₽</TableCell>
           </TableRow>
         </TableBody>
       </Table>
