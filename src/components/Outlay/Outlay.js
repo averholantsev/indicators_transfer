@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import EmailIcon from '@material-ui/icons/Email';
+import EmailIcon from "@material-ui/icons/Email";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 const Outlay = (props) => {
   const classes = useStyles();
   const { id, date, indicators } = props.indicatorsList;
-  const { costNovogor } = props;
+  const { costWaterSupply, costElectricity } = props;
 
   let indicatorMonth = "";
   switch (date.getMonth()) {
@@ -79,7 +79,7 @@ const Outlay = (props) => {
   }
 
   return (
-    <TableContainer component={Paper} className={classes.root} >
+    <TableContainer component={Paper} className={classes.root}>
       <IconButton
         className={classes.buttonSend}
         aria-label="Отправить"
@@ -112,9 +112,15 @@ const Outlay = (props) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell><b>Показатель</b></TableCell>
-            <TableCell align="center"><b>Расход</b></TableCell>
-            <TableCell align="center"><b>Потребление</b></TableCell>
+            <TableCell>
+              <b>Показатель</b>
+            </TableCell>
+            <TableCell align="center">
+              <b>Расход</b>
+            </TableCell>
+            <TableCell align="center">
+              <b>Потребление</b>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -136,7 +142,13 @@ const Outlay = (props) => {
             <TableCell component="th" scope="row" colSpan={2}>
               Водоснабжение
             </TableCell>
-            <TableCell align="center">{costNovogor}</TableCell>
+            <TableCell align="center">{costWaterSupply}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" colSpan={2}>
+              Электроэнергия
+            </TableCell>
+            <TableCell align="center">{costElectricity}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

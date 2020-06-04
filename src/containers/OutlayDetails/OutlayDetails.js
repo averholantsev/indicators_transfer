@@ -186,7 +186,7 @@ class OutlayDetails extends Component {
       hotWaterKitchen: indicator.indicators[3].kitchen,
       hotWaterBathroom: indicator.indicators[3].bathroom,
     };
-    
+
     emailjs
       .send(
         CONFIG.SERVICE_ID,
@@ -295,7 +295,74 @@ class OutlayDetails extends Component {
     return newIndicatorsList;
   };
 
-  countCostNovogor = (indicators, date) => {
+  countCostElectricity = (indicators, date) => {
+    let indicatorsDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
+
+    let electricityDay = null;
+    try {
+      electricityDay = indicators.find(({ id }) => id === "day_electricity")
+        .outlay;
+    } catch (e) {
+      console.log("Электричество день", e);
+    }
+
+    let electricityNight = null;
+    try {
+      electricityNight = indicators.find(({ id }) => id === "night_electricity")
+        .outlay;
+    } catch (e) {
+      console.log("Электричество ночь", e);
+    }
+
+    let electricityDayTariff = null;
+    try {
+      electricityDayTariff = this.state.tariffs.find(
+        ({ name, dateStart, dateEnd }) => {
+          if (
+            name === "electricity_day" &&
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) >=
+              new Date(dateStart) &&
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) <=
+              new Date(dateEnd)
+          ) {
+            return true;
+          } else return false;
+        }
+      ).cost;
+    } catch (e) {
+      console.log("Тариф на электричество день загружается...");
+    }
+
+    let electricityNightTariff = null;
+    try {
+      electricityNightTariff = this.state.tariffs.find(
+        ({ name, dateStart, dateEnd }) => {
+          if (
+            name === "electricity_night" &&
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) >=
+              new Date(dateStart) &&
+            indicatorsDate.setDate(indicatorsDate.getDate() + 1) <=
+              new Date(dateEnd)
+          ) {
+            return true;
+          } else return false;
+        }
+      ).cost;
+    } catch (e) {
+      console.log("Тариф на электричество ночь загружается...");
+    }
+
+    return (
+      electricityDay * electricityDayTariff +
+      electricityNight * electricityNightTariff
+    ).toFixed(2);
+  };
+
+  countCostWaterSupply = (indicators, date) => {
     let indicatorsDate = new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -360,11 +427,10 @@ class OutlayDetails extends Component {
       console.log("Тариф на водоотведение загружается...");
     }
 
-    let novogorCost = (
+    return (
       (coldWater + hotWater) * waterTariff +
       disposalWater * disposalTariff
     ).toFixed(2);
-    return novogorCost;
   };
 
   changeCurrentYear = (year) => {
@@ -386,7 +452,14 @@ class OutlayDetails extends Component {
             <Outlay
               key={index}
               indicatorsList={item}
-              costNovogor={this.countCostNovogor(item.indicators, item.date)}
+              costWaterSupply={this.countCostWaterSupply(
+                item.indicators,
+                item.date
+              )}
+              costElectricity={this.countCostElectricity(
+                item.indicators,
+                item.date
+              )}
               handleDeleteDialogOpen={this.handleDeleteDialogOpen}
               handleSendDialogOpen={this.handleSendDialogOpen}
             />
