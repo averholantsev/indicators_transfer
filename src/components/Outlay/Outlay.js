@@ -134,7 +134,7 @@ const Outlay = (props) => {
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row" colSpan={2}>
-              Новогор
+              Водоснабжение
             </TableCell>
             <TableCell align="center">{costNovogor}</TableCell>
           </TableRow>
