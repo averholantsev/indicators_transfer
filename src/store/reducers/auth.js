@@ -40,7 +40,12 @@ const authFail = (state, action) => {
     action.error.message === "EMAIL_NOT_FOUND"
   ) {
     errorMessage = "Пользователь с таким Email еще не зарегистрирован";
-  } else {
+  } else if (
+    action.error.code === 400 &&
+    action.error.message === "INVALID_PASSWORD"
+  ) {
+    errorMessage = "Не правильно указан пароль";
+  }else {
     errorMessage = "Произошла ошибка, попробуйте повторите попытку позднее";
   }
   return updateObject(state, {

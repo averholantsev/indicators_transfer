@@ -11,7 +11,7 @@ import {
   AuthInputPassword,
   AuthAlert,
 } from "../../components/UI/AuthComponents/index";
-import { Typography, Link } from "@material-ui/core";
+import { Typography, Link, Grid } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 // Реализация классового компонента формы
@@ -86,8 +86,11 @@ class AuthForm extends Component {
   };
 
   //Функция для отправки данных формы
-  formSenderHandler = () => {  
-    this.props.onAuth(this.state.auth.email.value, this.state.auth.password.value);
+  formSenderHandler = () => {
+    this.props.onAuth(
+      this.state.auth.email.value,
+      this.state.auth.password.value
+    );
   };
 
   render() {
@@ -108,7 +111,6 @@ class AuthForm extends Component {
             <AuthAlert severity="error">{this.props.errorMessage}</AuthAlert>
           ) : null}
           <AuthInput
-            key="email"
             id="email"
             label="Почта"
             name="email"
@@ -120,7 +122,6 @@ class AuthForm extends Component {
             value={email.value}
           />
           <AuthInputPassword
-            key="password"
             id="password"
             label="Пароль"
             name="password"
@@ -142,11 +143,22 @@ class AuthForm extends Component {
           >
             Войти в аккаунт
           </AuthButton>
-          <Typography>
-            <Link component={NavLink} to="/registration" variant="body2">
-              Еще нет аккаунта? Регистрация
-            </Link>
-          </Typography>
+          <Grid container spacing={1} direction="row">
+            <Grid item xs={6}>
+              <Typography>
+                <Link component={NavLink} to="/forgot-password" variant="body2">
+                  Забыли пароль?
+                </Link>
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography align="right">
+                <Link component={NavLink} to="/registration" variant="body2">
+                  Еще нет аккаунта? Регистрация
+                </Link>
+              </Typography>
+            </Grid>
+          </Grid>
         </form>
       </div>
     );
@@ -156,7 +168,6 @@ class AuthForm extends Component {
 //Использование Redux
 const mapStateToProps = (state) => {
   return {
-    isAuth: state.token !== null,
     loading: state.loading,
     errorMessage: state.error,
   };
