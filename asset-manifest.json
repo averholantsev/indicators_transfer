@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/indicators_transfer/static/css/main.a08f7a7e.chunk.css",
-    "main.js": "/indicators_transfer/static/js/main.91cd8d3f.chunk.js",
-    "main.js.map": "/indicators_transfer/static/js/main.91cd8d3f.chunk.js.map",
+    "main.css": "/indicators_transfer/static/css/main.319c99c0.chunk.css",
+    "main.js": "/indicators_transfer/static/js/main.5c6db240.chunk.js",
+    "main.js.map": "/indicators_transfer/static/js/main.5c6db240.chunk.js.map",
     "runtime-main.js": "/indicators_transfer/static/js/runtime-main.fb02dd0d.js",
     "runtime-main.js.map": "/indicators_transfer/static/js/runtime-main.fb02dd0d.js.map",
     "static/css/2.b8145abf.chunk.css": "/indicators_transfer/static/css/2.b8145abf.chunk.css",
-    "static/js/2.ad943c5f.chunk.js": "/indicators_transfer/static/js/2.ad943c5f.chunk.js",
-    "static/js/2.ad943c5f.chunk.js.map": "/indicators_transfer/static/js/2.ad943c5f.chunk.js.map",
+    "static/js/2.1598d9e7.chunk.js": "/indicators_transfer/static/js/2.1598d9e7.chunk.js",
+    "static/js/2.1598d9e7.chunk.js.map": "/indicators_transfer/static/js/2.1598d9e7.chunk.js.map",
     "index.html": "/indicators_transfer/index.html",
-    "precache-manifest.1cde05afe69c7d13ef1fa0febfbb4f96.js": "/indicators_transfer/precache-manifest.1cde05afe69c7d13ef1fa0febfbb4f96.js",
+    "precache-manifest.a76be1d4949499ed8146a034ec394504.js": "/indicators_transfer/precache-manifest.a76be1d4949499ed8146a034ec394504.js",
     "service-worker.js": "/indicators_transfer/service-worker.js",
     "static/css/2.b8145abf.chunk.css.map": "/indicators_transfer/static/css/2.b8145abf.chunk.css.map",
-    "static/css/main.a08f7a7e.chunk.css.map": "/indicators_transfer/static/css/main.a08f7a7e.chunk.css.map",
-    "static/js/2.ad943c5f.chunk.js.LICENSE.txt": "/indicators_transfer/static/js/2.ad943c5f.chunk.js.LICENSE.txt",
+    "static/css/main.319c99c0.chunk.css.map": "/indicators_transfer/static/css/main.319c99c0.chunk.css.map",
+    "static/js/2.1598d9e7.chunk.js.LICENSE.txt": "/indicators_transfer/static/js/2.1598d9e7.chunk.js.LICENSE.txt",
     "static/media/semantic.min.css": "/indicators_transfer/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.fb02dd0d.js",
     "static/css/2.b8145abf.chunk.css",
-    "static/js/2.ad943c5f.chunk.js",
-    "static/css/main.a08f7a7e.chunk.css",
-    "static/js/main.91cd8d3f.chunk.js"
+    "static/js/2.1598d9e7.chunk.js",
+    "static/css/main.319c99c0.chunk.css",
+    "static/js/main.5c6db240.chunk.js"
   ]
 }
