@@ -198,7 +198,7 @@ class OutlayDetails extends Component {
       .then(
         (response) => {
           console.log("SUCCESS!", response.status, response.text);
-          this.props.enqueueSnackbar("Данные успешно переданы на почту!", {
+          this.props.enqueueSnackbar(<Text tid="outlaySendSuccess" />, {
             variant: "success",
             preventDuplicate: true,
           });
@@ -223,7 +223,7 @@ class OutlayDetails extends Component {
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ deleteIndicatorId: null });
-        this.props.enqueueSnackbar("Объект успешно удален!", {
+        this.props.enqueueSnackbar(<Text tid="objectDeleted" />, {
           variant: "info",
           preventDuplicate: true,
         });

@@ -72,6 +72,7 @@ const ru = {
   outlayNoData: "Нет данных на за",
   outlayNoDataYear: "год",
   outlayErrorNotYetSend: "Показания еще не переданы",
+  outlaySendSuccess: "Данные успешно переданы на почту бухгалтерии!",
 
   // Форма тарифов
   addTariff: "Добавить тариф",
@@ -112,6 +113,7 @@ const ru = {
   recover: "Восстановить",
   loading: "Загрузка",
   saveData: "Данные успешно сохранены!",
+  objectDeleted: "Объект успешно удален!",
   prev: "Назад",
   next: "Вперед",
   finish: "Готово",

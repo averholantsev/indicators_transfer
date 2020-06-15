@@ -234,7 +234,7 @@ class UsersProfile extends Component {
       .patch(`/users/${this.state.id}.json?auth=${token}`, userFormData)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
-        this.props.enqueueSnackbar("Данные успешно сохранены!", {
+        this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
         });

@@ -94,7 +94,7 @@ class Tariffs extends Component {
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ deleteTariffId: null });
-        this.props.enqueueSnackbar("Объект успешно удален!", {
+        this.props.enqueueSnackbar(<Text tid="objectDeleted" />, {
           variant: "info",
           preventDuplicate: true,
         });
@@ -120,7 +120,7 @@ class Tariffs extends Component {
       .patch(`/tariffs/${id}.json?auth=${token}`, newData)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
-        this.props.enqueueSnackbar("Данные успешно сохранены!", {
+        this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
         });
@@ -148,7 +148,7 @@ class Tariffs extends Component {
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
         this.setState({ addButtonDisabled: false });
-        this.props.enqueueSnackbar("Данные успешно сохранены!", {
+        this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
         });

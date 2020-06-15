@@ -71,6 +71,7 @@ const en = {
   outlayNoData: "No data for",
   outlayNoDataYear: "year",
   outlayErrorNotYetSend: "The indicators hasn't been sent yet",
+  outlaySendSuccess: "The data was successfully sent to the accountant's email!",
 
   // Tariffs form
   addTariff: "Add tariff",
@@ -111,6 +112,7 @@ const en = {
   recover: "Recover",
   loading: "Loading",
   saveData: "Data saved successfully!",
+  objectDeleted: "The object was successfully deleted!",
   prev: "Prev",
   next: "Next",
   finish: "Finish",
