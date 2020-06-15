@@ -114,7 +114,7 @@ class AuthForm extends Component {
               <Text tid="systemName" />
             </Typography>
             {this.props.errorMessage ? (
-              <AuthAlert severity="error">{this.props.errorMessage}</AuthAlert>
+              <AuthAlert severity="error"><Text tid={this.props.errorMessage} /></AuthAlert>
             ) : null}
             <AuthInput
               id="email"

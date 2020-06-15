@@ -63,14 +63,14 @@ class OutlayDetails extends Component {
           this.setState({
             prevIndicators: prevIndicators,
             tariffs: tariffs,
-            error: "Передайте показания",
+            error: "outlayErrorNotYetSend",
           });
         }
       })
       .catch((error) => {
         console.log(error);
         this.setState({
-          error: "Произошла ошибка, попробуйте обновить страницу.",
+          error: "responseError",
         });
       });
   };
@@ -469,12 +469,15 @@ class OutlayDetails extends Component {
       } else
         indicatorsList = (
           <p style={{ textAlign: "center" }}>
-            <Text tid="outlayNoData" /> {this.state.currentYear} <Text tid="outlayNoDataYear" />
+            <Text tid="outlayNoData" /> {this.state.currentYear}{" "}
+            <Text tid="outlayNoDataYear" />
           </p>
         );
     } else {
       indicatorsList = (
-        <p style={{ textAlign: "center" }}>{this.state.error}</p>
+        <p style={{ textAlign: "center" }}>
+          <Text tid={this.state.error} />
+        </p>
       );
     }
 

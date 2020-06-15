@@ -9,7 +9,7 @@ import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
 import Text from "../../components/UI/Text/Text";
 
 import Typography from "@material-ui/core/Typography";
-import {Button, Grid} from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 class Tariffs extends Component {
   state = {
@@ -17,6 +17,7 @@ class Tariffs extends Component {
     deleteDialogOpen: false,
     deleteTariffId: null,
     addButtonDisabled: false,
+    error: null,
   };
 
   componentDidMount() {
@@ -32,56 +33,57 @@ class Tariffs extends Component {
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
 
-        let tariffs = Object.keys(response.data).map((item) => {
-          let tariff = {};
-          tariff.name = {
-            value: response.data[item].name,
-            validation: {
-              required: true,
-            },
-            valid: true,
-            errorMessage: "",
-            touched: true,
-          };
-          tariff.cost = {
-            value: response.data[item].cost,
-            validation: {
-              isNumber: true,
-            },
-            valid: true,
-            errorMessage: "",
-            touched: true,
-          };
-          tariff.dateStart = {
-            value: response.data[item].dateStart,
-            validation: {
-              isDate: true,
-            },
-            valid: true,
-            errorMessage: "",
-            touched: true,
-          };
-          tariff.dateEnd = {
-            value: response.data[item].dateEnd,
-            validation: {
-              isDate: true,
-            },
-            valid: true,
-            errorMessage: "",
-            touched: true,
-          };
-          tariff.id = item;
-          tariff.tariffValid = true;
-          tariff.userId = response.data[item].userId;
-          return tariff;
-        });
-        this.setState({ tariffs: tariffs });
+        if (Object.keys(response.data).length !== 0) {
+          let tariffs = Object.keys(response.data).map((item) => {
+            let tariff = {};
+            tariff.name = {
+              value: response.data[item].name,
+              validation: {
+                required: true,
+              },
+              valid: true,
+              errorMessage: "",
+              touched: true,
+            };
+            tariff.cost = {
+              value: response.data[item].cost,
+              validation: {
+                isNumber: true,
+              },
+              valid: true,
+              errorMessage: "",
+              touched: true,
+            };
+            tariff.dateStart = {
+              value: response.data[item].dateStart,
+              validation: {
+                isDate: true,
+              },
+              valid: true,
+              errorMessage: "",
+              touched: true,
+            };
+            tariff.dateEnd = {
+              value: response.data[item].dateEnd,
+              validation: {
+                isDate: true,
+              },
+              valid: true,
+              errorMessage: "",
+              touched: true,
+            };
+            tariff.id = item;
+            tariff.tariffValid = true;
+            tariff.userId = response.data[item].userId;
+            return tariff;
+          });
+          this.setState({ tariffs: tariffs });
+        } else {
+          this.setState({ error: "tariffErrorNotYetSend" });
+        }
       })
       .catch((error) => {
         console.log(error);
-        this.setState({
-          error: "Произошла ошибка, обратитесь к Системному Администратору.",
-        });
       });
   };
 
@@ -159,7 +161,10 @@ class Tariffs extends Component {
   handleDeleteDialogOpen = (id) => {
     if (typeof id !== "undefined") {
       this.setState({ deleteDialogOpen: true, deleteTariffId: id });
-    } else {
+    } else {      
+      if (this.state.tariffs.length === 1) {
+        this.setState({ error: "tariffErrorNotYetSend" });
+      }
       this.removeTariffFromState(id);
     }
   };
@@ -175,6 +180,7 @@ class Tariffs extends Component {
   };
 
   addTariffToState = () => {
+    this.setState({ error: null });
     let newTariffsList = [...this.state.tariffs];
 
     newTariffsList.unshift({
@@ -239,7 +245,7 @@ class Tariffs extends Component {
       value,
       newTariff[changeIndex][key].validation
     );
-    
+
     newTariff[changeIndex] = {
       ...this.state.tariffs[changeIndex],
       [key]: {
@@ -261,12 +267,7 @@ class Tariffs extends Component {
   checkFormValidity = (tariff) => {
     const { name, cost, dateStart, dateEnd } = tariff;
 
-    if (
-      name.valid &&
-      cost.valid &&
-      dateStart.valid &&
-      dateEnd.valid
-    ) {
+    if (name.valid && cost.valid && dateStart.valid && dateEnd.valid) {
       return true;
     }
 
@@ -275,8 +276,15 @@ class Tariffs extends Component {
 
   render() {
     let tariffCards = null;
-    if (this.state.tariffs.length === 0) tariffCards = <Loader />;
-    else
+    if (this.state.tariffs.length === 0 && this.state.error === null)
+      tariffCards = <Loader />;
+    else if (this.state.error !== null) {
+      tariffCards = (
+        <p style={{ textAlign: "center" }}>
+          <Text tid={this.state.error} />
+        </p>
+      );
+    } else
       tariffCards = this.state.tariffs.map((item, index) => (
         <TariffCard
           key={typeof item.id !== "undefined" ? item.id : index}
@@ -289,6 +297,7 @@ class Tariffs extends Component {
           insertItemToTariffs={this.insertItemToTariffs}
         />
       ));
+
     return (
       <div>
         <DialogSimple

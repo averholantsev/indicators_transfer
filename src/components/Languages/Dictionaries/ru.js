@@ -13,6 +13,12 @@ const ru = {
     "с дальнейшими инструкциями. Пожалуйста проверьте ваш почтовый ящик.",
   authReturn: "Вернутся на Форму входа",
   authSignInShort: "Войти",
+  emailNotReg: "Данный email не зарегистрирован",
+  authError: "Ошибка авторизации, проверьте данные и повторите попытку",
+  authErrorEmailExist: "Пользователь с таким Email уже существует",
+  authErrorEmailNotReg: "Пользователь с таким Email еще не зарегистрирован",
+  authErrorInvalidPassword: "Не правильно указан пароль",
+  authErrorOther: "Произошла ошибка, попробуйте повторите попытку позднее",
 
   // Форма регистрации
   registration: "Регистрация",
@@ -65,6 +71,7 @@ const ru = {
     "Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить.",
   outlayNoData: "Нет данных на за",
   outlayNoDataYear: "год",
+  outlayErrorNotYetSend: "Показания еще не переданы",
 
   // Форма тарифов
   addTariff: "Добавить тариф",
@@ -77,6 +84,7 @@ const ru = {
   tariffDisposalWater: "Водоотведение",
   tariffElectricityDay: "Электро-ия. день",
   tariffElectricityNight: "Электро-ия. ночь",
+  tariffErrorNotYetSend: "Тарифы еще не созданы",
 
   // Форма профиля пользователя
   userProfile: "Профиль пользователя",
@@ -110,6 +118,7 @@ const ru = {
   requiredField: "Поле обязательно для заполнения",
   unvalidEmail: "Пожалуйста, введите корректный email",
   unvalidPassword: "Пароль должен состоять из более чем 6 символов",
+  responseError: "Произошла ошибка, попробуйте обновить страницу",
 
   //Месяцы
   january: "Январь",

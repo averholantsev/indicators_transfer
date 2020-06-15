@@ -29,24 +29,24 @@ const authFail = (state, action) => {
   console.log(action.error);
 
   if (action.error.code === 401) {
-    errorMessage = "Ошибка авторизации, проверьте данные и повторите попытку";
+    errorMessage = "authError";
   } else if (
     action.error.code === 400 &&
     action.error.message === "EMAIL_EXISTS"
   ) {
-    errorMessage = "Пользователь с таким Email уже существует";
+    errorMessage = "authErrorEmailExist";
   } else if (
     action.error.code === 400 &&
     action.error.message === "EMAIL_NOT_FOUND"
   ) {
-    errorMessage = "Пользователь с таким Email еще не зарегистрирован";
+    errorMessage = "authErrorEmailNotReg";
   } else if (
     action.error.code === 400 &&
     action.error.message === "INVALID_PASSWORD"
   ) {
-    errorMessage = "Не правильно указан пароль";
+    errorMessage = "authErrorInvalidPassword";
   }else {
-    errorMessage = "Произошла ошибка, попробуйте повторите попытку позднее";
+    errorMessage = "authErrorOther";
   }
   return updateObject(state, {
     error: errorMessage,

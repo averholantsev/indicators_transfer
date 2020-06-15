@@ -60,7 +60,7 @@ export class ForgotPassword extends Component {
         console.log(error.response.data);
         if (error.response.data.error.message === "EMAIL_NOT_FOUND") {
           this.setState({
-            errorMessage: "Данный почтовый ящик не зарегистрирован",
+            errorMessage: "emailNotReg",
           });
         }
       });
@@ -78,7 +78,9 @@ export class ForgotPassword extends Component {
           <Text tid="authPasswordRecovery" />
         </Typography>
         {this.state.errorMessage ? (
-          <AuthAlert severity="error">{this.state.errorMessage}</AuthAlert>
+          <AuthAlert severity="error">
+            <Text tid={this.state.errorMessage} />
+          </AuthAlert>
         ) : null}
         <AuthInput
           id="email"

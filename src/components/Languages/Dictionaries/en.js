@@ -12,6 +12,12 @@ const en = {
   authEmailSentText2: "with further instructions. Please check your email box.",
   authReturn: "Return to the Login form",
   authSignInShort: "Sign in",
+  emailNotReg: "This email isn't registered",
+  authError: "Authorization error, check the data and try again",
+  authErrorEmailExist: "The user with this Email already exists",
+  authErrorEmailNotReg: "The user with this Email isn't registered yet",
+  authErrorInvalidPassword: "Invalid password",
+  authErrorOther: "An error occurred, please try again later",
 
   // Registration form
   registration: "Registration",
@@ -64,6 +70,7 @@ const en = {
     "Are you sure you want to delete this item? This process cannot be canceled.",
   outlayNoData: "No data for",
   outlayNoDataYear: "year",
+  outlayErrorNotYetSend: "The indicators hasn't been sent yet",
 
   // Tariffs form
   addTariff: "Add tariff",
@@ -76,6 +83,7 @@ const en = {
   tariffDisposalWater: "Water disposal",
   tariffElectricityDay: "Electricity day",
   tariffElectricityNight: "Electricity night",
+  tariffErrorNotYetSend: "The tariffs hasn't been created yet",
 
   // User profile form
   userProfile: "User profile",
@@ -109,6 +117,7 @@ const en = {
   requiredField: "This field is required",
   unvalidEmail: "Please enter a valid email address",
   unvalidPassword: "The password must consist of more than 6 characters",
+  responseError: "An error occurred, try refreshing the page",
 
   //Months
   january: "January",

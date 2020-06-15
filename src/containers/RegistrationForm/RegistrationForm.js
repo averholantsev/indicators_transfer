@@ -372,7 +372,9 @@ class RegistrationForm extends Component {
           <Text tid="registration" />
         </Typography>
         {this.props.errorMessage ? (
-          <Alert severity="error">{this.props.errorMessage}</Alert>
+          <Alert severity="error">
+            <Text tid={this.props.errorMessage} />
+          </Alert>
         ) : null}
         <RegistrationStepper
           userDetails={this.state.userDetails}
