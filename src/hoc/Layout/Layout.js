@@ -8,7 +8,19 @@ import Paper from "@material-ui/core/Paper";
 import AppBar from "../../components/Navigation/AppBar";
 
 class Layout extends Component {
-render() {
+  render() {
+    const languageIndex =
+      localStorage.getItem("languageIndex") === undefined
+        ? 0
+        : +localStorage.getItem("languageIndex");
+
+    if (languageIndex === 0) {
+      document.title = "Система коммунальных показателей";
+    }
+    if (languageIndex === 1) {
+      document.title = "The system of municipal indicators";
+    }
+
     return (
       <Grid
         container
@@ -18,7 +30,7 @@ render() {
       >
         {this.props.isAuth && (
           <Grid item xs={12} style={{ width: "100%" }}>
-            <AppBar userDetails={this.props.userDetails}/>
+            <AppBar userDetails={this.props.userDetails} />
           </Grid>
         )}
         <Grid item xs={12} style={{ width: "100%" }}>
