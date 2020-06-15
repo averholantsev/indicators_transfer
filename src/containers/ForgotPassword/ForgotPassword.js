@@ -11,6 +11,8 @@ import {
   AuthInput,
 } from "../../components/UI/AuthComponents/index";
 import { Typography, Link } from "@material-ui/core";
+import LanguageSelector from "../../components/Languages/LanguageSelector";
+import Text from "../../components/UI/Text/Text";
 
 export class ForgotPassword extends Component {
   state = {
@@ -57,7 +59,9 @@ export class ForgotPassword extends Component {
       .catch((error) => {
         console.log(error.response.data);
         if (error.response.data.error.message === "EMAIL_NOT_FOUND") {
-          this.setState({ errorMessage: "Данный почтовый ящик не зарегистрирован" });
+          this.setState({
+            errorMessage: "Данный почтовый ящик не зарегистрирован",
+          });
         }
       });
   };
@@ -68,29 +72,32 @@ export class ForgotPassword extends Component {
     const enterEmail = (
       <div>
         <Typography className="headFont" variant="h5" color="initial">
-          Забыли пароль?
+          <Text tid="authForgotPassword" />
         </Typography>
         <Typography className="typeFont" variant="body1" color="initial">
-          Для восстановления пароля введите ваш адрес электронной почты и вам
-          будет отправлено письмо с дальнейшими инструкциями.
+          <Text tid="authPasswordRecovery" />
         </Typography>
         {this.state.errorMessage ? (
           <AuthAlert severity="error">{this.state.errorMessage}</AuthAlert>
         ) : null}
         <AuthInput
           id="email"
-          label="Почта"
+          label={<Text tid="authEmail" />}
           name="email"
           value={email.value}
           error={!email.valid && email.touched}
-          helperText={!email.valid && email.touched ? email.errorMessage : null}
+          helperText={
+            !email.valid && email.touched ? (
+              <Text tid={email.errorMessage} />
+            ) : null
+          }
           onChange={(event) => this.inputHandler("email", event.target.value)}
         />
         <AuthButton
           disabled={!this.state.email.valid}
           onClick={this.sendPasswordRecovery}
         >
-          Восстановить
+          <Text tid="recover" />
         </AuthButton>
       </div>
     );
@@ -98,24 +105,46 @@ export class ForgotPassword extends Component {
     const information = (
       <div>
         <Typography className="headFont" variant="h5" color="initial">
-          Письмо отправлено!
+          <Text tid="authEmailSent" />
         </Typography>
         <Typography className="typeFont" variant="body1" color="initial">
-          Вам было отправлено письмо на адрес электронной почты{" "}
-          <b>{email.value}</b> с дальнейшими инструкциями. Пожалуйста проверьте
-          ваш почтовый ящик.
+          <Text tid="authEmailSentText1" /> <b>{email.value}</b>{" "}
+          <Text tid="authEmailSentText2" />
         </Typography>
         <Typography>
           <Link component={NavLink} to="/auth" variant="body2">
-            Вернутся на форму входа
+            <Text tid="authReturn" />
           </Link>
         </Typography>
       </div>
     );
 
     return (
-      <div className="form_container">
-        {!this.state.emailSend ? enterEmail : information}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            alignItems: "center",
+          }}
+        >
+          <LanguageSelector theme="dark" />
+          <Typography>
+            <Link
+              component={NavLink}
+              to="/auth"
+              variant="body2"
+              style={{ fontSize: "14px" }}
+            >
+              <Text tid="authSignInShort" />
+            </Link>
+          </Typography>
+        </div>
+        <div className="form_container">
+          {!this.state.emailSend ? enterEmail : information}
+        </div>
       </div>
     );
   }

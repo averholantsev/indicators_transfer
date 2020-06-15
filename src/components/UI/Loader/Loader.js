@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
+import {CircularProgress, Typography} from "@material-ui/core";
+import Text from '../Text/Text'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +20,7 @@ const Loader = () => {
   return (
     <div className={classes.root}>
       <CircularProgress />
-      <Typography className={classes.paragraph}>Загрузка</Typography>
+      <Typography className={classes.paragraph}><Text tid="loading" /></Typography>
     </div>
   );
 };

@@ -11,7 +11,7 @@ export const checkFieldValidity = (value, rules) => {
   if (rules.required) {
     validation.isValid = value.trim() !== "" && validation.isValid;
     validation.errorMessage = !validation.isValid
-      ? "Поле обязательно для заполнения"
+      ? "requiredField"
       : "";
   }
 
@@ -20,21 +20,21 @@ export const checkFieldValidity = (value, rules) => {
     validation.isValid = pattern.test(value) && validation.isValid;
     validation.errorMessage =
       value === ""
-        ? "Поле обязательно для заполнения"
-        : "Пожалуйста, введите корректный email";
+        ? "requiredField"
+        : "unvalidEmail";
   }
 
   if (rules.isDate) {
     validation.isValid = value !== null && validation.isValid;
     validation.errorMessage = !validation.isValid
-      ? "Поле обязательно для заполнения"
+      ? "requiredField"
       : "";
   }
 
   if (rules.isNumber) {
     validation.isValid = value !== 0 && validation.isValid;
     validation.errorMessage = !validation.isValid
-      ? "Поле обязательно для заполнения"
+      ? "requiredField"
       : "";
   }
 
@@ -42,11 +42,11 @@ export const checkFieldValidity = (value, rules) => {
     validation.isValid = value.length >= 6 && validation.isValid;
     if (value.length < 6 && value.length > 0)
       validation.errorMessage =
-        "Пароль должен состоять из более чем 6 символов";
+        "unvalidPassword";
     else if (value.length === 0)
-      validation.errorMessage = "Поле обязательно для заполнения";
+      validation.errorMessage = "requiredField";
     else validation.errorMessage = "";
   }
 
   return validation;
-}
+};

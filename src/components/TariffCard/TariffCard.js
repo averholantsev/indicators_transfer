@@ -2,23 +2,22 @@ import React, { useState } from "react";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  Card,
+  CardContent,
+  IconButton,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
-
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-
-import { makeStyles } from "@material-ui/core/styles";
-import CloseIcon from "@material-ui/icons/Close";
-import EditIcon from "@material-ui/icons/Edit";
-import SaveIcon from "@material-ui/icons/Save";
+import { Close, Edit, Save } from "@material-ui/icons";
+import Text from "../UI/Text/Text";
 
 const useStyles = makeStyles({
   root: {
@@ -74,19 +73,17 @@ const TariffCard = (props) => {
       {disabled ? (
         <IconButton
           className={classes.buttonEdit}
-          aria-label="Изменить"
           component="span"
           color="primary"
           onClick={() => setDisabled(false)}
           disableRipple
           disableFocusRipple
         >
-          <EditIcon />
+          <Edit />
         </IconButton>
       ) : (
         <IconButton
           className={classes.buttonEdit + " " + classes.buttonSuccess}
-          aria-label="Сохранить"
           component="span"
           color="secondary"
           disabled={!tariffValid}
@@ -101,13 +98,18 @@ const TariffCard = (props) => {
           disableRipple
           disableFocusRipple
         >
-          <SaveIcon className={!tariffValid ? classes.buttonIconSuccessDisabled : classes.buttonIconSuccess} />
+          <Save
+            className={
+              !tariffValid
+                ? classes.buttonIconSuccessDisabled
+                : classes.buttonIconSuccess
+            }
+          />
         </IconButton>
       )}
 
       <IconButton
         className={classes.buttonClose}
-        aria-label="Удалить"
         component="span"
         color="secondary"
         onClick={() => {
@@ -116,13 +118,15 @@ const TariffCard = (props) => {
         disableRipple
         disableFocusRipple
       >
-        <CloseIcon />
+        <Close />
       </IconButton>
       <CardContent className={classes.cardPadding}>
         <Grid container spacing={3}>
           <Grid item xs={6} className={classes.row}>
             <FormControl className={classes.textField}>
-              <InputLabel>Наименование</InputLabel>
+              <InputLabel>
+                <Text tid="tariffName" />
+              </InputLabel>
               <Select
                 value={name.value}
                 onChange={(event) =>
@@ -131,12 +135,20 @@ const TariffCard = (props) => {
                 disabled={disabled}
                 error={!name.valid && name.touched}
               >
-                <MenuItem value={"water"}>Подача воды</MenuItem>
-                <MenuItem value={"hot_water"}>Подогрев воды</MenuItem>
-                <MenuItem value={"disposal_water"}>Водоотведение</MenuItem>
-                <MenuItem value={"electricity_day"}>Электро-ия. день</MenuItem>
+                <MenuItem value={"water"}>
+                  <Text tid="tariffWater" />
+                </MenuItem>
+                <MenuItem value={"hot_water"}>
+                  <Text tid="tariffHotWater" />
+                </MenuItem>
+                <MenuItem value={"disposal_water"}>
+                  <Text tid="tariffDisposalWater" />
+                </MenuItem>
+                <MenuItem value={"electricity_day"}>
+                  <Text tid="tariffElectricityDay" />
+                </MenuItem>
                 <MenuItem value={"electricity_night"}>
-                  Электро-ия. ночь
+                  <Text tid="tariffElectricityNight" />
                 </MenuItem>
               </Select>
               {!name.valid && name.touched ? (
@@ -147,7 +159,7 @@ const TariffCard = (props) => {
           <Grid item xs={6} className={classes.row}>
             <CurrencyTextField
               className={classes.textField}
-              label="Тариф"
+              label={<Text tid="tariffCost" />}
               currencySymbol="₽"
               value={cost.value}
               minimumValue="0"
@@ -158,7 +170,9 @@ const TariffCard = (props) => {
               }
               error={!cost.valid && cost.touched}
               helperText={
-                !cost.valid && cost.touched ? cost.errorMessage : null
+                !cost.valid && cost.touched ? (
+                  <Text tid={cost.errorMessage} />
+                ) : null
               }
             />
           </Grid>
@@ -166,7 +180,7 @@ const TariffCard = (props) => {
             <Grid item xs={6} className={classes.row}>
               <DatePicker
                 clearable
-                label="Действителен c"
+                label={<Text tid="tariffDateStart" />}
                 format="dd.MM.yyyy"
                 value={dateStart.value}
                 className={classes.textFieldMargin + " " + classes.textField}
@@ -176,16 +190,16 @@ const TariffCard = (props) => {
                 }
                 error={!dateStart.valid && dateStart.touched}
                 helperText={
-                  !dateStart.valid && dateStart.touched
-                    ? dateStart.errorMessage
-                    : null
+                  !dateStart.valid && dateStart.touched ? (
+                    <Text tid={dateStart.errorMessage} />
+                  ) : null
                 }
               />
             </Grid>
             <Grid item xs={6} className={classes.row}>
               <DatePicker
                 clearable
-                label="Действителен по"
+                label={<Text tid="tariffDateEnd" />}
                 format="dd.MM.yyyy"
                 value={dateEnd.value}
                 className={classes.textField}
@@ -195,9 +209,9 @@ const TariffCard = (props) => {
                 }
                 error={!dateEnd.valid && dateEnd.touched}
                 helperText={
-                  !dateEnd.valid && dateEnd.touched
-                    ? dateEnd.errorMessage
-                    : null
+                  !dateEnd.valid && dateEnd.touched ? (
+                    <Text tid={dateEnd.errorMessage} />
+                  ) : null
                 }
               />
             </Grid>

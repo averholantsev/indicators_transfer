@@ -2,12 +2,11 @@ import React from "react";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 
+import { makeStyles } from "@material-ui/core/styles";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
-
 import Grid from "@material-ui/core/Grid";
-
-import { makeStyles } from "@material-ui/core/styles";
+import Text from "../UI/Text/Text";
 
 const useStyles = makeStyles({
   field: {
@@ -35,7 +34,7 @@ const StepTwo = (props) => {
             clearable
             className={classes.field}
             disabled={props.isDisabled}
-            label="Дата первичных показателей"
+            label={<Text tid="prevIndicatorsDate" />}
             format="dd.MM.yyyy"
             value={prevIndicatorsDate.value}
             onChange={(date) =>
@@ -43,9 +42,9 @@ const StepTwo = (props) => {
             }
             error={!prevIndicatorsDate.valid && prevIndicatorsDate.touched}
             helperText={
-              !prevIndicatorsDate.valid && prevIndicatorsDate.touched
-                ? prevIndicatorsDate.errorMessage
-                : null
+              !prevIndicatorsDate.valid && prevIndicatorsDate.touched ? (
+                <Text tid={prevIndicatorsDate.errorMessage} />
+              ) : null
             }
           />
         </MuiPickersUtilsProvider>
@@ -54,7 +53,7 @@ const StepTwo = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Электроэнергия: День"
+          label={<Text tid="electricityDay" />}
           currencySymbol=""
           value={electricityDay.value}
           minimumValue="0"
@@ -63,9 +62,9 @@ const StepTwo = (props) => {
           }
           error={!electricityDay.valid && electricityDay.touched}
           helperText={
-            !electricityDay.valid && electricityDay.touched
-              ? electricityDay.errorMessage
-              : null
+            !electricityDay.valid && electricityDay.touched ? (
+              <Text tid={electricityDay.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -73,7 +72,7 @@ const StepTwo = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Электроэнергия: Ночь"
+          label={<Text tid="electricityNight" />}
           currencySymbol=""
           value={electricityNight.value}
           minimumValue="0"
@@ -82,9 +81,9 @@ const StepTwo = (props) => {
           }
           error={!electricityNight.valid && electricityNight.touched}
           helperText={
-            !electricityNight.valid && electricityNight.touched
-              ? electricityNight.errorMessage
-              : null
+            !electricityNight.valid && electricityNight.touched ? (
+              <Text tid={electricityNight.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -92,7 +91,7 @@ const StepTwo = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Кухня: Холодная вода"
+          label={<Text tid="kitchenColdWater" />}
           currencySymbol=""
           value={kitchenColdWater.value}
           minimumValue="0"
@@ -101,9 +100,9 @@ const StepTwo = (props) => {
           }
           error={!kitchenColdWater.valid && kitchenColdWater.touched}
           helperText={
-            !kitchenColdWater.valid && kitchenColdWater.touched
-              ? kitchenColdWater.errorMessage
-              : null
+            !kitchenColdWater.valid && kitchenColdWater.touched ? (
+              <Text tid={kitchenColdWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -111,7 +110,7 @@ const StepTwo = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Кухня: Горячая вода"
+          label={<Text tid="kitchenHotWater" />}
           currencySymbol=""
           value={kitchenHotWater.value}
           minimumValue="0"
@@ -120,9 +119,9 @@ const StepTwo = (props) => {
           }
           error={!kitchenHotWater.valid && kitchenHotWater.touched}
           helperText={
-            !kitchenHotWater.valid && kitchenHotWater.touched
-              ? kitchenHotWater.errorMessage
-              : null
+            !kitchenHotWater.valid && kitchenHotWater.touched ? (
+              <Text tid={kitchenHotWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -130,7 +129,7 @@ const StepTwo = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Ванная: Холодная вода"
+          label={<Text tid="bathroomColdWater" />}
           currencySymbol=""
           value={bathroomColdWater.value}
           minimumValue="0"
@@ -139,9 +138,9 @@ const StepTwo = (props) => {
           }
           error={!bathroomColdWater.valid && bathroomColdWater.touched}
           helperText={
-            !bathroomColdWater.valid && bathroomColdWater.touched
-              ? bathroomColdWater.errorMessage
-              : null
+            !bathroomColdWater.valid && bathroomColdWater.touched ? (
+              <Text tid={bathroomColdWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -149,7 +148,7 @@ const StepTwo = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Ванная: Горячая вода"
+          label={<Text tid="bathroomHotWater" />}
           currencySymbol=""
           value={bathroomHotWater.value}
           minimumValue="0"
@@ -158,9 +157,9 @@ const StepTwo = (props) => {
           }
           error={!bathroomHotWater.valid && bathroomHotWater.touched}
           helperText={
-            !bathroomHotWater.valid && bathroomHotWater.touched
-              ? bathroomHotWater.errorMessage
-              : null
+            !bathroomHotWater.valid && bathroomHotWater.touched ? (
+              <Text tid={bathroomHotWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>

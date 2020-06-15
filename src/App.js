@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 
+import { LanguageProvider } from "./components/Languages/Language";
 import Layout from "./hoc/Layout/Layout";
 import AuthForm from "./containers/AuthForm/AuthForm";
 import Logout from "./containers/AuthForm/Logout/Logout";
@@ -40,7 +41,11 @@ class App extends Component {
         </Switch>
       );
     }
-    return <Layout isAuth={this.props.isAuth}>{routes}</Layout>;
+    return (
+      <LanguageProvider>
+        <Layout isAuth={this.props.isAuth}>{routes}</Layout>
+      </LanguageProvider>
+    );
   }
 }
 

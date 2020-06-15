@@ -1,0 +1,131 @@
+const ru = {
+  // Форма входа
+  authEmail: "Почта",
+  authPassword: "Пароль",
+  authSignIn: "Войти в аккаунт",
+  authSignUp: "Еще нет аккаунта? Регистрация",
+  authForgotPassword: "Забыли пароль?",
+  authPasswordRecovery:
+    "Для восстановления пароля введите ваш адрес электронной почты и вам будет отправлено письмо с дальнейшими инструкциями.",
+  authEmailSent: "Письмо отправлено!",
+  authEmailSentText1: "Вам было отправлено письмо на адрес электронной почты",
+  authEmailSentText2:
+    "с дальнейшими инструкциями. Пожалуйста проверьте ваш почтовый ящик.",
+  authReturn: "Вернутся на Форму входа",
+  authSignInShort: "Войти",
+
+  // Форма регистрации
+  registration: "Регистрация",
+  regEnterUserDetails: "Введите персональные данные",
+  regEnterPrevIndicators: "Введите первичные показатели",
+  regValidateData: "Проверьте данные",
+  regUserDetails: "Персональные данные",
+  regPrevIndicators: "Первичные показатели",
+  regSuccess: "Регистрация успешно завершена",
+
+  // Навигация
+  indications: "Показания",
+  expenses: "Расходы",
+  tariffs: "Тарифы",
+  profile: "Профиль",
+
+  // Форма подачи показаний
+  sendIndicators: "Подать показания",
+  sendIndicatorsMonthYear: "Месяц и год",
+  sendIndicatorsMonth: "Месяц",
+  sendIndicatorsYear: "Год",
+  sendIndicatorsElectricity: "Электроэнергия",
+  sendIndicatorsDay: "День",
+  sendIndicatorsNight: "Ночь",
+  sendIndicatorsKitchen: "Кухня",
+  sendIndicatorsBathroom: "Ванная",
+  sendIndicatorsColdWater: "Холодная вода",
+  sendIndicatorsHotWater: "Холодная вода",
+  dialogCheckTitle: "Проверьте показатели за",
+  switchMail: "Отправить в бухгалтерию",
+
+  // Форма показателей
+  outlayCurrentExpenditure: "Текущие расходы",
+  outlayIndicator: "Показатель",
+  outlayCharge: "Расход",
+  outlayConsumption: "Потребление",
+  outlayCost: "Расчет стоимости",
+  outlayElectricityDay: "Эл-я день:",
+  outlayElectricityNight: "Эл-я ночь:",
+  outlayColdWater: "Холодная вода:",
+  outlayHotWater: "Горячая вода:",
+  outlayDisposalWater: "Водоотведение:",
+  outlayWaterSupply: "Водоснабжение",
+  outlayElectricity: "Электроэнергия",
+  outlaySendDialogTitle: "Отправка показателей",
+  outlaySendDialogContent:
+    "Вы уверены, что хотите отправить показатели на адрес электронной почты бухгалтерии?",
+  outlayDeleteDialogTitle: "Вы уверены?",
+  outlayDeleteDialogContent:
+    "Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить.",
+  outlayNoData: "Нет данных на за",
+  outlayNoDataYear: "год",
+
+  // Форма тарифов
+  addTariff: "Добавить тариф",
+  tariffName: "Наименование",
+  tariffCost: "Стоимость",
+  tariffDateStart: "Действителен c",
+  tariffDateEnd: "Действителен по",
+  tariffWater: "Подача воды",
+  tariffHotWater: "Подогрев воды",
+  tariffDisposalWater: "Водоотведение",
+  tariffElectricityDay: "Электро-ия. день",
+  tariffElectricityNight: "Электро-ия. ночь",
+
+  // Форма профиля пользователя
+  userProfile: "Профиль пользователя",
+  contacts: "Контакты",
+  firstName: "Имя",
+  lastName: "Фамилия",
+  address: "Адрес",
+  userEmail: "Ваша почта",
+  accountantEmail: "Почта бухгалтерии",
+  primaryIndicators: "Первичные показатели",
+  prevIndicatorsDate: "Дата первичных показателей",
+  electricityDay: "Электроэнергия: День",
+  electricityNight: "Электроэнергия: Ночь",
+  kitchenColdWater: "Кухня: Холодная вода",
+  kitchenHotWater: "Кухня: Горячая вода",
+  bathroomColdWater: "Ванная: Холодная вода",
+  bathroomHotWater: "Ванная: Горячая вода",
+
+  // Общее
+  systemName: "Система коммунальных показателей",
+  save: "Сохранить",
+  send: "Отправить",
+  delete: "Удалить",
+  cancel: "Отмена",
+  recover: "Восстановить",
+  loading: "Загрузка",
+  saveData: "Данные успешно сохранены!",
+  prev: "Назад",
+  next: "Вперед",
+  finish: "Готово",
+  requiredField: "Поле обязательно для заполнения",
+  unvalidEmail: "Пожалуйста, введите корректный email",
+  unvalidPassword: "Пароль должен состоять из более чем 6 символов",
+
+  //Месяцы
+  january: "Январь",
+  february: "Февраль",
+  march: "Март",
+  april: "Апрель",
+  may: "Май",
+  june: "Июнь",
+  july: "Июль",
+  august: "Август",
+  september: "Сентябрь",
+  october: "Октябрь",
+  november: "Ноябрь",
+  december: "Декабрь",
+  year: "год",
+  notDefined: "Не определен",
+};
+
+export default ru;

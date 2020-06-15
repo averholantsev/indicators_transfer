@@ -1,10 +1,14 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import Text from "../Text/Text";
 
 export default function DialogSimple(props) {
   return (
@@ -14,20 +18,18 @@ export default function DialogSimple(props) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {props.dialogTitle}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title"><Text tid={props.dialogTitle} /></DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-        {props.dialogContent}
+          <Text tid={props.dialogContent} />
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={props.handleClose} color="primary">
-          Отмена
+          <Text tid="cancel" />
         </Button>
         <Button onClick={props.handleContinue} color="secondary" autoFocus>
-          {props.activeButtonName}
+          <Text tid={props.activeButtonName} />
         </Button>
       </DialogActions>
     </Dialog>

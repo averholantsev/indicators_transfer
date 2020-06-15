@@ -1,7 +1,6 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-
-import Grid from "@material-ui/core/Grid";
+import { TextField, Grid } from "@material-ui/core";
+import Text from "../UI/Text/Text";
 
 const StepOne = (props) => {
   const {
@@ -28,33 +27,35 @@ const StepOne = (props) => {
           }
           error={!userEmail.valid && userEmail.touched}
           helperText={
-            !userEmail.valid && userEmail.touched
-              ? userEmail.errorMessage
-              : null
+            !userEmail.valid && userEmail.touched ? (
+              <Text tid={userEmail.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Пароль"
+          label={<Text tid="authPassword" />}
           disabled={props.isDisabled}
           value={password.value}
           type="password"
-          autoComplete='new-password'
+          autoComplete="new-password"
           fullWidth
           onChange={(event) =>
             props.updateUserDataInState("password", event.target.value)
           }
           error={!password.valid && password.touched}
           helperText={
-            !password.valid && password.touched ? password.errorMessage : null
+            !password.valid && password.touched ? (
+              <Text tid={password.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           fullWidth
-          label="Имя"
+          label={<Text tid="firstName" />}
           value={firstName.value}
           onChange={(event) =>
             props.updateUserDataInState("firstName", event.target.value)
@@ -62,15 +63,15 @@ const StepOne = (props) => {
           disabled={props.isDisabled}
           error={!firstName.valid && firstName.touched}
           helperText={
-            !firstName.valid && firstName.touched
-              ? firstName.errorMessage
-              : null
+            !firstName.valid && firstName.touched ? (
+              <Text tid={firstName.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
-          label="Фамилия"
+          label={<Text tid="lastName" />}
           disabled={props.isDisabled}
           value={lastName.value}
           fullWidth
@@ -79,13 +80,15 @@ const StepOne = (props) => {
           }
           error={!lastName.valid && lastName.touched}
           helperText={
-            !lastName.valid && lastName.touched ? lastName.errorMessage : null
+            !lastName.valid && lastName.touched ? (
+              <Text tid={lastName.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Адрес"
+          label={<Text tid="address" />}
           disabled={props.isDisabled}
           value={address.value}
           fullWidth
@@ -94,13 +97,15 @@ const StepOne = (props) => {
           }
           error={!address.valid && address.touched}
           helperText={
-            !address.valid && address.touched ? address.errorMessage : null
+            !address.valid && address.touched ? (
+              <Text tid={address.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Почта бухгалтерии"
+          label={<Text tid="accountantEmail" />}
           disabled={props.isDisabled}
           value={accountantEmail.value}
           type="email"
@@ -111,7 +116,7 @@ const StepOne = (props) => {
           error={!accountantEmail.valid && accountantEmail.touched}
           helperText={
             !accountantEmail.valid && accountantEmail.touched
-              ? accountantEmail.errorMessage
+              ? <Text tid={accountantEmail.errorMessage} />
               : null
           }
         />

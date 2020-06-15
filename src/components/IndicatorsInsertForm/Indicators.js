@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
+import Text from "../UI/Text/Text";
 
 const Indicators = (props) => {
   const {
@@ -25,19 +26,23 @@ const Indicators = (props) => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h5" className="headerMargin">
-          Месяц и год
+          <Text tid="sendIndicatorsMonthYear" />
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <FormControl style={{ width: "100%" }}>
-          <InputLabel>Месяц</InputLabel>
+          <InputLabel>
+            <Text tid="sendIndicatorsMonth" />
+          </InputLabel>
           <Select
             value={props.monthYear.month || 0}
-            onChange={(event) => props.setStateMonthYear("month", event.target.value)}
+            onChange={(event) =>
+              props.setStateMonthYear("month", event.target.value)
+            }
           >
             {MONTHS_LIST.map((item) => (
               <MenuItem key={item.value} value={item.value}>
-                {item.text}
+                <Text tid={item.text} />
               </MenuItem>
             ))}
           </Select>
@@ -45,10 +50,14 @@ const Indicators = (props) => {
       </Grid>
       <Grid item xs={6}>
         <FormControl style={{ width: "100%" }}>
-          <InputLabel>Год</InputLabel>
+          <InputLabel>
+            <Text tid="sendIndicatorsYear" />
+          </InputLabel>
           <Select
             value={props.monthYear.year || 2020}
-            onChange={(event) => props.setStateMonthYear("year", event.target.value)}
+            onChange={(event) =>
+              props.setStateMonthYear("year", event.target.value)
+            }
           >
             {props.getCurrentYear().map((item) => (
               <MenuItem key={item.value} value={item.value}>
@@ -61,14 +70,14 @@ const Indicators = (props) => {
 
       <Grid item xs={12}>
         <Typography variant="h5" className="headerMargin">
-          Электроэнергия
+          <Text tid="sendIndicatorsElectricity" />
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <CurrencyTextField
           style={{ width: "100%" }}
           variant="standard"
-          label="День"
+          label={<Text tid="sendIndicatorsDay" />}
           currencySymbol=""
           value={electricityDay.value}
           minimumValue="0"
@@ -77,7 +86,9 @@ const Indicators = (props) => {
           }
           error={!electricityDay.valid && electricityDay.touched}
           helperText={
-            !electricityDay.valid && electricityDay.touched ? electricityDay.errorMessage : null
+            !electricityDay.valid && electricityDay.touched ? (
+              <Text tid={electricityDay.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -85,7 +96,7 @@ const Indicators = (props) => {
         <CurrencyTextField
           style={{ width: "100%" }}
           variant="standard"
-          label="Ночь"
+          label={<Text tid="sendIndicatorsNight" />}
           currencySymbol=""
           value={electricityNight.value}
           minimumValue="0"
@@ -94,21 +105,23 @@ const Indicators = (props) => {
           }
           error={!electricityNight.valid && electricityNight.touched}
           helperText={
-            !electricityNight.valid && electricityNight.touched ? electricityNight.errorMessage : null
+            !electricityNight.valid && electricityNight.touched ? (
+              <Text tid={electricityNight.errorMessage} />
+            ) : null
           }
         />
       </Grid>
 
       <Grid item xs={12}>
         <Typography variant="h5" className="headerMargin">
-          Кухня
+          <Text tid="sendIndicatorsKitchen" />
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <CurrencyTextField
           style={{ width: "100%" }}
           variant="standard"
-          label="Холодная вода"
+          label={<Text tid="sendIndicatorsColdWater" />}
           currencySymbol=""
           value={coldWaterKitchen.value}
           minimumValue="0"
@@ -117,7 +130,9 @@ const Indicators = (props) => {
           }
           error={!coldWaterKitchen.valid && coldWaterKitchen.touched}
           helperText={
-            !coldWaterKitchen.valid && coldWaterKitchen.touched ? coldWaterKitchen.errorMessage : null
+            !coldWaterKitchen.valid && coldWaterKitchen.touched ? (
+              <Text tid={coldWaterKitchen.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -125,7 +140,7 @@ const Indicators = (props) => {
         <CurrencyTextField
           style={{ width: "100%" }}
           variant="standard"
-          label="Горячая вода"
+          label={<Text tid="sendIndicatorsHotWater" />}
           currencySymbol=""
           value={hotWaterKitchen.value}
           minimumValue="0"
@@ -134,21 +149,23 @@ const Indicators = (props) => {
           }
           error={!hotWaterKitchen.valid && hotWaterKitchen.touched}
           helperText={
-            !hotWaterKitchen.valid && hotWaterKitchen.touched ? hotWaterKitchen.errorMessage : null
+            !hotWaterKitchen.valid && hotWaterKitchen.touched ? (
+              <Text tid={hotWaterKitchen.errorMessage} />
+            ) : null
           }
         />
       </Grid>
 
       <Grid item xs={12}>
         <Typography variant="h5" className="headerMargin">
-          Ванная
+          <Text tid="sendIndicatorsBathroom" />
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <CurrencyTextField
           style={{ width: "100%" }}
           variant="standard"
-          label="Холодная вода"
+          label={<Text tid="sendIndicatorsColdWater" />}
           currencySymbol=""
           value={coldWaterBathroom.value}
           minimumValue="0"
@@ -157,7 +174,9 @@ const Indicators = (props) => {
           }
           error={!coldWaterBathroom.valid && coldWaterBathroom.touched}
           helperText={
-            !coldWaterBathroom.valid && coldWaterBathroom.touched ? coldWaterBathroom.errorMessage : null
+            !coldWaterBathroom.valid && coldWaterBathroom.touched ? (
+              <Text tid={coldWaterBathroom.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -165,7 +184,7 @@ const Indicators = (props) => {
         <CurrencyTextField
           style={{ width: "100%" }}
           variant="standard"
-          label="Горячая вода"
+          label={<Text tid="sendIndicatorsHotWater" />}
           currencySymbol=""
           value={hotWaterBathroom.value}
           minimumValue="0"
@@ -174,7 +193,9 @@ const Indicators = (props) => {
           }
           error={!hotWaterBathroom.valid && hotWaterBathroom.touched}
           helperText={
-            !hotWaterBathroom.valid && hotWaterBathroom.touched ? hotWaterBathroom.errorMessage : null
+            !hotWaterBathroom.valid && hotWaterBathroom.touched ? (
+              <Text tid={hotWaterBathroom.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -184,9 +205,13 @@ const Indicators = (props) => {
           variant="contained"
           color="primary"
           disableElevation
-          onClick={props.indicatorsValid ? props.modalHandlerOpen : () => props.checkFormValidity()}
+          onClick={
+            props.indicatorsValid
+              ? props.modalHandlerOpen
+              : () => props.checkFormValidity()
+          }
         >
-          Отправить
+          <Text tid="send" />
         </Button>
       </Grid>
     </Grid>

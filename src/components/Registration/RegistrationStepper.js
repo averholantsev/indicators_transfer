@@ -2,12 +2,15 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@material-ui/core";
 import CardBody from "../UI/CardBody/CardBody";
+import Text from "../UI/Text/Text";
 
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
@@ -33,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    "Введите персональные данные",
-    "Введите первичные показатели",
-    "Проверьте данные",
+    <Text tid="regEnterUserDetails" />,
+    <Text tid="regEnterPrevIndicators" />,
+    <Text tid="regValidateData" />,
   ];
 }
 
@@ -90,7 +93,7 @@ const RegistrationStepper = (props) => {
               align="center"
               style={{ padding: "0 0 20px 0" }}
             >
-              Персональные данные
+              <Text tid="regUserDetails" />
             </Typography>
             <StepOne
               userDetails={props.userDetails}
@@ -102,7 +105,7 @@ const RegistrationStepper = (props) => {
               align="center"
               style={{ padding: "20px 0" }}
             >
-              Первичные показатели
+              <Text tid="regPrevIndicators" />
             </Typography>
             <StepTwo
               prevIndicators={props.prevIndicators}
@@ -128,8 +131,8 @@ const RegistrationStepper = (props) => {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography className={classes.instructions}>
-              Регистрация успешно завершена
+            <Typography className={classes.instructions} style={{marginTop: "30px"}}>
+              <Text tid="regSuccess" />
             </Typography>
             <Button
               variant="contained"
@@ -137,7 +140,7 @@ const RegistrationStepper = (props) => {
               component={NavLink}
               to="/auth"
             >
-              Войти в систему
+              <Text tid="authSignIn" />
             </Button>
           </div>
         ) : (
@@ -157,10 +160,10 @@ const RegistrationStepper = (props) => {
                 onClick={handleBack}
                 className={classes.backButton}
               >
-                Назад
+                <Text tid="prev" />
               </Button>
               <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Готово" : "Далее"}
+                {activeStep === steps.length - 1 ? <Text tid="finish" /> : <Text tid="next" />}
               </Button>
             </div>
           </div>

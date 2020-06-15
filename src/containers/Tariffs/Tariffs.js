@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
 
+import { withSnackbar } from "notistack";
+import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 import Loader from "../../components/UI/Loader/Loader";
-import Typography from "@material-ui/core/Typography";
-
 import TariffCard from "../../components/TariffCard/TariffCard";
 import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
-import Button from "@material-ui/core/Button";
+import Text from "../../components/UI/Text/Text";
 
-import { withSnackbar } from "notistack";
-import Grid from "@material-ui/core/Grid";
-
-import { checkFieldValidity } from "../../components/Helpers/FormHelper";
+import Typography from "@material-ui/core/Typography";
+import {Button, Grid} from "@material-ui/core";
 
 class Tariffs extends Component {
   state = {
@@ -297,16 +295,16 @@ class Tariffs extends Component {
           open={this.state.deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}
           handleContinue={this.handleDeleteDialogContinue}
-          dialogTitle="Вы уверены?"
-          dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
-          activeButtonName="Удалить"
+          dialogTitle="outlayDeleteDialogTitle"
+          dialogContent="outlayDeleteDialogContent"
+          activeButtonName="delete"
         />
         <Typography
           variant="h4"
           align="center"
           style={{ marginBottom: "10px" }}
         >
-          Тарифы
+          <Text tid="tariffs" />
         </Typography>
         <Grid
           container
@@ -322,7 +320,7 @@ class Tariffs extends Component {
             color="primary"
             disabled={this.state.addButtonDisabled}
           >
-            Добавить тариф
+            <Text tid="addTariff" />
           </Button>
         </Grid>
         {tariffCards}

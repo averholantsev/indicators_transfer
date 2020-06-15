@@ -11,6 +11,7 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import Text from "../UI/Text/Text";
 
 const DialogCheck = (props) => {
   return (
@@ -20,19 +21,20 @@ const DialogCheck = (props) => {
       maxWidth="xs"
     >
       <DialogTitle align="center">
-        Проверьте показатели за {MONTHS_LIST[props.monthYear.month].text}{" "}
-        {props.monthYear.year} г.
+        <Text tid="dialogCheckTitle" />{" "}
+        <Text tid={MONTHS_LIST[props.monthYear.month].text} />{" "}
+        {props.monthYear.year} <Text tid="year" />
       </DialogTitle>
       <DialogContent dividers>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Typography variant="h6" align="center">
-              Электроэнергия
+              <Text tid="sendIndicatorsElectricity" />
             </Typography>
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1" align="center">
-              День:
+              <Text tid="sendIndicatorsDay" />:
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -42,7 +44,7 @@ const DialogCheck = (props) => {
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1" align="center">
-              Ночь:
+              <Text tid="sendIndicatorsNight" />:
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -53,12 +55,12 @@ const DialogCheck = (props) => {
 
           <Grid item xs={12}>
             <Typography variant="h6" align="center">
-              Кухня
+              <Text tid="sendIndicatorsKitchen" />
             </Typography>
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1" align="center">
-              Холодная вода:
+              <Text tid="sendIndicatorsColdWater" />:
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -68,7 +70,7 @@ const DialogCheck = (props) => {
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1" align="center">
-              Горячая вода:
+              <Text tid="sendIndicatorsHotWater" />:
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -79,12 +81,12 @@ const DialogCheck = (props) => {
 
           <Grid item xs={12}>
             <Typography variant="h6" align="center">
-              Ванная
+              <Text tid="sendIndicatorsBathroom" />
             </Typography>
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1" align="center">
-              Холодная вода:
+              <Text tid="sendIndicatorsColdWater" />:
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -94,7 +96,7 @@ const DialogCheck = (props) => {
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1" align="center">
-              Горячая вода:
+              <Text tid="sendIndicatorsHotWater" />:
             </Typography>
           </Grid>
           <Grid item xs={3}>
@@ -105,7 +107,7 @@ const DialogCheck = (props) => {
 
           <Grid item xs={12}>
             <Switch
-              label="Отправить в бухгалтерию"
+              label={<Text tid="switchMail" />}
               checked={props.sendDataToAccountant}
               switchChange={props.switchChange}
             />
@@ -114,10 +116,10 @@ const DialogCheck = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={props.modalHandlerClose} color="secondary">
-          Отмена
+          <Text tid="cancel" />
         </Button>
         <Button onClick={props.sendIndicators} color="primary" autoFocus>
-          Отправить
+          <Text tid="send" />
         </Button>
       </DialogActions>
     </Dialog>

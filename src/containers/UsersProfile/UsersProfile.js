@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
 
+import { withSnackbar } from "notistack";
+import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 import UserCard from "../../components/UserCard/UserCard";
 import Loader from "../../components/UI/Loader/Loader";
-import Typography from "@material-ui/core/Typography";
 import CardBody from "../../components/UI/CardBody/CardBody";
-import { checkFieldValidity } from "../../components/Helpers/FormHelper";
-
-import { withSnackbar } from "notistack";
+import Text from "../../components/UI/Text/Text";
+import Typography from "@material-ui/core/Typography";
 
 class UsersProfile extends Component {
   state = {
@@ -198,9 +198,6 @@ class UsersProfile extends Component {
       })
       .catch((error) => {
         console.log(error);
-        this.setState({
-          error: "Произошла ошибка, обратитесь к Системному Администратору.",
-        });
       });
   };
 
@@ -337,7 +334,7 @@ class UsersProfile extends Component {
           align="center"
           style={{ marginBottom: "10px" }}
         >
-          Профиль пользователя
+          <Text tid="userProfile" />
         </Typography>
         {this.state.userId === null ? (
           <Loader />

@@ -1,50 +1,50 @@
 export const MONTHS_LIST = [
   {
-    text: "Январь",
+    text: "january",
     value: 0,
   },
   {
-    text: "Феварль",
+    text: "february",
     value: 1,
   },
   {
-    text: "Март",
+    text: "march",
     value: 2,
   },
   {
-    text: "Апрель",
+    text: "april",
     value: 3,
   },
   {
-    text: "Май",
+    text: "may",
     value: 4,
   },
   {
-    text: "Июнь",
+    text: "june",
     value: 5,
   },
   {
-    text: "Июль",
+    text: "july",
     value: 6,
   },
   {
-    text: "Август",
+    text: "august",
     value: 7,
   },
   {
-    text: "Сентябрь",
+    text: "september",
     value: 8,
   },
   {
-    text: "Октябрь",
+    text: "october",
     value: 9,
   },
   {
-    text: "Ноябрь",
+    text: "november",
     value: 10,
   },
   {
-    text: "Декабрь",
+    text: "december",
     value: 11,
   },
 ];

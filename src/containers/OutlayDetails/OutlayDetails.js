@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import axios from "../../axios-main";
 import { connect } from "react-redux";
+import emailjs from "emailjs-com";
 
+import { withSnackbar } from "notistack";
+import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
+import * as CONFIG from "../../configuration.json";
 import "./OutlayDetails.css";
 import Loader from "../../components/UI/Loader/Loader";
 import Outlay from "../../components/Outlay/Outlay";
 import Tabs from "../../components/UI/Tabs/Tabs";
-import Typography from "@material-ui/core/Typography";
 import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
-import { withSnackbar } from "notistack";
-import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
-import emailjs from "emailjs-com";
-import * as CONFIG from "../../configuration.json";
+import Typography from "@material-ui/core/Typography";
+import Text from "../../components/UI/Text/Text";
 
 class OutlayDetails extends Component {
   state = {
@@ -79,31 +80,31 @@ class OutlayDetails extends Component {
     let prevIndicators = [
       {
         id: "day_electricity",
-        name: "Эл-я день:",
+        name: "outlayElectricityDay",
         intake: prevIndicatorsData.electricity.day,
       },
       {
         id: "night_electricity",
-        name: "Эл-я ночь:",
+        name: "outlayElectricityNight",
         intake: prevIndicatorsData.electricity.night,
       },
       {
         id: "cold_water",
-        name: "Холодная вода:",
+        name: "outlayColdWater",
         intake:
           prevIndicatorsData.bathroom.coldWater +
           prevIndicatorsData.kitchen.coldWater,
       },
       {
         id: "hot_water",
-        name: "Горячая вода:",
+        name: "outlayHotWater",
         intake:
           prevIndicatorsData.bathroom.hotWater +
           prevIndicatorsData.kitchen.hotWater,
       },
       {
         id: "disposal_water",
-        name: "Водоотведение:",
+        name: "outlayDisposalWater",
         intake:
           prevIndicatorsData.bathroom.coldWater +
           prevIndicatorsData.kitchen.coldWater +
@@ -133,31 +134,31 @@ class OutlayDetails extends Component {
         indicators: [
           {
             id: "day_electricity",
-            name: "Эл-я день:",
+            name: "outlayElectricityDay",
             intake: data[key].electricity.day,
           },
           {
             id: "night_electricity",
-            name: "Эл-я ночь:",
+            name: "outlayElectricityNight",
             intake: data[key].electricity.night,
           },
           {
             id: "cold_water",
-            name: "Холодная вода:",
+            name: "outlayColdWater",
             intake: data[key].coldWater.bathroom + data[key].coldWater.kitchen,
             bathroom: data[key].coldWater.bathroom,
             kitchen: data[key].coldWater.kitchen,
           },
           {
             id: "hot_water",
-            name: "Горячая вода:",
+            name: "outlayHotWater",
             intake: data[key].hotWater.bathroom + data[key].hotWater.kitchen,
             bathroom: data[key].hotWater.bathroom,
             kitchen: data[key].hotWater.kitchen,
           },
           {
             id: "disposal_water",
-            name: "Водоотведение:",
+            name: "outlayDisposalWater",
             intake:
               data[key].coldWater.bathroom +
               data[key].coldWater.kitchen +
@@ -467,9 +468,9 @@ class OutlayDetails extends Component {
         });
       } else
         indicatorsList = (
-          <p
-            style={{ textAlign: "center" }}
-          >{`Нет данных на ${this.state.currentYear} год`}</p>
+          <p style={{ textAlign: "center" }}>
+            <Text tid="outlayNoData" /> {this.state.currentYear} <Text tid="outlayNoDataYear" />
+          </p>
         );
     } else {
       indicatorsList = (
@@ -492,20 +493,20 @@ class OutlayDetails extends Component {
           open={this.state.sendDialogOpen}
           handleClose={this.handleSendDialogClose}
           handleContinue={this.handleSendDialogContinue}
-          dialogTitle="Отправка показателей"
-          dialogContent="Вы уверены, что хотите отправить показатели на адрес электронной почты бухгалтерии?"
-          activeButtonName="Отправить"
+          dialogTitle="outlaySendDialogTitle"
+          dialogContent="outlaySendDialogContent"
+          activeButtonName="send"
         />
         <DialogSimple
           open={this.state.deleteDialogOpen}
           handleClose={this.handleDeleteDialogClose}
           handleContinue={this.handleDeleteDialogContinue}
-          dialogTitle="Вы уверены?"
-          dialogContent="Вы уверены, что хотите удалить данный объект? Этот процесс нельзя будет отменить."
-          activeButtonName="Удалить"
+          dialogTitle="outlayDeleteDialogTitle"
+          dialogContent="outlayDeleteDialogContent"
+          activeButtonName="delete"
         />
         <Typography variant="h4" align="center">
-          Текущие расходы
+          <Text tid="outlayCurrentExpenditure" />
         </Typography>
         <Tabs tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
         <div className="indicatorsList">{indicatorsList}</div>

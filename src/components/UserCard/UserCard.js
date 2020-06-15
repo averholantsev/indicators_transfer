@@ -9,8 +9,9 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-
 import { makeStyles } from "@material-ui/core/styles";
+
+import Text from "../UI/Text/Text";
 
 const useStyles = makeStyles({
   field: {
@@ -45,12 +46,12 @@ const UserCard = (props) => {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography variant="h5" align="center">
-          Контакты
+          <Text tid="contacts" />
         </Typography>
       </Grid>
       <Grid item xs={6}>
         <TextField
-          label="Имя"
+          label={<Text tid="firstName" />}
           value={firstName.value}
           fullWidth
           onChange={(event) =>
@@ -58,15 +59,15 @@ const UserCard = (props) => {
           }
           error={!firstName.valid && firstName.touched}
           helperText={
-            !firstName.valid && firstName.touched
-              ? firstName.errorMessage
-              : null
+            !firstName.valid && firstName.touched ? (
+              <Text tid={firstName.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
-          label="Фамилия"
+          label={<Text tid="lastName" />}
           value={lastName.value}
           fullWidth
           onChange={(event) =>
@@ -74,13 +75,15 @@ const UserCard = (props) => {
           }
           error={!lastName.valid && lastName.touched}
           helperText={
-            !lastName.valid && lastName.touched ? lastName.errorMessage : null
+            !lastName.valid && lastName.touched ? (
+              <Text tid={lastName.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Адрес"
+          label={<Text tid="address" />}
           value={address.value}
           fullWidth
           onChange={(event) =>
@@ -88,13 +91,15 @@ const UserCard = (props) => {
           }
           error={!address.valid && address.touched}
           helperText={
-            !address.valid && address.touched ? address.errorMessage : null
+            !address.valid && address.touched ? (
+              <Text tid={address.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Ваша почта"
+          label={<Text tid="userEmail" />}
           value={userEmail.value}
           disabled
           fullWidth
@@ -105,7 +110,7 @@ const UserCard = (props) => {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Почта бухгалтерии"
+          label={<Text tid="accountantEmail" />}
           value={accountantEmail.value}
           fullWidth
           onChange={(event) =>
@@ -113,15 +118,15 @@ const UserCard = (props) => {
           }
           error={!accountantEmail.valid && accountantEmail.touched}
           helperText={
-            !accountantEmail.valid && accountantEmail.touched
-              ? accountantEmail.errorMessage
-              : null
+            !accountantEmail.valid && accountantEmail.touched ? (
+              <Text tid={accountantEmail.errorMessage} />
+            ) : null
           }
         />
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h5" align="center">
-          Первичные показатели
+          <Text tid="primaryIndicators" />
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -130,7 +135,7 @@ const UserCard = (props) => {
             clearable
             className={classes.field}
             disabled={props.isDisabled}
-            label="Дата первичных показателей"
+            label={<Text tid="prevIndicatorsDate" />}
             format="dd.MM.yyyy"
             value={prevIndicatorsDate.value}
             onChange={(date) =>
@@ -138,9 +143,9 @@ const UserCard = (props) => {
             }
             error={!prevIndicatorsDate.valid && prevIndicatorsDate.touched}
             helperText={
-              !prevIndicatorsDate.valid && prevIndicatorsDate.touched
-                ? prevIndicatorsDate.errorMessage
-                : null
+              !prevIndicatorsDate.valid && prevIndicatorsDate.touched ? (
+                <Text tid={prevIndicatorsDate.errorMessage} />
+              ) : null
             }
           />
         </MuiPickersUtilsProvider>
@@ -149,7 +154,7 @@ const UserCard = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Электроэнергия: День"
+          label={<Text tid="electricityDay" />}
           currencySymbol=""
           value={electricityDay.value}
           minimumValue="0"
@@ -158,9 +163,9 @@ const UserCard = (props) => {
           }
           error={!electricityDay.valid && electricityDay.touched}
           helperText={
-            !electricityDay.valid && electricityDay.touched
-              ? electricityDay.errorMessage
-              : null
+            !electricityDay.valid && electricityDay.touched ? (
+              <Text tid={electricityDay.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -168,7 +173,7 @@ const UserCard = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Электроэнергия: Ночь"
+          label={<Text tid="electricityNight" />}
           currencySymbol=""
           value={electricityNight.value}
           minimumValue="0"
@@ -177,9 +182,9 @@ const UserCard = (props) => {
           }
           error={!electricityNight.valid && electricityNight.touched}
           helperText={
-            !electricityNight.valid && electricityNight.touched
-              ? electricityNight.errorMessage
-              : null
+            !electricityNight.valid && electricityNight.touched ? (
+              <Text tid={electricityNight.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -187,7 +192,7 @@ const UserCard = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Кухня: Холодная вода"
+          label={<Text tid="kitchenColdWater" />}
           currencySymbol=""
           value={kitchenColdWater.value}
           minimumValue="0"
@@ -196,9 +201,9 @@ const UserCard = (props) => {
           }
           error={!kitchenColdWater.valid && kitchenColdWater.touched}
           helperText={
-            !kitchenColdWater.valid && kitchenColdWater.touched
-              ? kitchenColdWater.errorMessage
-              : null
+            !kitchenColdWater.valid && kitchenColdWater.touched ? (
+              <Text tid={kitchenColdWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -206,7 +211,7 @@ const UserCard = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Кухня: Горячая вода"
+          label={<Text tid="kitchenHotWater" />}
           currencySymbol=""
           value={kitchenHotWater.value}
           minimumValue="0"
@@ -215,9 +220,9 @@ const UserCard = (props) => {
           }
           error={!kitchenHotWater.valid && kitchenHotWater.touched}
           helperText={
-            !kitchenHotWater.valid && kitchenHotWater.touched
-              ? kitchenHotWater.errorMessage
-              : null
+            !kitchenHotWater.valid && kitchenHotWater.touched ? (
+              <Text tid={kitchenHotWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -225,7 +230,7 @@ const UserCard = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Ванная: Холодная вода"
+          label={<Text tid="bathroomColdWater" />}
           currencySymbol=""
           value={bathroomColdWater.value}
           minimumValue="0"
@@ -234,9 +239,9 @@ const UserCard = (props) => {
           }
           error={!bathroomColdWater.valid && bathroomColdWater.touched}
           helperText={
-            !bathroomColdWater.valid && bathroomColdWater.touched
-              ? bathroomColdWater.errorMessage
-              : null
+            !bathroomColdWater.valid && bathroomColdWater.touched ? (
+              <Text tid={bathroomColdWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -244,7 +249,7 @@ const UserCard = (props) => {
         <CurrencyTextField
           className={classes.field}
           disabled={props.isDisabled}
-          label="Ванная: Горячая вода"
+          label={<Text tid="bathroomHotWater" />}
           currencySymbol=""
           value={bathroomHotWater.value}
           minimumValue="0"
@@ -253,9 +258,9 @@ const UserCard = (props) => {
           }
           error={!bathroomHotWater.valid && bathroomHotWater.touched}
           helperText={
-            !bathroomHotWater.valid && bathroomHotWater.touched
-              ? bathroomHotWater.errorMessage
-              : null
+            !bathroomHotWater.valid && bathroomHotWater.touched ? (
+              <Text tid={bathroomHotWater.errorMessage} />
+            ) : null
           }
         />
       </Grid>
@@ -268,7 +273,7 @@ const UserCard = (props) => {
             if (props.checkFormValidity()) props.updateUserDetails();
           }}
         >
-          Сохранить
+          <Text tid="save" />
         </Button>
       </Grid>
     </Grid>

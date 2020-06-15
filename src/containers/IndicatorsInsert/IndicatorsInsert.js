@@ -14,6 +14,7 @@ import DialogCheck from "../../components/IndicatorsInsertForm/DialogCheck";
 import CardBody from "../../components/UI/CardBody/CardBody";
 import Indicators from "../../components/IndicatorsInsertForm/Indicators";
 import { Typography } from "@material-ui/core";
+import Text from "../../components/UI/Text/Text";
 
 class IndicatorsInsert extends Component {
   state = {
@@ -137,32 +138,32 @@ class IndicatorsInsert extends Component {
         electricityDay: {
           ...this.state.indicators.electricityDay,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         electricityNight: {
           ...this.state.indicators.electricityNight,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         coldWaterKitchen: {
           ...this.state.indicators.coldWaterKitchen,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         coldWaterBathroom: {
           ...this.state.indicators.coldWaterBathroom,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         hotWaterKitchen: {
           ...this.state.indicators.hotWaterKitchen,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         hotWaterBathroom: {
           ...this.state.indicators.hotWaterBathroom,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
       };
       this.setState({ indicators: newIndicators });
@@ -290,9 +291,9 @@ class IndicatorsInsert extends Component {
   };
 
   setStateMonthYear = (key, value) => {
-    const updatedMonthYear = { 
+    const updatedMonthYear = {
       ...this.state.monthYear,
-      [key]: value
+      [key]: value,
     };
     this.setState({ monthYear: updatedMonthYear });
   };
@@ -315,7 +316,7 @@ class IndicatorsInsert extends Component {
         />
 
         <Typography variant="h4" align="center">
-          Подать показания
+          <Text tid="sendIndicators" />
         </Typography>
 
         <CardBody>

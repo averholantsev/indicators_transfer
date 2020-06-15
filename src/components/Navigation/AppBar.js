@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import Typography from "@material-ui/core/Typography";
-
-import MenuIcon from "@material-ui/icons/Menu";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import EventNoteIcon from "@material-ui/icons/EventNote";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import LanguageSelector from "../Languages/LanguageSelector";
+import { makeStyles, useMediaQuery } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import {
+  ExitToApp,
+  Menu,
+  ListAlt,
+  EventNote,
+  MonetizationOn,
+  AccountCircle,
+} from "@material-ui/icons";
+import Text from "../UI/Text/Text";
 
 const APP_MENU_LIST = [
-  { name: "Показания", path: "/send-indicators", icon: <ListAltIcon /> },
-  { name: "Расходы", path: "/outlay", icon: <EventNoteIcon /> },
-  { name: "Тарифы", path: "/tariffs", icon: <MonetizationOnIcon /> },
-  { name: "Профиль", path: "/profile", icon: <AccountCircleIcon /> },
+  { name: "indications", path: "/send-indicators", icon: <ListAlt /> },
+  { name: "expenses", path: "/outlay", icon: <EventNote /> },
+  { name: "tariffs", path: "/tariffs", icon: <MonetizationOn /> },
+  { name: "profile", path: "/profile", icon: <AccountCircle /> },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -49,25 +52,27 @@ const useStyles = makeStyles((theme) => ({
 const MenuAppBar = (props) => {
   const classes = useStyles();
 
-  let sectionTitleName = "Показания";  
+  let sectionTitleName = "indications";
   switch (window.location.hash) {
     case "#/send-indicators":
-      sectionTitleName = "Показания";
+      sectionTitleName = "indications";
       break;
     case "#/outlay":
-      sectionTitleName = "Расходы";
+      sectionTitleName = "expenses";
       break;
     case "#/tariffs":
-      sectionTitleName = "Тарифы";
+      sectionTitleName = "tariffs";
       break;
     case "#/profile":
-      sectionTitleName = "Профиль";
+      sectionTitleName = "profile";
       break;
     default:
       break;
   }
 
-  const [sectionTitle, setSectionTitle] = useState(sectionTitleName);
+  const [sectionTitle, setSectionTitle] = useState(
+    <Text tid={sectionTitleName} />
+  );
   const [openDrawer, setOpenDrawer] = useState(false);
   const titleShow = useMediaQuery("(min-width:425px)");
 
@@ -79,13 +84,14 @@ const MenuAppBar = (props) => {
             edge="start"
             className={classes.menuButton}
             color="inherit"
-            aria-label="menu" 
+            aria-label="menu"
             onClick={() => setOpenDrawer(true)}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
           <Typography variant="h6">{sectionTitle}</Typography>
           <div className={classes.grow} />
+          <LanguageSelector theme="light" />
           {props.userDetails && titleShow ? (
             <Typography variant="h6">
               {props.userDetails.firstName + " " + props.userDetails.lastName}
@@ -100,7 +106,7 @@ const MenuAppBar = (props) => {
             component={NavLink}
             to="/logout"
           >
-            <ExitToAppIcon />
+            <ExitToApp />
           </IconButton>
         </Toolbar>
         <Drawer
@@ -118,11 +124,11 @@ const MenuAppBar = (props) => {
                 to={item.path}
                 onClick={() => {
                   setOpenDrawer(false);
-                  setSectionTitle(item.name);
+                  setSectionTitle(<Text tid={item.name} />);
                 }}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.name} />
+                <ListItemText primary={<Text tid={item.name} />} />
               </ListItem>
             ))}
           </List>

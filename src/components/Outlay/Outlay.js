@@ -1,16 +1,19 @@
 import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import EmailIcon from "@material-ui/icons/Email";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  IconButton,
+} from "@material-ui/core";
+import { Close, Email } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import Text from "../UI/Text/Text";
 
 const useStyles = makeStyles({
   root: {
@@ -39,50 +42,50 @@ const Outlay = (props) => {
   let indicatorMonth = "";
   switch (date.getMonth()) {
     case 0:
-      indicatorMonth = "Январь";
+      indicatorMonth = <Text tid="january" />;
       break;
     case 1:
-      indicatorMonth = "Февраль";
+      indicatorMonth = <Text tid="february" />;
       break;
     case 2:
-      indicatorMonth = "Март";
+      indicatorMonth = <Text tid="march" />;
       break;
     case 3:
-      indicatorMonth = "Апрель";
+      indicatorMonth = <Text tid="april" />;
       break;
     case 4:
-      indicatorMonth = "Май";
+      indicatorMonth = <Text tid="may" />;
       break;
     case 5:
-      indicatorMonth = "Июнь";
+      indicatorMonth = <Text tid="june" />;
       break;
     case 6:
-      indicatorMonth = "Июль";
+      indicatorMonth = <Text tid="july" />;
       break;
     case 7:
-      indicatorMonth = "Август";
+      indicatorMonth = <Text tid="august" />;
       break;
     case 8:
-      indicatorMonth = "Сентябрь";
+      indicatorMonth = <Text tid="september" />;
       break;
     case 9:
-      indicatorMonth = "Октябрь";
+      indicatorMonth = <Text tid="october" />;
       break;
     case 10:
-      indicatorMonth = "Ноябрь";
+      indicatorMonth = <Text tid="november" />;
       break;
     case 11:
-      indicatorMonth = "Декабрь";
+      indicatorMonth = <Text tid="december" />;
       break;
     default:
-      indicatorMonth = "Не определен";
+      indicatorMonth = <Text tid="notDefined" />;
   }
 
   return (
     <TableContainer component={Paper} className={classes.root}>
       <IconButton
         className={classes.buttonSend}
-        aria-label="Отправить"
+        aria-label={<Text tid="send" />}
         component="span"
         color="primary"
         onClick={() => {
@@ -91,11 +94,11 @@ const Outlay = (props) => {
         disableRipple
         disableFocusRipple
       >
-        <EmailIcon />
+        <Email />
       </IconButton>
       <IconButton
         className={classes.buttonClose}
-        aria-label="Удалить"
+        aria-label={<Text tid="delete" />}
         component="span"
         color="secondary"
         onClick={() => {
@@ -104,7 +107,7 @@ const Outlay = (props) => {
         disableRipple
         disableFocusRipple
       >
-        <CloseIcon />
+        <Close />
       </IconButton>
       <Typography variant="h6" align="center">
         {indicatorMonth} {date.getFullYear()}
@@ -113,13 +116,19 @@ const Outlay = (props) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <b>Показатель</b>
+              <b>
+                <Text tid="outlayIndicator" />
+              </b>
             </TableCell>
             <TableCell align="center">
-              <b>Расход</b>
+              <b>
+                <Text tid="outlayCharge" />
+              </b>
             </TableCell>
             <TableCell align="center">
-              <b>Потребление</b>
+              <b>
+                <Text tid="outlayConsumption" />
+              </b>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -127,7 +136,7 @@ const Outlay = (props) => {
           {indicators.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                {row.name}
+                <Text tid={row.name} />
               </TableCell>
               <TableCell align="center">{row.intake}</TableCell>
               <TableCell align="center">{row.outlay}</TableCell>
@@ -135,18 +144,20 @@ const Outlay = (props) => {
           ))}
           <TableRow>
             <TableCell align="center" colSpan={3}>
-              <b>Расчет стоимости</b>
+              <b>
+                <Text tid="outlayCost" />
+              </b>
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row" colSpan={2}>
-              Водоснабжение
+              <Text tid="outlayWaterSupply" />
             </TableCell>
             <TableCell align="center">{costWaterSupply} ₽</TableCell>
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row" colSpan={2}>
-              Электроэнергия
+              <Text tid="outlayElectricity" />
             </TableCell>
             <TableCell align="center">{costElectricity} ₽</TableCell>
           </TableRow>

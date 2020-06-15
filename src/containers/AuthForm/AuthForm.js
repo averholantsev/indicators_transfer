@@ -13,6 +13,8 @@ import {
 } from "../../components/UI/AuthComponents/index";
 import { Typography, Link, Grid } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import LanguageSelector from "../../components/Languages/LanguageSelector";
+import Text from "../../components/UI/Text/Text";
 
 // Реализация классового компонента формы
 class AuthForm extends Component {
@@ -71,12 +73,12 @@ class AuthForm extends Component {
         email: {
           ...this.state.auth.email,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         password: {
           ...this.state.auth.password,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
       };
       this.setState({ auth: newAuthState });
@@ -97,69 +99,84 @@ class AuthForm extends Component {
     const { email, password } = this.state.auth;
 
     return (
-      <div className="auth_container">
-        <form>
-          <div className="lockIconContainer">
-            <div className="roundIcon">
-              <LockOutlinedIcon />
+      <div>
+        <div style={{ position: "absolute", top: "20px", right: "20px" }}>
+          <LanguageSelector theme="dark" />
+        </div>
+        <div className="auth_container">
+          <form>
+            <div className="lockIconContainer">
+              <div className="roundIcon">
+                <LockOutlinedIcon />
+              </div>
             </div>
-          </div>
-          <Typography className="authHeader" variant="h5" align="center">
-            Система коммунальных показателей
-          </Typography>
-          {this.props.errorMessage ? (
-            <AuthAlert severity="error">{this.props.errorMessage}</AuthAlert>
-          ) : null}
-          <AuthInput
-            id="email"
-            label="Почта"
-            name="email"
-            error={!email.valid && email.touched}
-            helperText={
-              !email.valid && email.touched ? email.errorMessage : null
-            }
-            onChange={(event) => this.inputHandler("email", event.target.value)}
-            value={email.value}
-          />
-          <AuthInputPassword
-            id="password"
-            label="Пароль"
-            name="password"
-            error={!password.valid && password.touched}
-            helperText={
-              !password.valid && password.touched ? password.errorMessage : null
-            }
-            onChange={(event) =>
-              this.inputHandler("password", event.target.value)
-            }
-            value={password.value}
-          />
-          <AuthButton
-            onClick={
-              this.state.authValid
-                ? () => this.formSenderHandler()
-                : () => this.checkFormValidity()
-            }
-          >
-            Войти в аккаунт
-          </AuthButton>
-          <Grid container spacing={1} direction="row">
-            <Grid item xs={6}>
-              <Typography>
-                <Link component={NavLink} to="/forgot-password" variant="body2">
-                  Забыли пароль?
-                </Link>
-              </Typography>
+            <Typography className="authHeader" variant="h5" align="center">
+              <Text tid="systemName" />
+            </Typography>
+            {this.props.errorMessage ? (
+              <AuthAlert severity="error">{this.props.errorMessage}</AuthAlert>
+            ) : null}
+            <AuthInput
+              id="email"
+              label={<Text tid="authEmail" />}
+              name="email"
+              error={!email.valid && email.touched}
+              helperText={
+                !email.valid && email.touched ? (
+                  <Text tid={email.errorMessage} />
+                ) : null
+              }
+              onChange={(event) =>
+                this.inputHandler("email", event.target.value)
+              }
+              value={email.value}
+            />
+            <AuthInputPassword
+              id="password"
+              label={<Text tid="authPassword" />}
+              name="password"
+              error={!password.valid && password.touched}
+              helperText={
+                !password.valid && password.touched ? (
+                  <Text tid={password.errorMessage} />
+                ) : null
+              }
+              onChange={(event) =>
+                this.inputHandler("password", event.target.value)
+              }
+              value={password.value}
+            />
+            <AuthButton
+              onClick={
+                this.state.authValid
+                  ? () => this.formSenderHandler()
+                  : () => this.checkFormValidity()
+              }
+            >
+              <Text tid="authSignIn" />
+            </AuthButton>
+            <Grid container spacing={1} direction="row">
+              <Grid item xs={6}>
+                <Typography>
+                  <Link
+                    component={NavLink}
+                    to="/forgot-password"
+                    variant="body2"
+                  >
+                    <Text tid="authForgotPassword" />
+                  </Link>
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography align="right">
+                  <Link component={NavLink} to="/registration" variant="body2">
+                    <Text tid="authSignUp" />
+                  </Link>
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Typography align="right">
-                <Link component={NavLink} to="/registration" variant="body2">
-                  Еще нет аккаунта? Регистрация
-                </Link>
-              </Typography>
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        </div>
       </div>
     );
   }

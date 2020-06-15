@@ -8,6 +8,8 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import RegistrationStepper from "../../components/Registration/RegistrationStepper";
 import Alert from "@material-ui/lab/Alert";
+import LanguageSelector from "../../components/Languages/LanguageSelector";
+import Text from "../../components/UI/Text/Text";
 
 class RegistrationForm extends Component {
   state = {
@@ -237,32 +239,32 @@ class RegistrationForm extends Component {
         firstName: {
           ...this.state.userDetails.firstName,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         lastName: {
           ...this.state.userDetails.lastName,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         userEmail: {
           ...this.state.userDetails.userEmail,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         password: {
           ...this.state.userDetails.password,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         accountantEmail: {
           ...this.state.userDetails.accountantEmail,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         address: {
           ...this.state.userDetails.address,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
       };
       this.setState({ userDetails: newUserDetails });
@@ -297,37 +299,37 @@ class RegistrationForm extends Component {
         prevIndicatorsDate: {
           ...this.state.prevIndicators.prevIndicatorsDate,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         electricityDay: {
           ...this.state.prevIndicators.electricityDay,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         electricityNight: {
           ...this.state.prevIndicators.electricityNight,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         kitchenColdWater: {
           ...this.state.prevIndicators.kitchenColdWater,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         kitchenHotWater: {
           ...this.state.prevIndicators.kitchenHotWater,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         bathroomColdWater: {
           ...this.state.prevIndicators.bathroomColdWater,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
         bathroomHotWater: {
           ...this.state.prevIndicators.bathroomHotWater,
           touched: true,
-          errorMessage: "Поле обязательно для заполнения",
+          errorMessage: "requiredField",
         },
       };
       this.setState({ prevIndicators: newPrevIndicators });
@@ -341,19 +343,33 @@ class RegistrationForm extends Component {
 
     return (
       <div>
-        <Typography
-          style={{ position: "absolute", top: "10px", right: "15px" }}
+        <div
+          style={{
+            display: "flex",
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            alignItems: "center",
+          }}
         >
-          <Link component={NavLink} to="/auth" variant="body2">
-            Войти
-          </Link>
-        </Typography>
+          <LanguageSelector theme="dark" />
+          <Typography>
+            <Link
+              component={NavLink}
+              to="/auth"
+              variant="body2"
+              style={{ fontSize: "14px" }}
+            >
+              <Text tid="authSignInShort" />
+            </Link>
+          </Typography>
+        </div>
         <Typography
           variant="h4"
           align="center"
           style={{ marginBottom: "10px" }}
         >
-          Регистрация
+          <Text tid="registration" />
         </Typography>
         {this.props.errorMessage ? (
           <Alert severity="error">{this.props.errorMessage}</Alert>
