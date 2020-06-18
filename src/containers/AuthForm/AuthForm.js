@@ -114,7 +114,9 @@ class AuthForm extends Component {
               <Text tid="systemName" />
             </Typography>
             {this.props.errorMessage ? (
-              <AuthAlert severity="error"><Text tid={this.props.errorMessage} /></AuthAlert>
+              <AuthAlert severity="error">
+                <Text tid={this.props.errorMessage} />
+              </AuthAlert>
             ) : null}
             <AuthInput
               id="email"
@@ -144,6 +146,13 @@ class AuthForm extends Component {
               onChange={(event) =>
                 this.inputHandler("password", event.target.value)
               }
+              onKeyUp={(event) => {
+                if (event.key === "Enter") {
+                  this.state.authValid
+                    ? this.formSenderHandler()
+                    : this.checkFormValidity(); 
+                }
+              }}
               value={password.value}
             />
             <AuthButton
