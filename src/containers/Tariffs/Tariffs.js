@@ -89,6 +89,7 @@ class Tariffs extends Component {
 
   deleteItemFromTariffs = () => {
     const token = localStorage.getItem("token");
+
     axios
       .delete(`/tariffs/${this.state.deleteTariffId}.json?auth=${token}`)
       .then((response) => {
@@ -116,6 +117,7 @@ class Tariffs extends Component {
       userId: oldData.userId,
     };
     console.log("Сформированные данные", newData);
+
     axios
       .patch(`/tariffs/${id}.json?auth=${token}`, newData)
       .then((response) => {
@@ -130,8 +132,8 @@ class Tariffs extends Component {
       });
   };
 
-  insertItemToTariffs = () => {
-    console.log("Сохраниение записи");
+  insertItemToTariffs = (index) => {
+    console.log("Сохраниение записи", index);
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const oldData = this.state.tariffs[0];
@@ -143,11 +145,20 @@ class Tariffs extends Component {
       userId: userId,
     };
     console.log("Сформированные данные", newData);
+
     axios
       .post(`/tariffs.json?auth=${token}`, newData)
       .then((response) => {
         console.log("Ответ с сервера: ", response.data);
-        this.setState({ addButtonDisabled: false });
+        let newTariffs = [...this.state.tariffs];
+
+        newTariffs[index] = {
+          ...this.state.tariffs[index],
+          id: response.data.name,
+          userId: userId,
+        };
+
+        this.setState({ addButtonDisabled: false, tariffs: newTariffs });
         this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
@@ -161,7 +172,7 @@ class Tariffs extends Component {
   handleDeleteDialogOpen = (id) => {
     if (typeof id !== "undefined") {
       this.setState({ deleteDialogOpen: true, deleteTariffId: id });
-    } else {      
+    } else {
       if (this.state.tariffs.length === 1) {
         this.setState({ error: "tariffErrorNotYetSend" });
       }
@@ -288,6 +299,7 @@ class Tariffs extends Component {
       tariffCards = this.state.tariffs.map((item, index) => (
         <TariffCard
           key={typeof item.id !== "undefined" ? item.id : index}
+          tarriffIndex={index}
           tariff={item}
           disabled={typeof item.id !== "undefined" ? true : false}
           handleDeleteDialogOpen={this.handleDeleteDialogOpen}

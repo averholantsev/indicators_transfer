@@ -92,7 +92,7 @@ const TariffCard = (props) => {
             if (id) {
               props.updateItemInTariffs(id);
             } else {
-              props.insertItemToTariffs();
+              props.insertItemToTariffs(props.tarriffIndex);
             }
           }}
           disableRipple
