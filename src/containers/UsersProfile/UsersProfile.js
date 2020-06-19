@@ -58,7 +58,7 @@ class UsersProfile extends Component {
       prevIndicatorsDate: {
         value: null,
         validation: {
-          isDate: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",
@@ -67,7 +67,7 @@ class UsersProfile extends Component {
       electricityDay: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",
@@ -76,7 +76,7 @@ class UsersProfile extends Component {
       electricityNight: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",
@@ -85,7 +85,7 @@ class UsersProfile extends Component {
       kitchenColdWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",
@@ -94,7 +94,7 @@ class UsersProfile extends Component {
       kitchenHotWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",
@@ -103,7 +103,7 @@ class UsersProfile extends Component {
       bathroomColdWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",
@@ -112,7 +112,7 @@ class UsersProfile extends Component {
       bathroomHotWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: true,
         errorMessage: "",

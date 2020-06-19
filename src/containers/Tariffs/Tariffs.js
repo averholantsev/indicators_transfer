@@ -48,7 +48,7 @@ class Tariffs extends Component {
             tariff.cost = {
               value: response.data[item].cost,
               validation: {
-                isNumber: true,
+                required: true,
               },
               valid: true,
               errorMessage: "",
@@ -57,7 +57,7 @@ class Tariffs extends Component {
             tariff.dateStart = {
               value: response.data[item].dateStart,
               validation: {
-                isDate: true,
+                required: true,
               },
               valid: true,
               errorMessage: "",
@@ -66,7 +66,7 @@ class Tariffs extends Component {
             tariff.dateEnd = {
               value: response.data[item].dateEnd,
               validation: {
-                isDate: true,
+                required: true,
               },
               valid: true,
               errorMessage: "",
@@ -207,7 +207,7 @@ class Tariffs extends Component {
       cost: {
         value: 0,
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -216,7 +216,7 @@ class Tariffs extends Component {
       dateStart: {
         value: null,
         validation: {
-          isDate: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -225,7 +225,7 @@ class Tariffs extends Component {
       dateEnd: {
         value: null,
         validation: {
-          isDate: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",

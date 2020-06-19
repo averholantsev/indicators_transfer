@@ -32,6 +32,7 @@ class AuthForm extends Component {
       password: {
         value: "",
         validation: {
+          required: true,
           isPassord: true,
         },
         valid: false,

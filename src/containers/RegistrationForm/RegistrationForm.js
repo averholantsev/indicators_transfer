@@ -43,6 +43,7 @@ class RegistrationForm extends Component {
       password: {
         value: "",
         validation: {
+          required: true,
           isPassord: true,
         },
         valid: false,
@@ -71,7 +72,7 @@ class RegistrationForm extends Component {
       prevIndicatorsDate: {
         value: null,
         validation: {
-          isDate: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -80,7 +81,7 @@ class RegistrationForm extends Component {
       electricityDay: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -89,7 +90,7 @@ class RegistrationForm extends Component {
       electricityNight: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -98,7 +99,7 @@ class RegistrationForm extends Component {
       kitchenColdWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -107,7 +108,7 @@ class RegistrationForm extends Component {
       kitchenHotWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -116,7 +117,7 @@ class RegistrationForm extends Component {
       bathroomColdWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -125,7 +126,7 @@ class RegistrationForm extends Component {
       bathroomHotWater: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",

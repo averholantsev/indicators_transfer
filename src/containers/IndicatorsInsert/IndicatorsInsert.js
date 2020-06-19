@@ -22,7 +22,7 @@ class IndicatorsInsert extends Component {
       electricityDay: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -31,7 +31,7 @@ class IndicatorsInsert extends Component {
       electricityNight: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -40,7 +40,7 @@ class IndicatorsInsert extends Component {
       coldWaterKitchen: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -49,7 +49,7 @@ class IndicatorsInsert extends Component {
       coldWaterBathroom: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -58,7 +58,7 @@ class IndicatorsInsert extends Component {
       hotWaterKitchen: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
@@ -67,7 +67,7 @@ class IndicatorsInsert extends Component {
       hotWaterBathroom: {
         value: "",
         validation: {
-          isNumber: true,
+          required: true,
         },
         valid: false,
         errorMessage: "",
