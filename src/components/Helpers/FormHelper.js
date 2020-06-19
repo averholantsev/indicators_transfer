@@ -1,5 +1,7 @@
 const isEmpty = (value) => {
-  return value.trim() === "";
+  if (typeof value === "string") return value.trim() === "";
+  if (typeof value === "number") return true;
+  if (typeof value === "object") return value.length === 0;
 };
 
 export const checkFieldValidity = (value, rules) => {
