@@ -14,7 +14,7 @@ export const checkFieldValidity = (value, rules) => {
 
   if (rules.required) {
     validation.isValid = !isEmpty(value) && validation.isValid;
-    validation.errorMessage = !validation.isValid ? "requiredField" : "";
+    validation.errorMessage = !validation.isValid ? "requiredField" : null;
     if (validation.errorMessage === "requiredField") return validation;
   }
 
@@ -22,17 +22,17 @@ export const checkFieldValidity = (value, rules) => {
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (isEmpty(value) && validation.isValid) validation.isValid = true;
     else validation.isValid = pattern.test(value) && validation.isValid;
-    validation.errorMessage = !validation.isValid ? "unvalidEmail" : "";
+    validation.errorMessage = !validation.isValid ? "unvalidEmail" : null;
   }
 
   if (rules.isDate) {
     validation.isValid = value !== null && validation.isValid;
-    validation.errorMessage = !validation.isValid ? "requiredField" : "";
+    validation.errorMessage = !validation.isValid ? "requiredField" : null;
   }
 
   if (rules.isNumber) {
     validation.isValid = value !== 0 && validation.isValid;
-    validation.errorMessage = !validation.isValid ? "requiredField" : "";
+    validation.errorMessage = !validation.isValid ? "requiredField" : null;
   }
 
   if (rules.isPassord) {
@@ -40,7 +40,7 @@ export const checkFieldValidity = (value, rules) => {
     if (value.length < 6 && value.length > 0)
       validation.errorMessage = "unvalidPassword";
     else if (value.length === 0) validation.errorMessage = "requiredField";
-    else validation.errorMessage = "";
+    else validation.errorMessage = null;
   }
 
   return validation;
