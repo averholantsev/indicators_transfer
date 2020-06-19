@@ -36,6 +36,7 @@ class UsersProfile extends Component {
       accountantEmail: {
         value: "",
         validation: {
+          required:true,
           isEmail: true,
         },
         valid: true,

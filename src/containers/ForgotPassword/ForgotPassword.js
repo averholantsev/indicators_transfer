@@ -19,6 +19,7 @@ export class ForgotPassword extends Component {
     email: {
       value: "",
       validation: {
+        required:true,
         isEmail: true,
       },
       valid: false,

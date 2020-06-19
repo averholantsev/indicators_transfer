@@ -23,6 +23,7 @@ class AuthForm extends Component {
       email: {
         value: "",
         validation: {
+          required:true,
           isEmail: true,
         },
         valid: false,

@@ -34,6 +34,7 @@ class RegistrationForm extends Component {
       userEmail: {
         value: "",
         validation: {
+          required:true,
           isEmail: true,
         },
         valid: false,
@@ -50,6 +51,7 @@ class RegistrationForm extends Component {
       accountantEmail: {
         value: "",
         validation: {
+          required:true,
           isEmail: true,
         },
         valid: false,
