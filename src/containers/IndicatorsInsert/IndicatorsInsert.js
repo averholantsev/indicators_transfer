@@ -205,7 +205,7 @@ class IndicatorsInsert extends Component {
     let templateParams = {
       recipient: this.props.userDetails.accountantEmail,
       address: this.props.userDetails.address,
-      month: MONTHS_LIST[this.state.monthYear.month].text,
+      month: MONTHS_LIST[this.state.monthYear.month].rusName,
       year: this.state.monthYear.year,
       electricityDay: this.state.indicators.electricityDay.value,
       electricityNight: this.state.indicators.electricityNight.value,
