@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { withSnackbar } from "notistack";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
-import { extractUser, updateUser } from "../../api/users";
+import { updateUser } from "../../api/users";
 import UserCard from "../../components/UserCard/UserCard";
 import Loader from "../../components/UI/Loader/Loader";
 import CardBody from "../../components/UI/CardBody/CardBody";
@@ -120,87 +121,74 @@ class UsersProfile extends Component {
       },
     },
     prevIndicatorsValid: false,
-    userId: null,
   };
 
-  componentDidMount() {
-    this.getUserDetails();
+  UNSAFE_componentWillReceiveProps(newProps) {    
+    if (this.props.userDetails !== newProps.userDetails) {
+      this.updateState(newProps);
+    }
   }
 
-  getUserDetails = () => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    console.log("Получение данных по UserId: ", userId);
+  updateState = (newProps) => {
+    let newUserDetails = {
+      ...this.state.userDetails,
+      firstName: {
+        ...this.state.userDetails.firstName,
+        value: newProps.userDetails.firstName,
+      },
+      lastName: {
+        ...this.state.userDetails.lastName,
+        value: newProps.userDetails.lastName,
+      },
+      userEmail: {
+        ...this.state.userDetails.userEmail,
+        value: newProps.userDetails.userEmail,
+      },
+      accountantEmail: {
+        ...this.state.userDetails.accountantEmail,
+        value: newProps.userDetails.accountantEmail,
+      },
+      address: {
+        ...this.state.userDetails.address,
+        value: newProps.userDetails.address,
+      },
+    };
+    let prevIndicators = {
+      ...this.state.prevIndicators,
+      prevIndicatorsDate: {
+        ...this.state.prevIndicators.prevIndicatorsDate,
+        value: newProps.prevIndicators.prevIndicatorsDate,
+      },
+      electricityDay: {
+        ...this.state.prevIndicators.electricityDay,
+        value: newProps.prevIndicators.electricity.day,
+      },
+      electricityNight: {
+        ...this.state.prevIndicators.electricityNight,
+        value: newProps.prevIndicators.electricity.night,
+      },
+      kitchenColdWater: {
+        ...this.state.prevIndicators.kitchenColdWater,
+        value: newProps.prevIndicators.kitchen.coldWater,
+      },
+      kitchenHotWater: {
+        ...this.state.prevIndicators.kitchenHotWater,
+        value: newProps.prevIndicators.kitchen.hotWater,
+      },
+      bathroomColdWater: {
+        ...this.state.prevIndicators.bathroomColdWater,
+        value: newProps.prevIndicators.bathroom.coldWater,
+      },
+      bathroomHotWater: {
+        ...this.state.prevIndicators.bathroomHotWater,
+        value: newProps.prevIndicators.bathroom.hotWater,
+      },
+    };
 
-    extractUser(token, userId)
-      .then((response) => {
-        console.log("extractUser", response.data);
-        let dataFromDB = response.data[Object.keys(response.data)];
-        let newUserDetails = {
-          ...this.state.userDetails,
-          firstName: {
-            ...this.state.userDetails.firstName,
-            value: dataFromDB.userDetails.firstName,
-          },
-          lastName: {
-            ...this.state.userDetails.lastName,
-            value: dataFromDB.userDetails.lastName,
-          },
-          userEmail: {
-            ...this.state.userDetails.userEmail,
-            value: dataFromDB.userDetails.userEmail,
-          },
-          accountantEmail: {
-            ...this.state.userDetails.accountantEmail,
-            value: dataFromDB.userDetails.accountantEmail,
-          },
-          address: {
-            ...this.state.userDetails.address,
-            value: dataFromDB.userDetails.address,
-          },
-        };
-        let prevIndicators = {
-          ...this.state.prevIndicators,
-          prevIndicatorsDate: {
-            ...this.state.prevIndicators.prevIndicatorsDate,
-            value: dataFromDB.prevIndicators.prevIndicatorsDate,
-          },
-          electricityDay: {
-            ...this.state.prevIndicators.electricityDay,
-            value: dataFromDB.prevIndicators.electricity.day,
-          },
-          electricityNight: {
-            ...this.state.prevIndicators.electricityNight,
-            value: dataFromDB.prevIndicators.electricity.night,
-          },
-          kitchenColdWater: {
-            ...this.state.prevIndicators.kitchenColdWater,
-            value: dataFromDB.prevIndicators.kitchen.coldWater,
-          },
-          kitchenHotWater: {
-            ...this.state.prevIndicators.kitchenHotWater,
-            value: dataFromDB.prevIndicators.kitchen.hotWater,
-          },
-          bathroomColdWater: {
-            ...this.state.prevIndicators.bathroomColdWater,
-            value: dataFromDB.prevIndicators.bathroom.coldWater,
-          },
-          bathroomHotWater: {
-            ...this.state.prevIndicators.bathroomHotWater,
-            value: dataFromDB.prevIndicators.bathroom.hotWater,
-          },
-        };
-
-        this.setState({
-          userDetails: newUserDetails,
-          prevIndicators: prevIndicators,
-          id: Object.keys(response.data)[0],
-          userId: dataFromDB.userId,
-        });
-      })
-      .catch((error) => {
-        console.log("[ERROR] extractUser", error);
-      });
+    this.setState({
+      userDetails: newUserDetails,
+      prevIndicators: prevIndicators,
+    });
   };
 
   updateUserDetails = () => {
@@ -337,7 +325,7 @@ class UsersProfile extends Component {
         >
           <Text tid="userProfile" />
         </Typography>
-        {this.state.userId === null ? (
+        {this.props.userIdDb === null ? (
           <Loader />
         ) : (
           <CardBody>
@@ -356,4 +344,12 @@ class UsersProfile extends Component {
   }
 }
 
-export default withSnackbar(UsersProfile);
+const mapStateToProps = (state) => {
+  return {
+    userDetails: state.userDetails,
+    prevIndicators: state.prevIndicators,
+    userIdDb: state.userIdDb,
+  };
+};
+
+export default connect(mapStateToProps)(withSnackbar(UsersProfile));

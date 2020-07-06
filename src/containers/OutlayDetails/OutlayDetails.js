@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import emailjs from "emailjs-com";
-import { extractUser } from "../../api/users";
 import { extractTariff } from "../../api/tariffs";
 import { extractIndicators, deleteIndicators } from "../../api/indicators";
 
@@ -29,27 +28,27 @@ class OutlayDetails extends Component {
     sendIndicatorId: null,
   };
 
-  componentDidMount() {
-    this.getDataFromFirebase();
+  UNSAFE_componentWillReceiveProps(newProps) {
+    if (this.props.userDetails !== newProps.userDetails) {
+      this.getDataFromFirebase(newProps);
+    }
   }
 
   getDataFromFirebase = () => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
-    const promise1 = extractUser(token, userId);
-    const promise2 = extractTariff(token, userId);
-    const promise3 = extractIndicators(token, userId);
+    const promise1 = extractTariff(token, userId);
+    const promise2 = extractIndicators(token, userId);
 
-    Promise.all([promise1, promise2, promise3])
+    Promise.all([promise1, promise2])
       .then((values) => {
-        console.log("extractUser", values[0]);
-        console.log("extractTariff", values[1]);
-        console.log("extractIndicators", values[2]);
+        console.log("extractTariff", values[0]);
+        console.log("extractIndicators", values[1]);
 
-        const prevIndicators = this.getUserDetails(values[0].data);
-        const tariffs = this.getListOfTariffs(values[1].data);
-        let indicatorsList = this.getListOfIndicators(values[2].data);
+        const prevIndicators = this.getUserDetails(this.props.prevIndicators);
+        const tariffs = this.getListOfTariffs(values[0].data);
+        let indicatorsList = this.getListOfIndicators(values[1].data);
 
         indicatorsList = this.countOutlay(indicatorsList, prevIndicators);
 
@@ -75,45 +74,40 @@ class OutlayDetails extends Component {
       });
   };
 
-  getUserDetails = (data) => {
-    const prevIndicatorsData = data[Object.keys(data)].prevIndicators;
-    let prevIndicators = [
+  getUserDetails = (prevIndicators) => {
+    return [
       {
         id: "day_electricity",
         name: "outlayElectricityDay",
-        intake: prevIndicatorsData.electricity.day,
+        intake: prevIndicators.electricity.day,
       },
       {
         id: "night_electricity",
         name: "outlayElectricityNight",
-        intake: prevIndicatorsData.electricity.night,
+        intake: prevIndicators.electricity.night,
       },
       {
         id: "cold_water",
         name: "outlayColdWater",
         intake:
-          prevIndicatorsData.bathroom.coldWater +
-          prevIndicatorsData.kitchen.coldWater,
+          prevIndicators.bathroom.coldWater + prevIndicators.kitchen.coldWater,
       },
       {
         id: "hot_water",
         name: "outlayHotWater",
         intake:
-          prevIndicatorsData.bathroom.hotWater +
-          prevIndicatorsData.kitchen.hotWater,
+          prevIndicators.bathroom.hotWater + prevIndicators.kitchen.hotWater,
       },
       {
         id: "disposal_water",
         name: "outlayDisposalWater",
         intake:
-          prevIndicatorsData.bathroom.coldWater +
-          prevIndicatorsData.kitchen.coldWater +
-          prevIndicatorsData.bathroom.hotWater +
-          prevIndicatorsData.kitchen.hotWater,
+          prevIndicators.bathroom.coldWater +
+          prevIndicators.kitchen.coldWater +
+          prevIndicators.bathroom.hotWater +
+          prevIndicators.kitchen.hotWater,
       },
     ];
-
-    return prevIndicators;
   };
 
   getListOfTariffs = (data) => {
@@ -520,7 +514,8 @@ class OutlayDetails extends Component {
 const mapStateToProps = (state) => {
   return {
     userDetails: state.userDetails,
+    prevIndicators: state.prevIndicators,
   };
 };
 
-export default withSnackbar(connect(mapStateToProps)(OutlayDetails));
+export default connect(mapStateToProps)(withSnackbar(OutlayDetails));
