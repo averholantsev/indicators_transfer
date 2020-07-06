@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "../../axios-main";
-import CONFIG from "../../configuration.json";
+import { sendOobCode } from "../../api/auth";
 
 import "./ForgotPassword.css";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
@@ -19,7 +18,7 @@ export class ForgotPassword extends Component {
     email: {
       value: "",
       validation: {
-        required:true,
+        required: true,
         isEmail: true,
       },
       valid: false,
@@ -43,22 +42,17 @@ export class ForgotPassword extends Component {
   };
 
   sendPasswordRecovery = () => {
-    console.log("Пароль восстановлен");
-    const body = {
+    const requestData = {
       requestType: "PASSWORD_RESET",
       email: this.state.email.value,
     };
-    axios
-      .post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${CONFIG.AUTH_API_KEY}`,
-        body
-      )
+    sendOobCode(requestData)
       .then((response) => {
-        console.log(response);
+        console.log("sendOobCode", response);
         this.setState({ emailSend: true });
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log("[ERROR] sendOobCode", error);
         if (error.response.data.error.message === "EMAIL_NOT_FOUND") {
           this.setState({
             errorMessage: "emailNotReg",

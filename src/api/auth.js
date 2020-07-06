@@ -7,6 +7,11 @@ export const signInWithEmail = (authData) => {
 };
 
 export const signUp = (authData) => {
-  let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${CONFIG.AUTH_API_KEY}`;
+  const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${CONFIG.AUTH_API_KEY}`;
   return axios.post(url, authData);
+};
+
+export const sendOobCode = (requestData) => {
+  const url = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${CONFIG.AUTH_API_KEY}`;
+  return axios.post(url, requestData);
 };
