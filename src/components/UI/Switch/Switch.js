@@ -3,7 +3,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-export default function SwitchLabels(props) {
+const SwitchLabels = (props) => {
   return (
     <FormGroup row>
       <FormControlLabel
@@ -19,4 +19,6 @@ export default function SwitchLabels(props) {
       />
     </FormGroup>
   );
-}
+};
+
+export default SwitchLabels;

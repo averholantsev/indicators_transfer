@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import Text from "../Text/Text";
 
-export default function DialogSimple(props) {
+const DialogSimple = (props) => {
   return (
     <Dialog
       open={props.open}
@@ -18,7 +18,9 @@ export default function DialogSimple(props) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title"><Text tid={props.dialogTitle} /></DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        <Text tid={props.dialogTitle} />
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           <Text tid={props.dialogContent} />
@@ -34,4 +36,5 @@ export default function DialogSimple(props) {
       </DialogActions>
     </Dialog>
   );
-}
+};
+export default DialogSimple;
