@@ -82,7 +82,7 @@ const Outlay = (props) => {
   }
 
   return (
-    <TableContainer component={Paper} className={classes.root}>
+    <Paper className={classes.root}>
       <IconButton
         className={classes.buttonSend}
         aria-label={<Text tid="send" />}
@@ -112,58 +112,60 @@ const Outlay = (props) => {
       <Typography variant="h6" align="center">
         {indicatorMonth} {date.getFullYear()}
       </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <b>
-                <Text tid="outlayIndicator" />
-              </b>
-            </TableCell>
-            <TableCell align="center">
-              <b>
-                <Text tid="outlayCharge" />
-              </b>
-            </TableCell>
-            <TableCell align="center">
-              <b>
-                <Text tid="outlayConsumption" />
-              </b>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {indicators.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell component="th" scope="row">
-                <Text tid={row.name} />
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <b>
+                  <Text tid="outlayIndicator" />
+                </b>
               </TableCell>
-              <TableCell align="center">{row.intake}</TableCell>
-              <TableCell align="center">{row.outlay}</TableCell>
+              <TableCell align="center">
+                <b>
+                  <Text tid="outlayCharge" />
+                </b>
+              </TableCell>
+              <TableCell align="center">
+                <b>
+                  <Text tid="outlayConsumption" />
+                </b>
+              </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell align="center" colSpan={3}>
-              <b>
-                <Text tid="outlayCost" />
-              </b>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell component="th" scope="row" colSpan={2}>
-              <Text tid="outlayWaterSupply" />
-            </TableCell>
-            <TableCell align="center">{costWaterSupply} ₽</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell component="th" scope="row" colSpan={2}>
-              <Text tid="outlayElectricity" />
-            </TableCell>
-            <TableCell align="center">{costElectricity} ₽</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {indicators.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell component="th" scope="row">
+                  <Text tid={row.name} />
+                </TableCell>
+                <TableCell align="center">{row.intake}</TableCell>
+                <TableCell align="center">{row.outlay}</TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell align="center" colSpan={3}>
+                <b>
+                  <Text tid="outlayCost" />
+                </b>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" colSpan={2}>
+                <Text tid="outlayWaterSupply" />
+              </TableCell>
+              <TableCell align="center">{costWaterSupply} ₽</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row" colSpan={2}>
+                <Text tid="outlayElectricity" />
+              </TableCell>
+              <TableCell align="center">{costElectricity} ₽</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 
