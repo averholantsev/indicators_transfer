@@ -96,7 +96,7 @@ class Tariffs extends Component {
 
     daleteTariff(this.state.deleteTariffId, token)
       .then((response) => {
-        console.log("daleteTariff", response.data);
+        console.log("daleteTariff", response);
         this.setState({ deleteTariffId: null });
         this.props.enqueueSnackbar(<Text tid="objectDeleted" />, {
           variant: "info",
@@ -112,7 +112,7 @@ class Tariffs extends Component {
     const token = localStorage.getItem("token");
     const oldData = this.state.tariffs.find((item) => item.id === id);
     const tariffData = {
-      cost: +oldData.cost.value,
+      cost: Number(oldData.cost.value.slice(2)),
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
@@ -121,7 +121,7 @@ class Tariffs extends Component {
 
     updateTariff(id, token, tariffData)
       .then((response) => {
-        console.log("updateTariff", response.data);
+        console.log("updateTariff", response);
         this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
@@ -135,18 +135,18 @@ class Tariffs extends Component {
   insertItemToTariffs = (index) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-    const oldData = this.state.tariffs[0];
+    const oldData = this.state.tariffs[index];
     const tariffData = {
-      cost: oldData.cost.value,
+      cost: Number(oldData.cost.value.slice(2)),
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
       userId: userId,
     };
-
+    
     insertTariff(token, tariffData)
       .then((response) => {
-        console.log("insertTariff", response.data);
+        console.log("insertTariff", response);
         let newTariffs = [...this.state.tariffs];
 
         newTariffs[index] = {
