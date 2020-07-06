@@ -2,8 +2,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import axios from "../../axios-main";
 import emailjs from "emailjs-com";
+import { insertIndicators } from "../../api/indicators";
 
 import "./IndicatorsInsert.css";
 import * as CONFIG from "../../configuration.json";
@@ -237,7 +237,7 @@ class IndicatorsInsert extends Component {
       Date.UTC(this.state.monthYear.year, this.state.monthYear.month, 1, 5)
     ).setUTCHours(0, 0, 0, 0);
 
-    const indicators = {
+    const indicatorsData = {
       electricity: {
         day: +this.state.indicators.electricityDay.value,
         night: +this.state.indicators.electricityNight.value,
@@ -258,16 +258,15 @@ class IndicatorsInsert extends Component {
     };
     const token = localStorage.getItem("token");
 
-    axios
-      .post(`/indicators.json?auth=${token}`, indicators)
+    insertIndicators(token, indicatorsData)
       .then((response) => {
-        console.log(response);
+        console.log("insertIndicators", response);
         this.setState({ modalOpen: false });
         if (this.state.sendDataToAccountant) this.sendEmailHandler();
         this.props.history.push("/outlay");
       })
       .catch((error) => {
-        console.log(error);
+        console.log("[ERROR] insertIndicators", error);
       });
   };
 

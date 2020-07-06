@@ -1,7 +1,7 @@
 import axios from "../axios-main";
 
-export const insertUser = (idToken, userData) => {
-  return axios.post(`/users.json?auth=${idToken}`, userData);
+export const insertUser = (token, userData) => {
+  return axios.post(`/users.json?auth=${token}`, userData);
 };
 
 export const extractUser = (token, userId) => {

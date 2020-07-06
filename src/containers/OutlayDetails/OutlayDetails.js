@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import axios from "../../axios-main";
 import { connect } from "react-redux";
 import emailjs from "emailjs-com";
+import { extractUser } from "../../api/users";
+import { extractTariff } from "../../api/tariffs";
+import { extractIndicators, deleteIndicators } from "../../api/indicators";
 
 import { withSnackbar } from "notistack";
 import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
@@ -35,17 +37,15 @@ class OutlayDetails extends Component {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
-    const url_1 = `/users.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
-    const url_2 = `/tariffs.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
-    const url_3 = `/indicators.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
-
-    const promise1 = axios.get(url_1);
-    const promise2 = axios.get(url_2);
-    const promise3 = axios.get(url_3);
+    const promise1 = extractUser(token, userId);
+    const promise2 = extractTariff(token, userId);
+    const promise3 = extractIndicators(token, userId);
 
     Promise.all([promise1, promise2, promise3])
       .then((values) => {
-        console.log("Текущие расходы | запрос данных: ", values);
+        console.log("extractUser", values[0]);
+        console.log("extractTariff", values[1]);
+        console.log("extractIndicators", values[2]);
 
         const prevIndicators = this.getUserDetails(values[0].data);
         const tariffs = this.getListOfTariffs(values[1].data);
@@ -218,10 +218,9 @@ class OutlayDetails extends Component {
 
   deleteItemFromIndicators = () => {
     const token = localStorage.getItem("token");
-    axios
-      .delete(`/indicators/${this.state.deleteIndicatorId}.json?auth=${token}`)
+    deleteIndicators(this.state.deleteIndicatorId, token)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("deleteIndicators", response.data);
         this.setState({ deleteIndicatorId: null });
         this.props.enqueueSnackbar(<Text tid="objectDeleted" />, {
           variant: "info",
@@ -229,7 +228,7 @@ class OutlayDetails extends Component {
         });
       })
       .catch((error) => {
-        console.log("Ошибка: ", error);
+        console.log("[ERROR] deleteIndicators", error);
       });
   };
 

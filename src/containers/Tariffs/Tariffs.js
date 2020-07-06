@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import axios from "../../axios-main";
+import {
+  extractTariff,
+  insertTariff,
+  updateTariff,
+  daleteTariff,
+} from "../../api/tariffs";
 
 import { withSnackbar } from "notistack";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
@@ -28,10 +33,9 @@ class Tariffs extends Component {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
-    axios
-      .get(`/tariffs.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`)
+    extractTariff(token, userId)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("extractTariff", response.data);
 
         if (Object.keys(response.data).length !== 0) {
           let tariffs = Object.keys(response.data).map((item) => {
@@ -83,17 +87,16 @@ class Tariffs extends Component {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log("[ERROR] extractTariff", error);
       });
   };
 
   deleteItemFromTariffs = () => {
     const token = localStorage.getItem("token");
 
-    axios
-      .delete(`/tariffs/${this.state.deleteTariffId}.json?auth=${token}`)
+    daleteTariff(this.state.deleteTariffId, token)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("daleteTariff", response.data);
         this.setState({ deleteTariffId: null });
         this.props.enqueueSnackbar(<Text tid="objectDeleted" />, {
           variant: "info",
@@ -101,55 +104,49 @@ class Tariffs extends Component {
         });
       })
       .catch((error) => {
-        console.log("Ошибка: ", error);
+        console.log("[ERROR] daleteTariff", error);
       });
   };
 
   updateItemInTariffs = (id) => {
-    console.log("Обновление записи", id);
     const token = localStorage.getItem("token");
     const oldData = this.state.tariffs.find((item) => item.id === id);
-    const newData = {
+    const tariffData = {
       cost: +oldData.cost.value,
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
       userId: oldData.userId,
     };
-    console.log("Сформированные данные", newData);
 
-    axios
-      .patch(`/tariffs/${id}.json?auth=${token}`, newData)
+    updateTariff(id, token, tariffData)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("updateTariff", response.data);
         this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
         });
       })
       .catch((error) => {
-        console.log("Ошибка: ", error);
+        console.log("[ERROR] updateTariff", error);
       });
   };
 
   insertItemToTariffs = (index) => {
-    console.log("Сохраниение записи", index);
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const oldData = this.state.tariffs[0];
-    const newData = {
+    const tariffData = {
       cost: oldData.cost.value,
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
       userId: userId,
     };
-    console.log("Сформированные данные", newData);
 
-    axios
-      .post(`/tariffs.json?auth=${token}`, newData)
+    insertTariff(token, tariffData)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("insertTariff", response.data);
         let newTariffs = [...this.state.tariffs];
 
         newTariffs[index] = {
@@ -165,7 +162,7 @@ class Tariffs extends Component {
         });
       })
       .catch((error) => {
-        console.log("Ошибка: ", error);
+        console.log("[ERROR] insertTariff", error);
       });
   };
 
