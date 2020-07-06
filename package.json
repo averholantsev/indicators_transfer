@@ -16,7 +16,6 @@
     "axios": "^0.19.2",
     "date-fns": "^2.14.0",
     "emailjs-com": "^2.4.1",
-    "json-loader": "^0.5.7",
     "notistack": "^0.9.16",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
