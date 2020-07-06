@@ -6,6 +6,7 @@ const NumberTextField = (props) => {
   return (
     <NumberFormat
       {...props}
+      type="tel"
       style={{ width: "100%" }}
       thousandSeparator={" "}
       decimalSeparator="."

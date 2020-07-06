@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   rootLight: {
     paddingTop: "1px",
-    marginRight: "15px",
+    marginRight: "5px",
     "& .MuiInput-underline:before": {
       display: "none",
     },
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
   rootDark: {
     paddingTop: "1px",
-    marginRight: "15px",
+    marginRight: "5px",
     "& .MuiInput-underline:before": {
       display: "none",
     },
