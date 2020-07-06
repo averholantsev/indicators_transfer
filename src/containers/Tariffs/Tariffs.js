@@ -110,7 +110,7 @@ class Tariffs extends Component {
     const token = localStorage.getItem("token");
     const oldData = this.state.tariffs.find((item) => item.id === id);
     const newData = {
-      cost: oldData.cost.value,
+      cost: +oldData.cost.value,
       dateEnd: oldData.dateEnd.value,
       dateStart: oldData.dateStart.value,
       name: oldData.name.value,
@@ -205,7 +205,7 @@ class Tariffs extends Component {
         touched: false,
       },
       cost: {
-        value: 0,
+        value: "",
         validation: {
           required: true,
         },

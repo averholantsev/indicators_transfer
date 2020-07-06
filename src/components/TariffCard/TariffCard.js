@@ -15,7 +15,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+import NumberTextField from "../UI/NumberTextField/NumberTextField";
 import { Close, Edit, Save } from "@material-ui/icons";
 import Text from "../UI/Text/Text";
 
@@ -157,16 +157,13 @@ const TariffCard = (props) => {
             </FormControl>
           </Grid>
           <Grid item xs={6} className={classes.row}>
-            <CurrencyTextField
-              className={classes.textField}
+            <NumberTextField
               label={<Text tid="tariffCost" />}
-              currencySymbol="₽"
-              value={cost.value}
-              minimumValue="0"
-              maximumValue="5000"
+              prefix="₽ "
               disabled={disabled}
-              onChange={(event, value) =>
-                props.updateTariffInState(id, "cost", value)
+              value={cost.value}
+              onChange={(event) =>
+                props.updateTariffInState(id, "cost", event.target.value)
               }
               error={!cost.valid && cost.touched}
               helperText={
