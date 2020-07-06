@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import axios from "../../axios-main";
-import CONFIG from "../../configuration.json";
+import { signInWithEmail, signUp } from "../../api/auth";
+import { insertUser, extractUser } from "../../api/users";
 
 export const authStart = () => {
   return {
@@ -36,12 +36,9 @@ export const auth = (email, password) => {
       returnSecureToken: true,
     };
 
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${CONFIG.AUTH_API_KEY}`;
-
-    axios
-      .post(url, authData)
+    signInWithEmail(authData)
       .then((response) => {
-        console.log(response);
+        console.log("auth", response);
         const expirationDate = new Date(
           new Date().getTime() + response.data.expiresIn * 1000
         );
@@ -70,12 +67,9 @@ export const registration = (email, password, userFormData) => {
       returnSecureToken: true,
     };
 
-    let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${CONFIG.AUTH_API_KEY}`;
-
-    axios
-      .post(url, authData)
+    signUp(authData)
       .then((response) => {
-        console.log(response);
+        console.log("registration", response);
         const expirationDate = new Date(
           new Date().getTime() + response.data.expiresIn * 1000
         );
@@ -88,17 +82,17 @@ export const registration = (email, password, userFormData) => {
         dispatch(checkAuthTimeout(response.data.expiresIn));
 
         userFormData["userId"] = response.data.localId;
-        axios
-          .post(`/users.json?auth=${response.data.idToken}`, userFormData)
+
+        insertUser(response.data.idToken, userFormData)
           .then((response) => {
-            console.log(response);
+            console.log("registration insertUser", response);
           })
           .catch((error) => {
-            console.log(error);
+            console.log("[ERROR] registration insertUser", error);
           });
       })
       .catch((error) => {
-        console.log(error);
+        console.log("[ERROR] registration", error);
         dispatch(authFail(error.response.data.error));
       });
   };
@@ -156,10 +150,9 @@ export const loadUserData = () => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-    axios
-      .get(`/users.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`)
+    extractUser(token, userId)
       .then((response) => {
-        console.log(response);
+        console.log("extractUser", response);
         let dataFromDB = response.data[Object.keys(response.data)];
 
         dispatch(
@@ -171,7 +164,7 @@ export const loadUserData = () => {
         );
       })
       .catch((error) => {
-        console.log(error);
+        console.log("[ERROR] extractUser", error);
       });
   };
 };

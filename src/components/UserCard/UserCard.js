@@ -4,13 +4,8 @@ import DateFnsUtils from "@date-io/date-fns";
 
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import CurrencyTextField from "@unicef/material-ui-currency-textfield";
-import TextField from "@material-ui/core/TextField";
-
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import { Grid, Typography, Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
 import Text from "../UI/Text/Text";
 
 const useStyles = makeStyles({

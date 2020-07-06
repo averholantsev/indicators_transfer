@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from "../../axios-main";
 
 import { withSnackbar } from "notistack";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
+import { extractUser, updateUser } from "../../api/users";
 import UserCard from "../../components/UserCard/UserCard";
 import Loader from "../../components/UI/Loader/Loader";
 import CardBody from "../../components/UI/CardBody/CardBody";
@@ -36,7 +36,7 @@ class UsersProfile extends Component {
       accountantEmail: {
         value: "",
         validation: {
-          required:true,
+          required: true,
           isEmail: true,
         },
         valid: true,
@@ -124,16 +124,17 @@ class UsersProfile extends Component {
   };
 
   componentDidMount() {
-    this.getUserDetails(localStorage.getItem("userId"));
+    this.getUserDetails();
   }
 
-  getUserDetails = (userId) => {
-    console.log("Получение данных по UserId: ", userId);
+  getUserDetails = () => {
     const token = localStorage.getItem("token");
-    axios
-      .get(`/users.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`)
+    const userId = localStorage.getItem("userId");
+    console.log("Получение данных по UserId: ", userId);
+
+    extractUser(token, userId)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("extractUser", response.data);
         let dataFromDB = response.data[Object.keys(response.data)];
         let newUserDetails = {
           ...this.state.userDetails,
@@ -198,7 +199,7 @@ class UsersProfile extends Component {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log("[ERROR] extractUser", error);
       });
   };
 
@@ -231,17 +232,16 @@ class UsersProfile extends Component {
       userId: localStorage.getItem("userId"),
     };
 
-    axios
-      .patch(`/users/${this.state.id}.json?auth=${token}`, userFormData)
+    updateUser(this.state.id, token, userFormData)
       .then((response) => {
-        console.log("Ответ с сервера: ", response.data);
+        console.log("updateUser", response.data);
         this.props.enqueueSnackbar(<Text tid="saveData" />, {
           variant: "success",
           preventDuplicate: true,
         });
       })
       .catch((error) => {
-        console.log("Ошибка: ", error);
+        console.log("[ERROR] updateUser", error);
       });
   };
 

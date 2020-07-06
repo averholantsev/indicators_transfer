@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getSteps() {
+const getSteps = () => {
   return [
     <Text tid="regEnterUserDetails" />,
     <Text tid="regEnterPrevIndicators" />,
     <Text tid="regValidateData" />,
   ];
-}
+};
 
 const RegistrationStepper = (props) => {
   const classes = useStyles();
@@ -131,7 +131,10 @@ const RegistrationStepper = (props) => {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography className={classes.instructions} style={{marginTop: "30px"}}>
+            <Typography
+              className={classes.instructions}
+              style={{ marginTop: "30px" }}
+            >
               <Text tid="regSuccess" />
             </Typography>
             <Button
@@ -163,7 +166,11 @@ const RegistrationStepper = (props) => {
                 <Text tid="prev" />
               </Button>
               <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? <Text tid="finish" /> : <Text tid="next" />}
+                {activeStep === steps.length - 1 ? (
+                  <Text tid="finish" />
+                ) : (
+                  <Text tid="next" />
+                )}
               </Button>
             </div>
           </div>
