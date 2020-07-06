@@ -36,7 +36,7 @@
 }
 
 .linkContainer {
-  display: block;
+  justify-content: space-between;
 }
 
 .link {
@@ -55,6 +55,11 @@
 
 .rightLink {
   float: right;
+}
+
+.signUpLink {
+  max-width: 205px !important;
+
 }
 
 @media (max-width: 389px) {

@@ -23,7 +23,7 @@ class AuthForm extends Component {
       email: {
         value: "",
         validation: {
-          required:true,
+          required: true,
           isEmail: true,
         },
         valid: false,
@@ -152,7 +152,7 @@ class AuthForm extends Component {
                 if (event.key === "Enter") {
                   this.state.authValid
                     ? this.formSenderHandler()
-                    : this.checkFormValidity(); 
+                    : this.checkFormValidity();
                 }
               }}
               value={password.value}
@@ -166,7 +166,7 @@ class AuthForm extends Component {
             >
               <Text tid="authSignIn" />
             </AuthButton>
-            <Grid container spacing={1} direction="row">
+            <Grid className="linkContainer" container spacing={1} direction="row">
               <Grid item xs={6}>
                 <Typography>
                   <Link
@@ -178,7 +178,7 @@ class AuthForm extends Component {
                   </Link>
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid className="signUpLink" item xs={6}>
                 <Typography align="right">
                   <Link component={NavLink} to="/registration" variant="body2">
                     <Text tid="authSignUp" />
