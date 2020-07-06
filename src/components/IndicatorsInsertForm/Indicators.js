@@ -1,6 +1,6 @@
 import React from "react";
 
-import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+import NumberTextField from "../UI/NumberTextField/NumberTextField";
 import { MONTHS_LIST } from "./Constants";
 import {
   Grid,
@@ -74,15 +74,11 @@ const Indicators = (props) => {
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          style={{ width: "100%" }}
-          variant="standard"
+        <NumberTextField
           label={<Text tid="sendIndicatorsDay" />}
-          currencySymbol=""
           value={electricityDay.value}
-          minimumValue="0"
-          onChange={(event, value) =>
-            props.updateIndicatorsInState("electricityDay", value)
+          onChange={(event) =>
+            props.updateIndicatorsInState("electricityDay", event.target.value)
           }
           error={!electricityDay.valid && electricityDay.touched}
           helperText={
@@ -93,15 +89,11 @@ const Indicators = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          style={{ width: "100%" }}
-          variant="standard"
+        <NumberTextField
           label={<Text tid="sendIndicatorsNight" />}
-          currencySymbol=""
           value={electricityNight.value}
-          minimumValue="0"
-          onChange={(event, value) =>
-            props.updateIndicatorsInState("electricityNight", value)
+          onChange={(event) =>
+            props.updateIndicatorsInState("electricityNight", event.target.value)
           }
           error={!electricityNight.valid && electricityNight.touched}
           helperText={
@@ -118,15 +110,11 @@ const Indicators = (props) => {
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          style={{ width: "100%" }}
-          variant="standard"
+        <NumberTextField
           label={<Text tid="sendIndicatorsColdWater" />}
-          currencySymbol=""
           value={coldWaterKitchen.value}
-          minimumValue="0"
-          onChange={(event, value) =>
-            props.updateIndicatorsInState("coldWaterKitchen", value)
+          onChange={(event) =>
+            props.updateIndicatorsInState("coldWaterKitchen", event.target.value)
           }
           error={!coldWaterKitchen.valid && coldWaterKitchen.touched}
           helperText={
@@ -137,15 +125,11 @@ const Indicators = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          style={{ width: "100%" }}
-          variant="standard"
+        <NumberTextField
           label={<Text tid="sendIndicatorsHotWater" />}
-          currencySymbol=""
           value={hotWaterKitchen.value}
-          minimumValue="0"
-          onChange={(event, value) =>
-            props.updateIndicatorsInState("hotWaterKitchen", value)
+          onChange={(event) =>
+            props.updateIndicatorsInState("hotWaterKitchen", event.target.value)
           }
           error={!hotWaterKitchen.valid && hotWaterKitchen.touched}
           helperText={
@@ -162,15 +146,14 @@ const Indicators = (props) => {
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          style={{ width: "100%" }}
-          variant="standard"
+        <NumberTextField
           label={<Text tid="sendIndicatorsColdWater" />}
-          currencySymbol=""
           value={coldWaterBathroom.value}
-          minimumValue="0"
-          onChange={(event, value) =>
-            props.updateIndicatorsInState("coldWaterBathroom", value)
+          onChange={(event) =>
+            props.updateIndicatorsInState(
+              "coldWaterBathroom",
+              event.target.value
+            )
           }
           error={!coldWaterBathroom.valid && coldWaterBathroom.touched}
           helperText={
@@ -181,15 +164,14 @@ const Indicators = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          style={{ width: "100%" }}
-          variant="standard"
+        <NumberTextField
           label={<Text tid="sendIndicatorsHotWater" />}
-          currencySymbol=""
           value={hotWaterBathroom.value}
-          minimumValue="0"
-          onChange={(event, value) =>
-            props.updateIndicatorsInState("hotWaterBathroom", value)
+          onChange={(event) =>
+            props.updateIndicatorsInState(
+              "hotWaterBathroom",
+              event.target.value
+            )
           }
           error={!hotWaterBathroom.valid && hotWaterBathroom.touched}
           helperText={

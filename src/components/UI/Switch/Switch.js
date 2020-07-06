@@ -11,7 +11,6 @@ const SwitchLabels = (props) => {
           <Switch
             checked={props.checked}
             onChange={props.switchChange}
-            name={props.label}
             color="primary"
           />
         }

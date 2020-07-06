@@ -108,8 +108,6 @@ class IndicatorsInsert extends Component {
   };
 
   checkFormValidity = (stateData) => {
-    console.log(typeof stateData);
-
     if (typeof stateData !== "undefined") {
       const {
         electricityDay,
@@ -241,16 +239,16 @@ class IndicatorsInsert extends Component {
 
     const indicators = {
       electricity: {
-        day: this.state.indicators.electricityDay.value,
-        night: this.state.indicators.electricityNight.value,
+        day: +this.state.indicators.electricityDay.value,
+        night: +this.state.indicators.electricityNight.value,
       },
       coldWater: {
-        kitchen: this.state.indicators.coldWaterKitchen.value,
-        bathroom: this.state.indicators.coldWaterBathroom.value,
+        kitchen: +this.state.indicators.coldWaterKitchen.value,
+        bathroom: +this.state.indicators.coldWaterBathroom.value,
       },
       hotWater: {
-        kitchen: this.state.indicators.hotWaterKitchen.value,
-        bathroom: this.state.indicators.hotWaterBathroom.value,
+        kitchen: +this.state.indicators.hotWaterKitchen.value,
+        bathroom: +this.state.indicators.hotWaterBathroom.value,
       },
       currentDate: {
         today: new Date(dateOfIndicators).toUTCString(),

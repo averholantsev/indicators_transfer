@@ -46,7 +46,7 @@ const ru = {
   sendIndicatorsKitchen: "Кухня",
   sendIndicatorsBathroom: "Ванная",
   sendIndicatorsColdWater: "Холодная вода",
-  sendIndicatorsHotWater: "Холодная вода",
+  sendIndicatorsHotWater: "Горячая вода",
   dialogCheckTitle: "Проверьте показатели за",
   switchMail: "Отправить в бухгалтерию",
 
