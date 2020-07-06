@@ -122,8 +122,8 @@ const RegistrationStepper = (props) => {
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
+        {steps.map((label, index) => (
+          <Step key={index}>
             <StepLabel classes={{ root: classes.stepLabel }}>{label}</StepLabel>
           </Step>
         ))}
