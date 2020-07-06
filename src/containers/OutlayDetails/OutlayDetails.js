@@ -28,6 +28,12 @@ class OutlayDetails extends Component {
     sendIndicatorId: null,
   };
 
+  componentDidMount() {
+    if (this.props.userDetails) {
+      this.getDataFromFirebase(this.props);
+    }
+  }
+
   UNSAFE_componentWillReceiveProps(newProps) {
     if (this.props.userDetails !== newProps.userDetails) {
       this.getDataFromFirebase(newProps);

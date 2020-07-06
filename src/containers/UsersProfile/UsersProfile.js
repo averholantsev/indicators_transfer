@@ -123,7 +123,13 @@ class UsersProfile extends Component {
     prevIndicatorsValid: false,
   };
 
-  UNSAFE_componentWillReceiveProps(newProps) {    
+  componentDidMount() {
+    if (this.props.userDetails) {
+      this.updateState(this.props);
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (this.props.userDetails !== newProps.userDetails) {
       this.updateState(newProps);
     }
