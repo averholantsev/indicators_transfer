@@ -217,16 +217,16 @@ class UsersProfile extends Component {
       prevIndicators: {
         prevIndicatorsDate: this.state.prevIndicators.prevIndicatorsDate.value,
         electricity: {
-          day: this.state.prevIndicators.electricityDay.value,
-          night: this.state.prevIndicators.electricityNight.value,
+          day: +this.state.prevIndicators.electricityDay.value,
+          night: +this.state.prevIndicators.electricityNight.value,
         },
         kitchen: {
-          coldWater: this.state.prevIndicators.kitchenColdWater.value,
-          hotWater: this.state.prevIndicators.kitchenHotWater.value,
+          coldWater: +this.state.prevIndicators.kitchenColdWater.value,
+          hotWater: +this.state.prevIndicators.kitchenHotWater.value,
         },
         bathroom: {
-          coldWater: this.state.prevIndicators.bathroomColdWater.value,
-          hotWater: this.state.prevIndicators.bathroomHotWater.value,
+          coldWater: +this.state.prevIndicators.bathroomColdWater.value,
+          hotWater: +this.state.prevIndicators.bathroomHotWater.value,
         },
       },
       userId: localStorage.getItem("userId"),

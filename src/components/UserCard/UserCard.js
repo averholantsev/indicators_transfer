@@ -3,7 +3,7 @@ import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import CurrencyTextField from "@unicef/material-ui-currency-textfield";
+import NumberTextField from "../UI/NumberTextField/NumberTextField";
 import { Grid, Typography, Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Text from "../UI/Text/Text";
@@ -146,15 +146,14 @@ const UserCard = (props) => {
         </MuiPickersUtilsProvider>
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          className={classes.field}
-          disabled={props.isDisabled}
+        <NumberTextField
           label={<Text tid="electricityDay" />}
-          currencySymbol=""
           value={electricityDay.value}
-          minimumValue="0"
-          onChange={(_, value) =>
-            props.updatePrevIndicatorsInState("electricityDay", value)
+          onChange={(event) =>
+            props.updatePrevIndicatorsInState(
+              "electricityDay",
+              event.target.value
+            )
           }
           error={!electricityDay.valid && electricityDay.touched}
           helperText={
@@ -165,15 +164,14 @@ const UserCard = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          className={classes.field}
-          disabled={props.isDisabled}
+        <NumberTextField
           label={<Text tid="electricityNight" />}
-          currencySymbol=""
           value={electricityNight.value}
-          minimumValue="0"
-          onChange={(_, value) =>
-            props.updatePrevIndicatorsInState("electricityNight", value)
+          onChange={(event) =>
+            props.updatePrevIndicatorsInState(
+              "electricityNight",
+              event.target.value
+            )
           }
           error={!electricityNight.valid && electricityNight.touched}
           helperText={
@@ -184,15 +182,14 @@ const UserCard = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          className={classes.field}
-          disabled={props.isDisabled}
+        <NumberTextField
           label={<Text tid="kitchenColdWater" />}
-          currencySymbol=""
           value={kitchenColdWater.value}
-          minimumValue="0"
-          onChange={(_, value) =>
-            props.updatePrevIndicatorsInState("kitchenColdWater", value)
+          onChange={(event) =>
+            props.updatePrevIndicatorsInState(
+              "kitchenColdWater",
+              event.target.value
+            )
           }
           error={!kitchenColdWater.valid && kitchenColdWater.touched}
           helperText={
@@ -203,15 +200,14 @@ const UserCard = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          className={classes.field}
-          disabled={props.isDisabled}
+        <NumberTextField
           label={<Text tid="kitchenHotWater" />}
-          currencySymbol=""
           value={kitchenHotWater.value}
-          minimumValue="0"
-          onChange={(_, value) =>
-            props.updatePrevIndicatorsInState("kitchenHotWater", value)
+          onChange={(event) =>
+            props.updatePrevIndicatorsInState(
+              "kitchenHotWater",
+              event.target.value
+            )
           }
           error={!kitchenHotWater.valid && kitchenHotWater.touched}
           helperText={
@@ -222,15 +218,14 @@ const UserCard = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          className={classes.field}
-          disabled={props.isDisabled}
+        <NumberTextField
           label={<Text tid="bathroomColdWater" />}
-          currencySymbol=""
           value={bathroomColdWater.value}
-          minimumValue="0"
-          onChange={(_, value) =>
-            props.updatePrevIndicatorsInState("bathroomColdWater", value)
+          onChange={(event) =>
+            props.updatePrevIndicatorsInState(
+              "bathroomColdWater",
+              event.target.value
+            )
           }
           error={!bathroomColdWater.valid && bathroomColdWater.touched}
           helperText={
@@ -241,15 +236,14 @@ const UserCard = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <CurrencyTextField
-          className={classes.field}
-          disabled={props.isDisabled}
+        <NumberTextField
           label={<Text tid="bathroomHotWater" />}
-          currencySymbol=""
           value={bathroomHotWater.value}
-          minimumValue="0"
-          onChange={(_, value) =>
-            props.updatePrevIndicatorsInState("bathroomHotWater", value)
+          onChange={(event) =>
+            props.updatePrevIndicatorsInState(
+              "bathroomHotWater",
+              event.target.value
+            )
           }
           error={!bathroomHotWater.valid && bathroomHotWater.touched}
           helperText={
