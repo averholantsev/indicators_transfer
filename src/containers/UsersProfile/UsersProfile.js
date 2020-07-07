@@ -198,7 +198,7 @@ class UsersProfile extends Component {
   };
 
   updateUserDetails = () => {
-    console.log("Обновление записи по Id: ", this.state.id);
+    console.log("Обновление записи по Id: ", this.props.userIdDb);
     const token = localStorage.getItem("token");
     const userFormData = {
       userDetails: {
@@ -226,7 +226,7 @@ class UsersProfile extends Component {
       userId: localStorage.getItem("userId"),
     };
 
-    updateUser(this.state.id, token, userFormData)
+    updateUser(this.props.userIdDb, token, userFormData)
       .then((response) => {
         console.log("updateUser", response.data);
         this.props.enqueueSnackbar(<Text tid="saveData" />, {

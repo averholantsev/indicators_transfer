@@ -152,7 +152,7 @@ export const loadUserData = () => {
     const userId = localStorage.getItem("userId");
     extractUser(token, userId)
       .then((response) => {
-        console.log("extractUser", response);
+        console.log("loadUserData extractUser", response);
         let dataFromDB = response.data[Object.keys(response.data)];
 
         dispatch(
@@ -164,7 +164,7 @@ export const loadUserData = () => {
         );
       })
       .catch((error) => {
-        console.log("[ERROR] extractUser", error);
+        console.log("[ERROR] loadUserData extractUser", error);
       });
   };
 };
