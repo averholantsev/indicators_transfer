@@ -73,7 +73,7 @@ const Indicators = (props) => {
           <Text tid="sendIndicatorsElectricity" />
         </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="sendIndicatorsDay" />}
           value={electricityDay.value}
@@ -88,7 +88,7 @@ const Indicators = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="sendIndicatorsNight" />}
           value={electricityNight.value}
@@ -109,7 +109,7 @@ const Indicators = (props) => {
           <Text tid="sendIndicatorsKitchen" />
         </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="sendIndicatorsColdWater" />}
           value={coldWaterKitchen.value}
@@ -124,7 +124,7 @@ const Indicators = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="sendIndicatorsHotWater" />}
           value={hotWaterKitchen.value}
@@ -145,7 +145,7 @@ const Indicators = (props) => {
           <Text tid="sendIndicatorsBathroom" />
         </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="sendIndicatorsColdWater" />}
           value={coldWaterBathroom.value}
@@ -163,7 +163,7 @@ const Indicators = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="sendIndicatorsHotWater" />}
           value={hotWaterBathroom.value}

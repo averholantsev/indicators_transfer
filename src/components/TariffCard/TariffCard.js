@@ -121,8 +121,8 @@ const TariffCard = (props) => {
         <Close />
       </IconButton>
       <CardContent className={classes.cardPadding}>
-        <Grid container spacing={3}>
-          <Grid item xs={6} className={classes.row}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} className={classes.row}>
             <FormControl className={classes.textField}>
               <InputLabel>
                 <Text tid="tariffName" />
@@ -156,7 +156,7 @@ const TariffCard = (props) => {
               ) : null}
             </FormControl>
           </Grid>
-          <Grid item xs={6} className={classes.row}>
+          <Grid item xs={12} sm={6} className={classes.row}>
             <NumberTextField
               label={<Text tid="tariffCost" />}
               prefix="₽ "
@@ -174,7 +174,7 @@ const TariffCard = (props) => {
             />
           </Grid>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid item xs={6} className={classes.row}>
+            <Grid item xs={12} sm={6} className={classes.row}>
               <DatePicker
                 clearable
                 label={<Text tid="tariffDateStart" />}
@@ -193,7 +193,7 @@ const TariffCard = (props) => {
                 }
               />
             </Grid>
-            <Grid item xs={6} className={classes.row}>
+            <Grid item xs={12} sm={6} className={classes.row}>
               <DatePicker
                 clearable
                 label={<Text tid="tariffDateEnd" />}

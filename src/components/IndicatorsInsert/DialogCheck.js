@@ -28,26 +28,34 @@ const DialogCheck = (props) => {
       <DialogContent dividers>
         <Grid container spacing={1}>
           <Grid item xs={12}>
+            <Switch
+              label={<Text tid="switchMail" />}
+              checked={props.sendDataToAccountant}
+              switchChange={props.switchChange}
+            />
+          </Grid>
+          
+          <Grid item xs={12}>
             <Typography variant="h6" align="center">
               <Text tid="sendIndicatorsElectricity" />
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               <Text tid="sendIndicatorsDay" />:
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               {props.indicators.electricityDay.value}
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               <Text tid="sendIndicatorsNight" />:
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               {props.indicators.electricityNight.value}
             </Typography>
@@ -58,22 +66,22 @@ const DialogCheck = (props) => {
               <Text tid="sendIndicatorsKitchen" />
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               <Text tid="sendIndicatorsColdWater" />:
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               {props.indicators.coldWaterKitchen.value}
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               <Text tid="sendIndicatorsHotWater" />:
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               {props.indicators.hotWaterKitchen.value}
             </Typography>
@@ -84,33 +92,25 @@ const DialogCheck = (props) => {
               <Text tid="sendIndicatorsBathroom" />
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               <Text tid="sendIndicatorsColdWater" />:
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               {props.indicators.coldWaterBathroom.value}
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               <Text tid="sendIndicatorsHotWater" />:
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant="body1" align="center">
               {props.indicators.hotWaterBathroom.value}
             </Typography>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Switch
-              label={<Text tid="switchMail" />}
-              checked={props.sendDataToAccountant}
-              switchChange={props.switchChange}
-            />
           </Grid>
         </Grid>
       </DialogContent>

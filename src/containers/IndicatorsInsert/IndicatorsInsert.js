@@ -7,12 +7,12 @@ import { insertIndicators } from "../../api/indicators";
 
 import "./IndicatorsInsert.css";
 import * as CONFIG from "../../configuration.json";
-import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
+import { MONTHS_LIST } from "../../components/IndicatorsInsert/Constants";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 
-import DialogCheck from "../../components/IndicatorsInsertForm/DialogCheck";
+import DialogCheck from "../../components/IndicatorsInsert/DialogCheck";
 import CardBody from "../../components/UI/CardBody/CardBody";
-import Indicators from "../../components/IndicatorsInsertForm/Indicators";
+import Indicators from "../../components/IndicatorsInsert/Indicators";
 import { Typography } from "@material-ui/core";
 import Text from "../../components/UI/Text/Text";
 

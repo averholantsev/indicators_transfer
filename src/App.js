@@ -5,9 +5,9 @@ import * as actions from "./store/actions/index";
 
 import { LanguageProvider } from "./components/Languages/Language";
 import Layout from "./hoc/Layout/Layout";
-import AuthForm from "./containers/AuthForm/AuthForm";
-import Logout from "./containers/AuthForm/Logout/Logout";
-import RegistrationForm from "./containers/RegistrationForm/RegistrationForm";
+import Authorization from "./containers/Authorization/Authorization";
+import Logout from "./containers/Authorization/Logout/Logout";
+import Registration from "./containers/Registration/Registration";
 import ForgotPassword from "./containers/ForgotPassword/ForgotPassword";
 import IndicatorsInsert from "./containers/IndicatorsInsert/IndicatorsInsert";
 import OutlayDetails from "./containers/OutlayDetails/OutlayDetails";
@@ -22,8 +22,8 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/auth" component={AuthForm} />
-        <Route path="/registration" component={RegistrationForm} />
+        <Route path="/auth" component={Authorization} />
+        <Route path="/registration" component={Registration} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Redirect to="/auth" />
       </Switch>

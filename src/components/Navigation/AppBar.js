@@ -74,7 +74,7 @@ const MenuAppBar = (props) => {
     <Text tid={sectionTitleName} />
   );
   const [openDrawer, setOpenDrawer] = useState(false);
-  const titleShow = useMediaQuery("(min-width:425px)");
+  const titleShow = useMediaQuery("(min-width:525px)");
 
   return (
     <div className={classes.root}>

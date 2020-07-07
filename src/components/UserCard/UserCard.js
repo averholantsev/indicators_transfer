@@ -44,7 +44,7 @@ const UserCard = (props) => {
           <Text tid="contacts" />
         </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           label={<Text tid="firstName" />}
           value={firstName.value}
@@ -60,7 +60,7 @@ const UserCard = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           label={<Text tid="lastName" />}
           value={lastName.value}
@@ -145,7 +145,7 @@ const UserCard = (props) => {
           />
         </MuiPickersUtilsProvider>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="electricityDay" />}
           value={electricityDay.value}
@@ -163,7 +163,7 @@ const UserCard = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="electricityNight" />}
           value={electricityNight.value}
@@ -181,7 +181,7 @@ const UserCard = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="kitchenColdWater" />}
           value={kitchenColdWater.value}
@@ -199,7 +199,7 @@ const UserCard = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="kitchenHotWater" />}
           value={kitchenHotWater.value}
@@ -217,7 +217,7 @@ const UserCard = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="bathroomColdWater" />}
           value={bathroomColdWater.value}
@@ -235,7 +235,7 @@ const UserCard = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="bathroomHotWater" />}
           value={bathroomHotWater.value}

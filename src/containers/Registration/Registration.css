@@ -1,0 +1,11 @@
+.reg-container {
+  padding-top: 30px;
+}
+
+.top-div {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  align-items: center;
+}

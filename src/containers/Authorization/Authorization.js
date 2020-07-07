@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 
-import "./AuthForm.css";
+import "./Authorization.css";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 import {
   AuthButton,
@@ -17,7 +17,7 @@ import LanguageSelector from "../../components/Languages/LanguageSelector";
 import Text from "../../components/UI/Text/Text";
 
 // Реализация классового компонента формы
-class AuthForm extends Component {
+class Authorization extends Component {
   state = {
     auth: {
       email: {
@@ -207,4 +207,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Authorization);

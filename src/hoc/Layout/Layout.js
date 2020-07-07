@@ -6,6 +6,8 @@ import "./Layout.css";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import AppBar from "../../components/Navigation/AppBar";
+import { ThemeProvider } from "@material-ui/core";
+import { theme } from "./Theme";
 
 class Layout extends Component {
   render() {
@@ -22,21 +24,23 @@ class Layout extends Component {
     }
 
     return (
-      <Grid
-        container
-        direction="column"
-        justify="flex-start"
-        alignItems="center"
-      >
-        {this.props.isAuth && (
+      <ThemeProvider theme={theme}>
+        <Grid
+          container
+          direction="column"
+          justify="flex-start"
+          alignItems="center"
+        >
+          {this.props.isAuth && (
+            <Grid item xs={12} style={{ width: "100%" }}>
+              <AppBar userDetails={this.props.userDetails} />
+            </Grid>
+          )}
           <Grid item xs={12} style={{ width: "100%" }}>
-            <AppBar userDetails={this.props.userDetails} />
+            <Paper className="paper">{this.props.children}</Paper>
           </Grid>
-        )}
-        <Grid item xs={12} style={{ width: "100%" }}>
-          <Paper className="paper">{this.props.children}</Paper>
         </Grid>
-      </Grid>
+      </ThemeProvider>
     );
   }
 }

@@ -4,6 +4,7 @@ import * as actions from "../../store/actions/index";
 import { NavLink } from "react-router-dom";
 import { checkFieldValidity } from "../../components/Helpers/FormHelper";
 
+import "./Registration.css";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import RegistrationStepper from "../../components/Registration/RegistrationStepper";
@@ -11,7 +12,7 @@ import Alert from "@material-ui/lab/Alert";
 import LanguageSelector from "../../components/Languages/LanguageSelector";
 import Text from "../../components/UI/Text/Text";
 
-class RegistrationForm extends Component {
+class Registration extends Component {
   state = {
     userDetails: {
       firstName: {
@@ -34,7 +35,7 @@ class RegistrationForm extends Component {
       userEmail: {
         value: "",
         validation: {
-          required:true,
+          required: true,
           isEmail: true,
         },
         valid: false,
@@ -52,7 +53,7 @@ class RegistrationForm extends Component {
       accountantEmail: {
         value: "",
         validation: {
-          required:true,
+          required: true,
           isEmail: true,
         },
         valid: false,
@@ -345,16 +346,8 @@ class RegistrationForm extends Component {
     if (this.props.errorMessage) window.scrollTo(0, 0);
 
     return (
-      <div>
-        <div
-          style={{
-            display: "flex",
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            alignItems: "center",
-          }}
-        >
+      <div className="reg-container">
+        <div className="top-div">
           <LanguageSelector theme="dark" />
           <Typography>
             <Link
@@ -407,4 +400,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

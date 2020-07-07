@@ -5,7 +5,7 @@ import { extractTariff } from "../../api/tariffs";
 import { extractIndicators, deleteIndicators } from "../../api/indicators";
 
 import { withSnackbar } from "notistack";
-import { MONTHS_LIST } from "../../components/IndicatorsInsertForm/Constants";
+import { MONTHS_LIST } from "../../components/IndicatorsInsert/Constants";
 import * as CONFIG from "../../configuration.json";
 import "./OutlayDetails.css";
 import Loader from "../../components/UI/Loader/Loader";

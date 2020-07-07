@@ -49,7 +49,7 @@ const StepTwo = (props) => {
           />
         </MuiPickersUtilsProvider>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="electricityDay" />}
           value={electricityDay.value}
@@ -67,7 +67,7 @@ const StepTwo = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="electricityNight" />}
           value={electricityNight.value}
@@ -85,7 +85,7 @@ const StepTwo = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="kitchenColdWater" />}
           value={kitchenColdWater.value}
@@ -103,7 +103,7 @@ const StepTwo = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="kitchenHotWater" />}
           value={kitchenHotWater.value}
@@ -121,7 +121,7 @@ const StepTwo = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="bathroomColdWater" />}
           value={bathroomColdWater.value}
@@ -139,7 +139,7 @@ const StepTwo = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <NumberTextField
           label={<Text tid="bathroomHotWater" />}
           value={bathroomHotWater.value}

@@ -88,7 +88,7 @@ const ru = {
   tariffErrorNotYetSend: "Тарифы еще не созданы",
 
   // Форма профиля пользователя
-  userProfile: "Профиль пользователя",
+  userProfile: "Профиль",
   contacts: "Контакты",
   firstName: "Имя",
   lastName: "Фамилия",

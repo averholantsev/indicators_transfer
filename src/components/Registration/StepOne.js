@@ -52,7 +52,7 @@ const StepOne = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           label={<Text tid="firstName" />}
@@ -69,7 +69,7 @@ const StepOne = (props) => {
           }
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           label={<Text tid="lastName" />}
           disabled={props.isDisabled}

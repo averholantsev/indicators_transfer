@@ -87,7 +87,7 @@ const en = {
   tariffErrorNotYetSend: "The tariffs hasn't been created yet",
 
   // User profile form
-  userProfile: "User profile",
+  userProfile: "Profile",
   contacts: "Contacts",
   firstName: "First name",
   lastName: "Last name",
