@@ -12,7 +12,6 @@ import {
   AuthAlert,
 } from "../../components/UI/AuthComponents/index";
 import { Typography, Link, Grid } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import LanguageSelector from "../../components/Languages/LanguageSelector";
 import Text from "../../components/UI/Text/Text";
 
@@ -108,8 +107,14 @@ class Authorization extends Component {
         <div className="auth_container">
           <form>
             <div className="lockIconContainer">
-              <div className="roundIcon">
-                <LockOutlinedIcon />
+              <div
+                className="roundIcon"
+                style={{
+                  background: `url("${process.env.PUBLIC_URL}/img/logo.png") no-repeat`,
+                  backgroundPosition: "50% 0",
+                  backgroundSize: "60px"
+                }}
+              >
               </div>
             </div>
             <Typography className="authHeader" variant="h5" align="center">
@@ -166,7 +171,12 @@ class Authorization extends Component {
             >
               <Text tid="authSignIn" />
             </AuthButton>
-            <Grid className="linkContainer" container spacing={1} direction="row">
+            <Grid
+              className="linkContainer"
+              container
+              spacing={1}
+              direction="row"
+            >
               <Grid item xs={6}>
                 <Typography>
                   <Link

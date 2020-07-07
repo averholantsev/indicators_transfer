@@ -47,6 +47,14 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
   },
+  logo: {
+    width: "40px",
+    height: "40px",
+    padding: "10px 10px 10px 0",
+    background: `url("${process.env.PUBLIC_URL}/img/logo.png") no-repeat`,
+    backgroundSize: "40px",
+    backgroundPosition: "left",
+  },
 }));
 
 const MenuAppBar = (props) => {
@@ -89,6 +97,7 @@ const MenuAppBar = (props) => {
           >
             <Menu />
           </IconButton>
+          {titleShow ? <div className={classes.logo}></div> : null}
           <Typography variant="h6">{sectionTitle}</Typography>
           <div className={classes.grow} />
           <LanguageSelector theme="light" />

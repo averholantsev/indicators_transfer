@@ -354,7 +354,7 @@ class Registration extends Component {
               component={NavLink}
               to="/auth"
               variant="body2"
-              style={{ fontSize: "14px" }}
+              style={{ fontSize: "16px" }}
             >
               <Text tid="authSignInShort" />
             </Link>
