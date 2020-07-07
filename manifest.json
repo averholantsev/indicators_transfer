@@ -1,11 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Indicators app",
+  "name": "The system of municipal indicators",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "img/logo.png",
+      "sizes": "432x432",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
