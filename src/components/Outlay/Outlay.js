@@ -19,6 +19,7 @@ const useStyles = makeStyles({
   root: {
     position: "relative",
     marginTop: "30px",
+    margin: "10px",
   },
   buttonClose: {
     position: "absolute",

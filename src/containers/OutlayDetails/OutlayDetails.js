@@ -7,13 +7,20 @@ import { extractIndicators, deleteIndicators } from "../../api/indicators";
 import { withSnackbar } from "notistack";
 import { MONTHS_LIST } from "../../components/IndicatorsInsert/Constants";
 import * as CONFIG from "../../configuration.json";
-import "./OutlayDetails.css";
 import Loader from "../../components/UI/Loader/Loader";
 import Outlay from "../../components/Outlay/Outlay";
 import Tabs from "../../components/UI/Tabs/Tabs";
 import DialogSimple from "../../components/UI/DialogSimple/DialogSimple";
 import Typography from "@material-ui/core/Typography";
 import Text from "../../components/UI/Text/Text";
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext,
+} from "pure-react-carousel";
+import "pure-react-carousel/dist/react-carousel.es.css";
 
 class OutlayDetails extends Component {
   state = {
@@ -168,7 +175,7 @@ class OutlayDetails extends Component {
         ],
       };
     });
-    indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
+    indicatorsList.sort((a, b) => b.date.getTime() - a.date.getTime());
     return indicatorsList;
   };
 
@@ -440,41 +447,57 @@ class OutlayDetails extends Component {
   render() {
     let indicatorsList = null;
     if (this.state.indicatorsList === null && this.state.error === null) {
-      indicatorsList = <Loader />;
+      indicatorsList = <Loader style={{ marginTop: "30px" }} />;
     } else if (this.state.indicatorsList !== null) {
       indicatorsList = this.state.indicatorsList.filter((item) => {
         return item.date.getUTCFullYear() === this.state.currentYear;
       });
 
       if (indicatorsList.length > 0) {
-        indicatorsList = indicatorsList.map((item, index) => {
-          return (
-            <Outlay
-              key={index}
-              indicatorsList={item}
-              costWaterSupply={this.countCostWaterSupply(
-                item.indicators,
-                item.date
-              )}
-              costElectricity={this.countCostElectricity(
-                item.indicators,
-                item.date
-              )}
-              handleDeleteDialogOpen={this.handleDeleteDialogOpen}
-              handleSendDialogOpen={this.handleSendDialogOpen}
-            />
-          );
-        });
+        indicatorsList = (
+          <CarouselProvider
+            naturalSlideWidth={100}
+            naturalSlideHeight={125}
+            totalSlides={indicatorsList.length}
+          >
+            <Slider>
+              {indicatorsList.map((item, index) => {
+                const costWaterSupply = this.countCostWaterSupply(
+                  item.indicators,
+                  item.date
+                );
+                const costElectricity = this.countCostElectricity(
+                  item.indicators,
+                  item.date
+                );
+                return (
+                  <Slide index={index} key={index}>
+                    <Outlay
+                      key={index}
+                      indicatorsList={item}
+                      costWaterSupply={costWaterSupply}
+                      costElectricity={costElectricity}
+                      handleDeleteDialogOpen={this.handleDeleteDialogOpen}
+                      handleSendDialogOpen={this.handleSendDialogOpen}
+                    />
+                  </Slide>
+                );
+              })}
+            </Slider>
+            <ButtonBack>Back</ButtonBack>
+            <ButtonNext>Next</ButtonNext>
+          </CarouselProvider>
+        );
       } else
         indicatorsList = (
-          <p style={{ textAlign: "center" }}>
+          <p style={{ textAlign: "center", marginTop: "30px" }}>
             <Text tid="outlayNoData" /> {this.state.currentYear}{" "}
             <Text tid="outlayNoDataYear" />
           </p>
         );
     } else {
       indicatorsList = (
-        <p style={{ textAlign: "center" }}>
+        <p style={{ textAlign: "center", marginTop: "30px" }}>
           <Text tid={this.state.error} />
         </p>
       );
@@ -511,7 +534,7 @@ class OutlayDetails extends Component {
           <Text tid="outlayCurrentExpenditure" />
         </Typography>
         <Tabs tabsList={tabsList} changeCurrentYear={this.changeCurrentYear} />
-        <div className="indicatorsList">{indicatorsList}</div>
+        {indicatorsList}
       </div>
     );
   }

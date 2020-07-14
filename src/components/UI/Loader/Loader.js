@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Loader = () => {
+const Loader = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div className={classes.root} {...props}>
       <CircularProgress />
       <Typography className={classes.paragraph}><Text tid="loading" /></Typography>
     </div>

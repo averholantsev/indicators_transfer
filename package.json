@@ -16,6 +16,7 @@
     "date-fns": "^2.14.0",
     "emailjs-com": "^2.4.1",
     "notistack": "^0.9.16",
+    "pure-react-carousel": "^1.27.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-number-format": "^4.4.1",
