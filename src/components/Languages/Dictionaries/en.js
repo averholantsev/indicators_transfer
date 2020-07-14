@@ -72,6 +72,7 @@ const en = {
   outlayNoDataYear: "year",
   outlayErrorNotYetSend: "The indicators hasn't been sent yet",
   outlaySendSuccess: "The data was successfully sent to the accountant's email!",
+  currencySymbol: "$",
 
   // Tariffs form
   addTariff: "Add tariff",

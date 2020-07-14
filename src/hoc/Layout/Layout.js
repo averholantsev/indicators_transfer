@@ -25,19 +25,16 @@ class Layout extends Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <Grid
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="center"
-        >
+        <Grid container direction="column" justify="center" alignItems="center">
           {this.props.isAuth && (
             <Grid item xs={12} style={{ width: "100%" }}>
               <AppBar userDetails={this.props.userDetails} />
             </Grid>
           )}
           <Grid item xs={12} style={{ width: "100%" }}>
-            <Paper className="paper">{this.props.children}</Paper>
+            <Grid container justify="center" alignItems="center">
+              <div className="paper">{this.props.children}</div>
+            </Grid>
           </Grid>
         </Grid>
       </ThemeProvider>

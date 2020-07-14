@@ -1,0 +1,55 @@
+.btn-carousel {
+  width: 40px;
+  height: 40px;
+  transition: .5s;
+  border: none;
+  box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.5);
+  background-color: transparent;
+  position: relative;
+  top: -300px;
+}
+
+.btn-carousel:focus {
+  outline: none;
+}
+
+.btn-left {
+  transform: rotate(45deg);
+  left: -30px;
+  float: left;
+}
+.btn-right {
+  transform: rotate(225deg);
+  right: -30px;
+  float: right;
+}
+
+@media (max-width: 650px) {
+  .btn-carousel {
+    display: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .carousel-provider {
+    min-width: 288px;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 375px) {
+  .carousel-provider {
+    min-width: 342px;
+  }
+}
+
+@media (min-width: 376px) and (max-width: 475px) {
+  .carousel-provider {
+    min-width: 385px;
+  }
+}
+
+@media (min-width: 476px) {
+  .carousel-provider {
+    min-width: 450px;
+  }
+}

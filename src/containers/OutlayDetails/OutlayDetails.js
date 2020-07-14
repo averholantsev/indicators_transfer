@@ -21,6 +21,7 @@ import {
   ButtonNext,
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import "./OutlayDetails.css";
 
 class OutlayDetails extends Component {
   state = {
@@ -175,7 +176,7 @@ class OutlayDetails extends Component {
         ],
       };
     });
-    indicatorsList.sort((a, b) => b.date.getTime() - a.date.getTime());
+    indicatorsList.sort((a, b) => a.date.getTime() - b.date.getTime());
     return indicatorsList;
   };
 
@@ -459,33 +460,36 @@ class OutlayDetails extends Component {
             naturalSlideWidth={100}
             naturalSlideHeight={125}
             totalSlides={indicatorsList.length}
+            className="carousel-provider"
           >
-            <Slider>
-              {indicatorsList.map((item, index) => {
-                const costWaterSupply = this.countCostWaterSupply(
-                  item.indicators,
-                  item.date
-                );
-                const costElectricity = this.countCostElectricity(
-                  item.indicators,
-                  item.date
-                );
-                return (
-                  <Slide index={index} key={index}>
-                    <Outlay
-                      key={index}
-                      indicatorsList={item}
-                      costWaterSupply={costWaterSupply}
-                      costElectricity={costElectricity}
-                      handleDeleteDialogOpen={this.handleDeleteDialogOpen}
-                      handleSendDialogOpen={this.handleSendDialogOpen}
-                    />
-                  </Slide>
-                );
-              })}
+            <Slider style={{ height: "550px" }}>
+              {indicatorsList
+                .sort((a, b) => a.date.getTime() - b.date.getTime())
+                .map((item, index) => {
+                  const costWaterSupply = this.countCostWaterSupply(
+                    item.indicators,
+                    item.date
+                  );
+                  const costElectricity = this.countCostElectricity(
+                    item.indicators,
+                    item.date
+                  );
+                  return (
+                    <Slide index={index} key={index}>
+                      <Outlay
+                        key={index}
+                        indicatorsList={item}
+                        costWaterSupply={costWaterSupply}
+                        costElectricity={costElectricity}
+                        handleDeleteDialogOpen={this.handleDeleteDialogOpen}
+                        handleSendDialogOpen={this.handleSendDialogOpen}
+                      />
+                    </Slide>
+                  );
+                })}
             </Slider>
-            <ButtonBack>Back</ButtonBack>
-            <ButtonNext>Next</ButtonNext>
+            <ButtonBack className="btn-carousel btn-left"></ButtonBack>
+            <ButtonNext className="btn-carousel btn-right"></ButtonNext>
           </CarouselProvider>
         );
       } else

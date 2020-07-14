@@ -73,6 +73,7 @@ const ru = {
   outlayNoDataYear: "год",
   outlayErrorNotYetSend: "Показания еще не переданы",
   outlaySendSuccess: "Данные успешно переданы на почту бухгалтерии!",
+  currencySymbol: "₽",
 
   // Форма тарифов
   addTariff: "Добавить тариф",

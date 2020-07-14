@@ -124,12 +124,7 @@ const Outlay = (props) => {
               </TableCell>
               <TableCell align="center">
                 <b>
-                  <Text tid="outlayCharge" />
-                </b>
-              </TableCell>
-              <TableCell align="center">
-                <b>
-                  <Text tid="outlayConsumption" />
+                  <Text tid="outlayCharge" /> | <Text tid="outlayConsumption" />
                 </b>
               </TableCell>
             </TableRow>
@@ -140,28 +135,33 @@ const Outlay = (props) => {
                 <TableCell component="th" scope="row">
                   <Text tid={row.name} />
                 </TableCell>
-                <TableCell align="center">{row.intake}</TableCell>
-                <TableCell align="center">{row.outlay}</TableCell>
+                <TableCell align="center">
+                  {row.intake} | {row.outlay}
+                </TableCell>
               </TableRow>
             ))}
             <TableRow>
-              <TableCell align="center" colSpan={3}>
+              <TableCell align="center" colSpan={2}>
                 <b>
                   <Text tid="outlayCost" />
                 </b>
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell component="th" scope="row" colSpan={2}>
+              <TableCell component="th" scope="row">
                 <Text tid="outlayWaterSupply" />
               </TableCell>
-              <TableCell align="center">{costWaterSupply} ₽</TableCell>
+              <TableCell align="center">
+                {costWaterSupply} <Text tid="currencySymbol" />
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell component="th" scope="row" colSpan={2}>
+              <TableCell component="th" scope="row">
                 <Text tid="outlayElectricity" />
               </TableCell>
-              <TableCell align="center">{costElectricity} ₽</TableCell>
+              <TableCell align="center">
+                {costElectricity} <Text tid="currencySymbol" />
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -171,3 +171,90 @@ const Outlay = (props) => {
 };
 
 export default Outlay;
+
+/* (
+  <Paper className={classes.root}>
+    <IconButton
+      className={classes.buttonSend}
+      aria-label={<Text tid="send" />}
+      component="span"
+      color="primary"
+      onClick={() => {
+        props.handleSendDialogOpen(id);
+      }}
+      disableRipple
+      disableFocusRipple
+    >
+      <Email />
+    </IconButton>
+    <IconButton
+      className={classes.buttonClose}
+      aria-label={<Text tid="delete" />}
+      component="span"
+      color="secondary"
+      onClick={() => {
+        props.handleDeleteDialogOpen(id);
+      }}
+      disableRipple
+      disableFocusRipple
+    >
+      <Close />
+    </IconButton>
+    <Typography variant="h6" align="center">
+      {indicatorMonth} {date.getFullYear()}
+    </Typography>
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <b>
+                <Text tid="outlayIndicator" />
+              </b>
+            </TableCell>
+            <TableCell align="center">
+              <b>
+                <Text tid="outlayCharge" />
+              </b>
+            </TableCell>
+            <TableCell align="center">
+              <b>
+                <Text tid="outlayConsumption" />
+              </b>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {indicators.map((row, index) => (
+            <TableRow key={index}>
+              <TableCell component="th" scope="row">
+                <Text tid={row.name} />
+              </TableCell>
+              <TableCell align="center">{row.intake}</TableCell>
+              <TableCell align="center">{row.outlay}</TableCell>
+            </TableRow>
+          ))}
+          <TableRow>
+            <TableCell align="center" colSpan={3}>
+              <b>
+                <Text tid="outlayCost" />
+              </b>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" colSpan={2}>
+              <Text tid="outlayWaterSupply" />
+            </TableCell>
+            <TableCell align="center">{costWaterSupply} ₽</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell component="th" scope="row" colSpan={2}>
+              <Text tid="outlayElectricity" />
+            </TableCell>
+            <TableCell align="center">{costElectricity} ₽</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Paper>
+); */
