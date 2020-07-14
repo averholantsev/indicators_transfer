@@ -1,22 +1,25 @@
 {
   "files": {
-    "main.css": "/indicators_transfer/static/css/main.7cf7536d.chunk.css",
-    "main.js": "/indicators_transfer/static/js/main.78cd89e0.chunk.js",
-    "main.js.map": "/indicators_transfer/static/js/main.78cd89e0.chunk.js.map",
+    "main.css": "/indicators_transfer/static/css/main.593f4106.chunk.css",
+    "main.js": "/indicators_transfer/static/js/main.fdcad916.chunk.js",
+    "main.js.map": "/indicators_transfer/static/js/main.fdcad916.chunk.js.map",
     "runtime-main.js": "/indicators_transfer/static/js/runtime-main.08519d5f.js",
     "runtime-main.js.map": "/indicators_transfer/static/js/runtime-main.08519d5f.js.map",
-    "static/js/2.5f5e741c.chunk.js": "/indicators_transfer/static/js/2.5f5e741c.chunk.js",
-    "static/js/2.5f5e741c.chunk.js.map": "/indicators_transfer/static/js/2.5f5e741c.chunk.js.map",
+    "static/css/2.1a0a2c47.chunk.css": "/indicators_transfer/static/css/2.1a0a2c47.chunk.css",
+    "static/js/2.6dab2dd6.chunk.js": "/indicators_transfer/static/js/2.6dab2dd6.chunk.js",
+    "static/js/2.6dab2dd6.chunk.js.map": "/indicators_transfer/static/js/2.6dab2dd6.chunk.js.map",
     "index.html": "/indicators_transfer/index.html",
-    "precache-manifest.687d8dabec7ae5263f71ee29ee706659.js": "/indicators_transfer/precache-manifest.687d8dabec7ae5263f71ee29ee706659.js",
+    "precache-manifest.f3bc06d37a4c6fd7e89f3588c38b4ad6.js": "/indicators_transfer/precache-manifest.f3bc06d37a4c6fd7e89f3588c38b4ad6.js",
     "service-worker.js": "/indicators_transfer/service-worker.js",
-    "static/css/main.7cf7536d.chunk.css.map": "/indicators_transfer/static/css/main.7cf7536d.chunk.css.map",
-    "static/js/2.5f5e741c.chunk.js.LICENSE.txt": "/indicators_transfer/static/js/2.5f5e741c.chunk.js.LICENSE.txt"
+    "static/css/2.1a0a2c47.chunk.css.map": "/indicators_transfer/static/css/2.1a0a2c47.chunk.css.map",
+    "static/css/main.593f4106.chunk.css.map": "/indicators_transfer/static/css/main.593f4106.chunk.css.map",
+    "static/js/2.6dab2dd6.chunk.js.LICENSE.txt": "/indicators_transfer/static/js/2.6dab2dd6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.08519d5f.js",
-    "static/js/2.5f5e741c.chunk.js",
-    "static/css/main.7cf7536d.chunk.css",
-    "static/js/main.78cd89e0.chunk.js"
+    "static/css/2.1a0a2c47.chunk.css",
+    "static/js/2.6dab2dd6.chunk.js",
+    "static/css/main.593f4106.chunk.css",
+    "static/js/main.fdcad916.chunk.js"
   ]
 }
