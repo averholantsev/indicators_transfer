@@ -239,16 +239,16 @@ class IndicatorsInsert extends Component {
 
     const indicatorsData = {
       electricity: {
-        day: +this.state.indicators.electricityDay.value,
-        night: +this.state.indicators.electricityNight.value,
+        day: Number(this.state.indicators.electricityDay.value.replace( /\s/g, "")),
+        night: Number(this.state.indicators.electricityNight.value.replace( /\s/g, "")),
       },
       coldWater: {
-        kitchen: +this.state.indicators.coldWaterKitchen.value,
-        bathroom: +this.state.indicators.coldWaterBathroom.value,
+        kitchen: Number(this.state.indicators.coldWaterKitchen.value.replace( /\s/g, "")),
+        bathroom: Number(this.state.indicators.coldWaterBathroom.value.replace( /\s/g, "")),
       },
       hotWater: {
-        kitchen: +this.state.indicators.hotWaterKitchen.value,
-        bathroom: +this.state.indicators.hotWaterBathroom.value,
+        kitchen: Number(this.state.indicators.hotWaterKitchen.value.replace( /\s/g, "")),
+        bathroom: Number(this.state.indicators.hotWaterBathroom.value.replace( /\s/g, "")),
       },
       currentDate: {
         today: new Date(dateOfIndicators).toUTCString(),
@@ -258,6 +258,7 @@ class IndicatorsInsert extends Component {
     };
     const token = localStorage.getItem("token");
 
+    console.log(indicatorsData);
     insertIndicators(token, indicatorsData)
       .then((response) => {
         console.log("insertIndicators", response);

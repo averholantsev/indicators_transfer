@@ -464,7 +464,7 @@ class OutlayDetails extends Component {
           >
             <Slider style={{ height: "550px" }}>
               {indicatorsList
-                .sort((a, b) => a.date.getTime() - b.date.getTime())
+                .sort((a, b) => b.date.getTime() - a.date.getTime())
                 .map((item, index) => {
                   const costWaterSupply = this.countCostWaterSupply(
                     item.indicators,
